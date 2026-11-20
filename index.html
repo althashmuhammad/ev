@@ -478,11 +478,6 @@
       border-radius: 0 !important;
     }
 
-    #ios-status-bar { transition: background 0.2s ease; }
-    .sb-glass { background: var(--glass); backdrop-filter: blur(20px) saturate(160%); -webkit-backdrop-filter: blur(20px) saturate(160%); }
-    .sb-clear { background: linear-gradient(to bottom, rgba(237, 242, 240, 0.85) 35%, transparent); }
-    :root[data-theme="dark"] .sb-clear { background: linear-gradient(to bottom, rgba(16, 26, 29, 0.85) 35%, transparent); }
-
     /* =====================================================================
        SURFACES & COMPONENTS
        ===================================================================== */
@@ -709,7 +704,6 @@
     :root[data-theme]:not([data-theme="light"]):not([data-theme="dark"]) .home-battery-divider { background: var(--line); }
     :root[data-theme]:not([data-theme="light"]):not([data-theme="dark"]) .home-service-icon svg { fill: var(--invtext); }
     :root[data-theme]:not([data-theme="light"]):not([data-theme="dark"]) .home-notification-button { border: 1px solid var(--line); }
-    :root[data-theme]:not([data-theme="light"]):not([data-theme="dark"]) .sb-clear { background: linear-gradient(to bottom, color-mix(in srgb, var(--map-bg) 88%, transparent) 35%, transparent); }
     :root[data-theme]:not([data-theme="light"]):not([data-theme="dark"]) #ios-viewport .text-slate-900,
     :root[data-theme]:not([data-theme="light"]):not([data-theme="dark"]) #ios-viewport .text-gray-900,
     :root[data-theme]:not([data-theme="light"]):not([data-theme="dark"]) #ios-viewport .text-gray-800 { color: var(--label) !important; }
@@ -1234,7 +1228,7 @@
     .seg button, .sw, .sw::before, .sw i, .opt { transition-duration: var(--motion-small); transition-timing-function: var(--motion-ease-out); }
     .field-error { animation: iosTabFade var(--motion-small) var(--motion-ease-out) both; }
     @media (prefers-reduced-transparency: reduce) {
-      .glass, .sb-glass, #ios-sheet-backdrop, .home-map-back { backdrop-filter: none !important; -webkit-backdrop-filter: none !important; }
+      .glass, #ios-sheet-backdrop, .home-map-back { backdrop-filter: none !important; -webkit-backdrop-filter: none !important; }
     }
 
     /* =====================================================================
@@ -1284,33 +1278,11 @@
     <div class="iphone">
       <div class="ios-screen">
 
-        <!-- Status Bar -->
-        <div id="ios-status-bar" class="absolute top-0 inset-x-0 h-[44px] sm:h-[50px] px-6 sm:px-7 pt-2 sm:pt-2.5 flex items-center justify-between text-[13px] font-display font-bold select-none z-30 text-label sb-glass">
-          <span class="w-12">9:41</span>
-          <div class="flex items-center gap-1.5">
-            <svg class="w-3.5 h-3" viewBox="0 0 18 12" fill="currentColor">
-              <rect x="0" y="8" width="3" height="4" rx="1"/><rect x="4.5" y="5.5" width="3" height="6.5" rx="1"/>
-              <rect x="9" y="3" width="3" height="9" rx="1"/><rect x="13.5" y="0.5" width="3" height="11.5" rx="1"/>
-            </svg>
-            <svg class="w-3.5 h-3" viewBox="0 0 16 12" fill="currentColor">
-              <path d="M8 9.5a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3zm-3.6-2.1a5.2 5.2 0 0 1 7.2 0l1.1-1.2a6.8 6.8 0 0 0-9.4 0l1.1 1.2zm-2.5-2.6a8.8 8.8 0 0 1 12.2 0l1.1-1.2a10.4 10.4 0 0 0-14.4 0l1.1 1.2z"/>
-            </svg>
-            <div class="w-[22px] h-[11px] rounded-[3.5px] border border-current p-[1.5px] flex items-center">
-              <div class="h-full w-[82%] bg-current rounded-[1.5px]"></div>
-            </div>
-          </div>
-        </div>
-
         <!-- Viewport -->
         <div id="ios-viewport" class="flex-1 overflow-y-auto ios-scroll relative flex flex-col"></div>
 
         <!-- Tab Bar -->
         <nav id="ios-tab-bar" class="glass !border-x-0 !border-b-0 px-2 pt-1.5 pb-0.5 grid grid-cols-4 items-center z-20 shrink-0"></nav>
-
-        <!-- Home Indicator -->
-        <div class="glass !border-0 pt-1 pb-2 flex justify-center shrink-0">
-          <div class="w-[134px] h-[5px] bg-label rounded-full opacity-90"></div>
-        </div>
 
         <!-- Dynamic Island Notification Banner -->
         <div id="ios-banner" class="absolute top-14 left-4 right-4 z-50 bg-slatecard text-white px-4 py-3 rounded-[22px] shadow-2xl flex items-center gap-3 border border-white/10">
@@ -1648,8 +1620,6 @@
       { id: '19', shortTitle: 'Test Vehicle', tag: 'Entry', tabBar: false, t: '19 Guest Test Vehicle — Tata Nexon EV', d: 'Confirm the Tata Nexon EV for the local guest test.' },
       { id: '20', shortTitle: 'Test Location', tag: 'Entry', tabBar: false, t: '20 Guest Test Location — Kochi', d: 'Choose the illustrative Kochi test area before entering the customer flow.' }
     ];
-    const MAP_SCREENS = ['01', '02', '03', '04', '20'];
-
     const car = () => state.cars[state.carIdx];
     const hub = () => HUBS[state.hubIdx];
     const set = (k, v) => { state[k] = v; render(); };
@@ -3838,9 +3808,9 @@
       const emergencyBattery = hasBatteryEstimate && c.soc <= 15;
       const batteryFillWidth = hasBatteryEstimate ? ((14 * c.soc) / 100).toFixed(2) : '0';
       const services = [
-        { l: customerTest ? 'M Charging' : 'Stations', svg: SERVICE_3D_SVGS.stations, fn: "go('04')" },
-        { l: 'Car Wash', image: 'service-carwash-home-icon.png', i: 'drop', fn: customerTest ? "showCustomerUnavailable('Car wash')" : 'startWash()' },
-        { l: 'Towing', svg: SERVICE_3D_SVGS.towing, fn: customerTest ? "showCustomerUnavailable('Towing')" : 'startTow()' },
+        { l: customerTest ? 'M Charging' : 'Stations', i: 'bolt', fn: "go('04')" },
+        { l: 'Car Wash', i: 'drop', fn: customerTest ? "showCustomerUnavailable('Car wash')" : 'startWash()' },
+        { l: 'Towing', i: 'truck', fn: customerTest ? "showCustomerUnavailable('Towing')" : 'startTow()' },
         { l: 'More', i: 'grid', color: 'text-teal', fn: "go('14')" }
       ];
       return `
@@ -6101,10 +6071,6 @@ function screen02() {
 
     function render(animate) {
       const meta = SCREENS.find(s => s.id === state.screen) || SCREENS[0];
-
-      const sb = document.getElementById('ios-status-bar');
-      sb.classList.toggle('sb-clear', MAP_SCREENS.includes(state.screen));
-      sb.classList.toggle('sb-glass', !MAP_SCREENS.includes(state.screen));
 
       const vp = document.getElementById('ios-viewport');
       // Remember which input had focus so typing isn't interrupted by a re-render
