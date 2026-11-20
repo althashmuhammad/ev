@@ -51,7 +51,9 @@
           var textLuminance = 0.2126 * textRgb[0] + 0.7152 * textRgb[1] + 0.0722 * textRgb[2];
           root.style.setProperty('--home-vehicle-text', textLuminance > 0.55 ? '#000000' : '#FFFFFF');
         }
-      } catch (e) {}
+      } catch (error) {
+        console.error('Unable to apply saved theme before first paint', error);
+      }
     })();
   </script>
 
@@ -1412,6 +1414,7 @@
           return theme;
         }, {});
       } catch (error) {
+        console.error('Unable to load saved custom theme', error);
         return { ...DEFAULT_CUSTOM_THEME };
       }
     }
@@ -1636,11 +1639,13 @@
     function openAccountAppearance() {
       state.accountView = 'appearance';
       render();
+      document.getElementById('account-appearance-title')?.focus({ preventScroll: true });
     }
 
     function closeAccountAppearance() {
       state.accountView = null;
       render();
+      document.getElementById('account-appearance-menu')?.focus({ preventScroll: true });
     }
 
     function setPrimaryBank(bankId) {
@@ -2166,11 +2171,12 @@
       return {
         id: o.id, serviceType: o.serviceType, status: o.status || 'En Route',
         boostLabel: o.detail, etaMins: o.etaMins, paymentMode: o.paymentMode || 'Postpayment',
-        total: o.total || 0, cancelled: false
+        paymentMethod: o.paymentMethod || state.pay, total: o.total || 0, cancelled: false
       };
     }
     function placeOrder(o) {
-      if (!o.scheduledLabel && o.paymentMode === 'Prepayment' && state.pay === 'wallet') {
+      const paymentMethod = o.paymentMethod || state.pay;
+      if (!o.scheduledLabel && o.paymentMode === 'Prepayment' && paymentMethod === 'wallet') {
         if (state.walletInr < o.total) {
           showBanner(`Wallet has ₹${state.walletInr.toLocaleString('en-IN')} — top up or pick UPI`);
           return openPayMethodSheet();
@@ -2187,14 +2193,15 @@
         showBanner(`${o.title} scheduled • ${o.scheduledLabel}`);
         return;
       }
-      state.activeOrder = makeActiveOrder(o);
+      state.activeOrder = makeActiveOrder({ ...o, paymentMethod });
       resetChat();
       go('03', 'push', { reset: true });
       showBanner(`${o.title} confirmed • ETA ${o.etaMins} min`);
     }
     function cancelActiveOrder() {
       const o = state.activeOrder;
-      if (o.paymentMode === 'Prepayment' && state.pay === 'wallet' && o.total) state.walletInr += o.total;
+      if (!o || o.cancelled) return;
+      if (o.paymentMode === 'Prepayment' && o.paymentMethod === 'wallet' && o.total) state.walletInr += o.total;
       o.cancelled = true;
       go('01', 'pop');
       showBanner(o.paymentMode === 'Prepayment' ? 'Request cancelled • refund initiated' : 'Request cancelled');
@@ -3131,11 +3138,7 @@
                 <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/>
                 <path d="M13.73 21a2 2 0 0 1-3.46 0"/>
               </svg>
-              ${unreadNotifs ? `
-                <span class="min-w-[19px] h-[19px] px-1 rounded-full bg-[#E04F26] text-white text-[10px] font-extrabold flex items-center justify-center border-2 border-white absolute -top-1 -right-1 shadow-xs num">${unreadNotifs}</span>
-              ` : `
-                <span class="min-w-[19px] h-[19px] px-1 rounded-full bg-[#E04F26] text-white text-[10px] font-extrabold flex items-center justify-center border-2 border-white absolute -top-1 -right-1 shadow-xs num">2</span>
-              `}
+              ${unreadNotifs ? `<span class="min-w-[19px] h-[19px] px-1 rounded-full bg-[#E04F26] text-white text-[10px] font-extrabold flex items-center justify-center border-2 border-white absolute -top-1 -right-1 shadow-xs num">${unreadNotifs}</span>` : ''}
             </button>
           </div>
 
@@ -3163,7 +3166,7 @@
               </svg>
               <span class="home-battery-percent font-display text-[13.5px] font-extrabold ${lowBattery ? 'text-coral' : ''} num">${c.soc}%</span>
               <span class="home-battery-divider w-[1px] h-3.5 mx-0.5"></span>
-              <span class="home-battery-range text-[12.5px] font-medium num">~${estRangeKm || 75} km</span>
+              <span class="home-battery-range text-[12.5px] font-medium num">~${estRangeKm} km</span>
             </button>
           </div>
         </div>
@@ -3244,7 +3247,7 @@
             </button>
           ` : ''}
 
-          <button onclick="openQuickChargeChoiceSheet()" aria-label="Charge my EV, low battery with about ${estRangeKm || 79} kilometres remaining" class="home-service-card card-feature card-interactive press">
+          <button onclick="openQuickChargeChoiceSheet()" aria-label="Charge my EV, low battery with about ${estRangeKm} kilometres remaining" class="home-service-card card-feature card-interactive press">
             <span class="home-service-content">
               <span class="home-service-icon icon-container icon-container--liquid" aria-hidden="true">
                 <svg class="w-6 h-6 fill-white" viewBox="0 0 24 24"><path d="M13 2L4 14h7l-1 8 9-12h-7l1-8z"/></svg>
@@ -3302,10 +3305,6 @@
         detail: q.detail, status: 'Van En Route', etaMins: q.slot.eta || q.etaMins, paymentMode: state.paymentMode, total: q.total,
         scheduledLabel: state.vanMode === 'Recurring' ? recurLabel(q.slot.label) : state.vanMode === 'Schedule' ? q.slot.label : null
       });
-      state.screen = '03'; // Smooth pop-back directly to Home Screen / Live Tracking map where map is shown
-      state.activeTab = '01'; // Select Home tab on the bottom bar
-      state.tabLabel = 'Home';
-      render();
     }
 
 function screen02() {
@@ -4565,14 +4564,17 @@ function screen02() {
       document.getElementById('add-plate')?.focus();
     }
     function normalisePlate(p) {
-      return p.toUpperCase().replace(/[^A-Z0-9]/g, '').replace(/^([A-Z]{2})(\d{1,2})([A-Z]{0,3})(\d{1,4})$/, (m, st, d, l, n) => [st, d.padStart(2, '0'), l, n.padStart(4, '0')].filter(Boolean).join(' '));
+      const compact = p.toUpperCase().replace(/[^A-Z0-9]/g, '');
+      const bharatSeries = compact.match(/^(\d{2})BH(\d{4})([A-Z]{1,2})$/);
+      if (bharatSeries) return `${bharatSeries[1]} BH ${bharatSeries[2]} ${bharatSeries[3]}`;
+      return compact.replace(/^([A-Z]{2})(\d{1,2})([A-Z]{0,3})(\d{1,4})$/, (m, st, d, l, n) => [st, d.padStart(2, '0'), l, n.padStart(4, '0')].filter(Boolean).join(' '));
     }
     function validateAddForm() {
       const f = state.addForm, e = {};
       if (f.name.trim().length < 2) e.name = 'Enter the make and model, e.g. Tata Punch.ev';
       const plate = normalisePlate(f.plate);
       if (!f.plate.trim()) e.plate = 'Enter the registration number';
-      else if (!/^[A-Z]{2} \d{2}( [A-Z]{1,3})? \d{4}$/.test(plate) && !/^\d{2} BH \d{4} [A-Z]{1,2}$/.test(f.plate.trim().toUpperCase()))
+      else if (!/^[A-Z]{2} \d{2}( [A-Z]{1,3})? \d{4}$/.test(plate) && !/^\d{2} BH \d{4} [A-Z]{1,2}$/.test(plate))
         e.plate = 'Use the format KL 07 AB 1234';
       else if (state.cars.some(c => c.plate === plate)) e.plate = 'This vehicle is already in your garage';
       const kwh = parseFloat(f.batteryKwh);
@@ -4896,7 +4898,7 @@ function screen02() {
               <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
               <span>Account</span>
             </button>
-            <h1 class="font-display text-[17px] font-bold tracking-tight text-center">Appearance</h1>
+            <h1 id="account-appearance-title" tabindex="-1" class="font-display text-[17px] font-bold tracking-tight text-center">Appearance</h1>
             <span class="w-16" aria-hidden="true"></span>
           </div>
           <div class="card p-3.5">
@@ -4984,7 +4986,7 @@ function screen02() {
         <div>
           <div class="eyebrow px-1 mb-2">APPEARANCE</div>
           <div class="card overflow-hidden text-[13px] font-semibold">
-            <button onclick="openAccountAppearance()" class="w-full px-4 py-3.5 flex items-center justify-between text-left press">
+            <button id="account-appearance-menu" onclick="openAccountAppearance()" class="w-full px-4 py-3.5 flex items-center justify-between text-left press">
               <span class="flex items-center gap-3">${I('sparkle', 'w-[18px] h-[18px] text-teal')}Theme</span>
               <span class="flex items-center gap-2 text-label2 font-medium">
                 ${THEME_OPTIONS.find(option => option.id === state.theme).label}
@@ -5009,7 +5011,7 @@ function screen02() {
         };
         return `
           <button type="button" role="radio" aria-checked="${state.theme === option.id}" aria-label="${option.label}"
-            title="${option.label}" data-theme-option="${option.id}" onclick="setTheme('${option.id}')" class="theme-option press">
+            id="theme-option-${option.id}" title="${option.label}" data-theme-option="${option.id}" onclick="setTheme('${option.id}')" class="theme-option press">
             <span class="theme-preview" aria-hidden="true" style="--preview-page:${colors.page};--preview-surface:${colors.surface};--preview-text:${colors.text};--preview-accent:${colors.accent}">
               <span class="theme-preview-card"></span><span class="theme-preview-accent"></span>
             </span>
@@ -5104,9 +5106,15 @@ function screen02() {
       isImmersiveMode = !isImmersiveMode;
       document.body.classList.toggle('is-fullscreen', isImmersiveMode);
       try {
-        if (isImmersiveMode && !document.fullscreenElement) document.documentElement.requestFullscreen?.().catch(() => {});
-        if (!isImmersiveMode && document.fullscreenElement) document.exitFullscreen?.().catch(() => {});
-      } catch (e) {}
+        if (isImmersiveMode && !document.fullscreenElement) {
+          document.documentElement.requestFullscreen?.().catch(error => console.warn('Fullscreen request failed', error));
+        }
+        if (!isImmersiveMode && document.fullscreenElement) {
+          document.exitFullscreen?.().catch(error => console.warn('Fullscreen exit failed', error));
+        }
+      } catch (error) {
+        console.warn('Fullscreen change failed', error);
+      }
     }
     const isInteractive = (t) => !!t.closest('button, a, input, textarea, select, label, [onclick], #ios-sheet-backdrop, #ios-chat-overlay, #ios-call-overlay');
     document.addEventListener('dblclick', (e) => { if (!isInteractive(e.target)) toggleImmersive(); });
