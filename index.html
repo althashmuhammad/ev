@@ -2138,6 +2138,7 @@
     function visitDemo() {
       state.entryMode = 'demo';
       go('01', 'tab', { reset: true });
+      if (!isImmersiveMode) toggleImmersive();
     }
     function continueCustomerTestWithVehicle() {
       state.cars = [{
@@ -3271,22 +3272,17 @@
           <div class="space-y-5">
             <div class="w-14 h-14 rounded-[18px] bg-teal text-white flex items-center justify-center shadow-sm">${I('bolt', 'w-7 h-7', 2.2)}</div>
             <div class="space-y-2">
-              <div class="eyebrow text-teal">VoltIndia · Test experience</div>
+              <div class="eyebrow text-teal">VoltIndia · Interactive demo</div>
               <h1 class="font-display text-[27px] leading-tight font-bold tracking-tight text-label">Welcome to a simpler EV day.</h1>
-              <p class="text-[13px] leading-relaxed text-label2">Test the customer flow with a Tata Nexon EV, or explore the existing app as a demo visitor.</p>
+              <p class="text-[13px] leading-relaxed text-label2">Explore sample vehicles, charging stations, and roadside-service flows.</p>
             </div>
           </div>
           <div class="space-y-3">
-            <button onclick="startCustomerTest()" class="w-full card min-h-[76px] p-4 flex items-center gap-3 text-left press border-teal/25 bg-teal-soft/35">
-              <span class="w-11 h-11 rounded-2xl bg-teal text-white flex items-center justify-center shrink-0">${I('user', 'w-5 h-5')}</span>
-              <span class="flex-1"><span class="block text-[14px] font-bold text-teal">Login as guest</span><span class="block mt-1 text-[11px] text-label2">Customer test · Tata Nexon EV only</span></span>
-              ${I('chevR', 'w-4 h-4 text-teal')}
-            </button>
-            <button onclick="visitDemo()" class="w-full min-h-[52px] rounded-2xl bg-surface border border-line px-4 flex items-center justify-center gap-2 text-[13px] font-semibold text-label press">
-              ${I('grid', 'w-4 h-4 text-teal')} Visit demo
+            <button onclick="visitDemo()" class="btn w-full min-h-[56px]">
+              ${I('grid', 'w-4 h-4')} Visit demo
             </button>
           </div>
-          <p class="text-center text-[10.5px] leading-relaxed text-label3">Prototype only: guest details stay in this browser session. No account, payment, or service request is sent.</p>
+          <p class="text-center text-[10.5px] leading-relaxed text-label3">Demo only: sample data is used. No payment or service request is sent.</p>
         </div>
       `;
     }
@@ -3808,7 +3804,7 @@
       const emergencyBattery = hasBatteryEstimate && c.soc <= 15;
       const batteryFillWidth = hasBatteryEstimate ? ((14 * c.soc) / 100).toFixed(2) : '0';
       const services = [
-        { l: customerTest ? 'M Charging' : 'Stations', i: 'bolt', fn: "go('04')" },
+        { l: customerTest ? 'M Charging' : 'Stations', svg: SERVICE_3D_SVGS.stations, fn: "go('04')" },
         { l: 'Car Wash', i: 'drop', fn: customerTest ? "showCustomerUnavailable('Car wash')" : 'startWash()' },
         { l: 'Towing', i: 'truck', fn: customerTest ? "showCustomerUnavailable('Towing')" : 'startTow()' },
         { l: 'More', i: 'grid', color: 'text-teal', fn: "go('14')" }
