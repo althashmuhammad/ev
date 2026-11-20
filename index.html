@@ -545,14 +545,14 @@
       display: flex; flex-direction: column; flex: 1 0 auto; min-height: 100%; background: var(--page);
     }
     [class*="pt-["] { padding-top: max(20px, env(safe-area-inset-top, 0px)) !important; }
-    .screen.map { background-color: var(--map-bg); }
-    .screen.map:not(.home-screen) {
+    .map:not(.home-screen) {
       background-image: url("kochi-aerial-map.png");
       background-position: center;
       background-size: cover;
     }
-    .screen.map:not(.home-screen)::before,
-    .screen.map:not(.home-screen)::after { display: none; }
+    .map:not(.home-screen)::before,
+    .map:not(.home-screen)::after { display: none; }
+    .aerial-map-road-mock { display: none; }
     .aerial-map-surface {
       background-image: url("kochi-aerial-map.png");
       background-position: center 52%;
@@ -1058,7 +1058,7 @@
       background-position: center;
       background-size: cover;
     }
-    .customer-map-backdrop-aerial > svg { display: none; }
+    .customer-map-backdrop.customer-map-backdrop-aerial > svg { display: none; }
     .customer-map-backdrop > svg { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
     .customer-map-marker {
       position: absolute; left: 52%; top: 52%; transform: translate(-50%, -100%);
@@ -2195,7 +2195,6 @@
       state.locIdx = -1;
       state.usingCurrentGps = false;
       go('01', 'tab', { reset: true });
-      showBanner('Kochi test location selected');
     }
     function continueShopFromOrder() {
       go('15', 'push', { history: ['01', '14'] });
@@ -3322,7 +3321,7 @@
     function screen20() {
       return `
         <div class="screen min-h-full relative overflow-hidden justify-between">
-          ${customerMapBackdrop()}
+          ${customerMapBackdrop(true)}
           <div class="relative z-10 px-4 pt-[54px]">
             <button onclick="back()" aria-label="Back to vehicle" class="navbtn min-h-[44px] pr-2 flex items-center gap-1.5 text-label font-bold text-[17px] press bg-surface/90 rounded-full shadow-sm">
               ${I('chevL', 'w-5 h-5', 2.2)}<span>Vehicle</span>
@@ -3583,9 +3582,9 @@
       </div>`;
     }
 
-    function customerMapBackdrop() {
+    function customerMapBackdrop(aerial = false) {
       return `
-        <div class="customer-map-backdrop" role="img" aria-label="Illustrative map of Kochi. The marked test area is approximate; no live location, route, or charger data is shown.">
+        <div class="customer-map-backdrop ${aerial ? 'customer-map-backdrop-aerial' : ''}" role="img" aria-label="Illustrative map of Kochi. The marked test area is approximate; no live location, route, or charger data is shown.">
           <svg viewBox="0 0 390 800" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
             <rect width="390" height="800" fill="#EFF0DC"/>
             <path d="M0 0h143c-17 42 12 69-9 111s8 77-11 116 11 76-5 119 11 77-8 119 8 81-9 124 8 77-5 211H0z" fill="#CDE7F4"/>
@@ -3723,7 +3722,6 @@
       state.usingCurrentGps = false;
       state.locIdx = -1;
       render();
-      showBanner('Selected: ' + name);
     }
 
     function openChargeFiltersSheet() {
@@ -4003,7 +4001,7 @@
               <button onclick="useCurrentGpsLocation()" class="btn-outline w-full min-h-[44px]">${I('crosshair', 'w-4 h-4')} Use device location</button>
             </div>
             <div class="customer-map-frame h-[132px] rounded-[18px] border border-line shadow-sm">
-              ${customerMapBackdrop()}
+              ${customerMapBackdrop(true)}
             </div>
             <div class="rounded-2xl bg-teal-soft/45 px-3 py-2 text-[10px] leading-relaxed text-label2">
               Illustrative map only. Your address is used for the estimate; no live routes, stations, or service availability are shown.
@@ -4072,9 +4070,9 @@ function screen02() {
           </div>
 
           <!-- Interactive Kochi charging map -->
-          <div onclick="moveMapPin(event)" class="flex-1 relative min-h-0 cursor-crosshair select-none bg-[var(--map-bg)] overflow-hidden">
+          <div onclick="moveMapPin(event)" class="map flex-1 relative min-h-0 cursor-crosshair select-none overflow-hidden">
             <!-- SVG Vector Map of Kochi with Waterway, Parks & Street Grid -->
-            <svg class="absolute inset-0 w-full h-full" preserveAspectRatio="xMidYMid slice" viewBox="0 0 400 480" fill="none">
+            <svg class="aerial-map-road-mock absolute inset-0 w-full h-full" preserveAspectRatio="xMidYMid slice" viewBox="0 0 400 480" fill="none">
               <!-- Parks -->
               <path d="M 230 30 C 275 25 350 45 355 95 C 360 145 310 165 265 155 C 230 145 215 75 230 30 Z" fill="var(--map-park)"/>
               <path d="M -20 290 C 25 295 65 315 60 370 C 55 410 15 435 -20 420 Z" fill="var(--map-park)"/>
@@ -4453,7 +4451,7 @@ function screen02() {
             <span class="chip !text-[10px]">Local test</span>
           </div>
           <div class="customer-map-frame h-[160px] rounded-[20px] border border-line shadow-sm">
-            ${customerMapBackdrop()}
+            ${customerMapBackdrop(true)}
           </div>
           <div class="card p-4 space-y-3">
             <div class="eyebrow text-teal">Request ${esc(order.id)}</div>
@@ -4894,7 +4892,7 @@ function screen02() {
               <h1 class="font-display text-[21px] font-bold text-label">M Charging request</h1>
             </div>
             <div class="customer-map-frame h-[180px] rounded-[20px] border border-line shadow-sm">
-              ${customerMapBackdrop()}
+              ${customerMapBackdrop(true)}
             </div>
             <div class="card p-4 space-y-2">
               <p class="text-[12px] leading-relaxed text-label2">Review an M Charging request using your selected Kochi test area. This prototype does not check live unit availability or contact a provider.</p>
@@ -5413,10 +5411,6 @@ function screen02() {
     function screen09() {
       const c = car();
       const customerTest = state.entryMode === 'customer';
-      const bays = [
-        { i: 'home', t: 'Home • Kadavanthra, Kochi', s: 'Sahodaran Ayyappan Rd • Open Parking' },
-        { i: 'building', t: 'Office • Infopark, Kakkanad', s: 'Phase 2 Basement B1 • Slot EV-04' }
-      ];
       return `
       <div class="screen pt-[58px] px-4 pb-4 space-y-4">
         <div class="flex items-end justify-between">
@@ -5485,19 +5479,8 @@ function screen02() {
 
         ${customerTest ? `
           <div class="card p-3.5 text-[11px] leading-relaxed text-label2">Vehicle battery telemetry is not connected in this test.</div>
-        ` : `<div>
-          <div class="eyebrow px-1 mb-2">Saved locations • tap to use</div>
-          <div class="card overflow-hidden">
-            ${bays.map((b, i) => `
-              ${i ? '<div class="hair ml-16"></div>' : ''}
-              <button onclick="setLoc(${i})" aria-pressed="${state.locIdx === i}" class="w-full p-3.5 text-left flex items-center gap-3 active:bg-fill">
-                <span class="w-9 h-9 rounded-xl bg-teal-soft text-teal flex items-center justify-center shrink-0">${I(b.i, 'w-[18px] h-[18px]')}</span>
-                <span class="flex-1 min-w-0"><span class="block text-[12.5px] font-bold">${b.t}</span><span class="block text-[10.5px] text-label2 mt-0.5">${b.s}</span></span>
-                <span class="w-5 h-5 rounded-full flex items-center justify-center shrink-0 ${state.locIdx === i ? 'bg-teal text-white' : 'border border-line text-transparent'}">${I('check', 'w-3 h-3', 3)}</span>
-              </button>`).join('')}
-          </div>
-        </div>
-      </div>`}`;
+        ` : ''}
+      </div>`;
     }
 
     // 10 — ADD VEHICLE (validated form + quick-fill of popular Indian EVs)
