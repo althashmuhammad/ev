@@ -484,6 +484,14 @@
       bottom: max(24px, env(safe-area-inset-bottom, 0px));
       z-index: 60;
     }
+    .charge-address-dock-card {
+      background: #FFFFFF;
+      backdrop-filter: none;
+      -webkit-backdrop-filter: none;
+      color: #15272A;
+    }
+    .charge-address-dock-card .text-label { color: #15272A !important; }
+    .charge-address-dock-card .text-label2 { color: #526569 !important; }
     body.is-fullscreen .charge-address-dock {
       position: fixed;
       bottom: max(24px, calc(env(safe-area-inset-bottom, 0px) + 16px));
@@ -543,6 +551,56 @@
     .card-empty { background: var(--background-secondary); border-style: dashed; box-shadow: none; }
     .screen {
       display: flex; flex-direction: column; flex: 1 0 auto; min-height: 100%; background: var(--page);
+    }
+    .welcome-screen {
+      position: relative; isolation: isolate; display: block; width: 100%; height: 100%;
+      min-height: 100%; overflow: hidden; background: #FFFFFF; color: #15272A;
+    }
+    .welcome-screen::after {
+      content: ''; position: absolute; z-index: 0; right: -78px; bottom: -96px;
+      width: 270px; height: 175px; border-radius: 100% 0 0 0;
+      background: linear-gradient(155deg, transparent 0 42%, #DDF3F1 42% 65%, #A6DED9 65% 100%);
+      transform: rotate(-10deg); pointer-events: none;
+    }
+    .welcome-hero {
+      position: absolute; inset: 0 0 auto; z-index: 0; height: 60%; overflow: hidden;
+    }
+    .welcome-hero-image {
+      display: block; width: 100%; height: 100%; object-fit: cover; object-position: center 62%;
+    }
+    .welcome-hero-wave {
+      position: absolute; left: 0; bottom: -1px; display: block;
+      width: 100%; height: 29%; pointer-events: none;
+    }
+    .welcome-content {
+      position: relative; z-index: 1; display: flex; flex-direction: column; justify-content: flex-end;
+      width: 100%; height: 100%; min-height: 100%;
+      padding: 0 clamp(28px, 11.4vw, 88px) clamp(28px, 7.3vh, 100px);
+    }
+    .welcome-title {
+      max-width: 650px; margin: 0; color: #11191C;
+      font: 800 clamp(28px, 6vw, 48px)/1.14 'Plus Jakarta Sans', 'Inter', sans-serif;
+      letter-spacing: -.04em;
+    }
+    .welcome-copy {
+      max-width: 620px; margin: clamp(12px, 2vw, 20px) 0 0;
+      color: #70777D; font-size: clamp(16px, 3.4vw, 27px); font-weight: 500; line-height: 1.45;
+    }
+    .welcome-visit-button {
+      display: flex; align-items: center; justify-content: center; gap: 16px;
+      width: 100%; min-height: clamp(58px, 11.5vw, 88px); margin-top: clamp(36px, 4.5vh, 64px);
+      border: 0; border-radius: 999px; background: linear-gradient(110deg, #008B8D 0%, #005B63 100%);
+      color: #FFFFFF; font-size: clamp(18px, 3.5vw, 28px); font-weight: 800;
+      box-shadow: 0 15px 32px rgba(0, 100, 103, .2);
+    }
+    .welcome-visit-button svg { width: 26px; height: 26px; flex: none; }
+    @media (max-height: 680px) {
+      .welcome-hero { height: 60%; }
+      .welcome-hero-image { object-position: center 50%; }
+      .welcome-content { padding-bottom: 18px; }
+      .welcome-title { font-size: clamp(25px, 7vw, 32px); }
+      .welcome-copy { margin-top: 8px; font-size: 14px; }
+      .welcome-visit-button { min-height: 54px; margin-top: 20px; }
     }
     [class*="pt-["] { padding-top: max(20px, env(safe-area-inset-top, 0px)) !important; }
     .map:not(.home-screen) {
@@ -683,7 +741,40 @@
     .home-shortcut-icon--image { overflow: hidden; background: var(--surface); }
     .home-shortcut-image { width: 100%; height: 100%; object-fit: cover; border-radius: inherit; }
     .home-shortcut-label { font-size: 10.5px; line-height: 1.15; font-weight: 650; color: var(--label); white-space: nowrap; }
-    .flow-stepper .flow-step-item { min-height: 44px; min-width: 0; }
+    .flow-stepper {
+      display: flex; width: 100%; align-items: center; justify-content: space-between;
+      gap: clamp(4px, 1vw, 12px); padding: 4px; user-select: none;
+    }
+    .flow-stepper .flow-step-item {
+      display: inline-flex; flex: 0 1 auto; align-items: center; justify-content: flex-start;
+      gap: clamp(5px, .8vw, 10px); min-width: 0; min-height: 48px; padding: 0;
+      border: 0; border-radius: 0; background: transparent; box-shadow: none;
+      color: var(--label2); text-align: left; white-space: nowrap;
+    }
+    .flow-step-number {
+      display: inline-flex; flex: 0 0 clamp(34px, 5.2vw, 52px);
+      width: clamp(34px, 5.2vw, 52px); height: clamp(34px, 5.2vw, 52px);
+      align-items: center; justify-content: center; border-radius: 50%;
+      background: #E9EAEB; color: #62696D;
+      font-size: clamp(18px, 2.4vw, 27px); font-weight: 800; line-height: 1;
+    }
+    .flow-step-label {
+      color: var(--label2); font-size: clamp(14px, 2.1vw, 22px);
+      font-weight: 700; line-height: 1; white-space: nowrap;
+    }
+    .flow-step-label-short { display: none; }
+    .flow-step-item[aria-current="step"] .flow-step-number,
+    .flow-step-item[data-complete="true"] .flow-step-number {
+      background: var(--teal); color: var(--invtext);
+    }
+    .flow-step-item[aria-current="step"] .flow-step-label,
+    .flow-step-item[data-complete="true"] .flow-step-label { color: var(--teal); }
+    .flow-stepper .flow-step-separator {
+      flex: 1 1 32px; min-width: 8px; height: 2px; margin: 0 2px;
+      background: #D2D4D5;
+    }
+    .flow-stepper .flow-step-separator.is-complete { background: var(--teal); }
+    .flow-step-item:focus-visible { outline: 2px solid var(--teal); outline-offset: 3px; border-radius: 4px; }
     :root[data-theme]:not([data-theme="light"]):not([data-theme="dark"]) .home-service-sheet { background: var(--surface); border-color: var(--line); }
     :root[data-theme]:not([data-theme="light"]):not([data-theme="dark"]) .home-service-card,
     :root[data-theme]:not([data-theme="light"]):not([data-theme="dark"]) .home-shortcut { background: var(--surface); border-color: var(--line); }
@@ -774,10 +865,29 @@
       .home-plate-pill { min-height: 32px; padding: 0 7px; gap: 4px; font-size: 10px; }
       .home-plate-icon { width: 13px; height: 13px; }
     }
-    .flow-stepper { justify-content: space-between; gap: 2px; padding-left: 0; padding-right: 0; }
-    .flow-stepper .flow-step-item { flex: 1 1 0; min-width: 0; min-height: 48px; justify-content: center; gap: 4px; padding: 6px 3px; }
-    .flow-stepper .flow-step-label { max-width: 72px; white-space: normal; text-align: center; font-size: 10.5px; line-height: 1.1; }
-    .flow-stepper > .flow-step-separator { width: 12px; flex: 0 0 12px; }
+    @media (max-width: 380px) {
+      .flow-stepper { gap: 4px; padding-right: 4px; padding-left: 4px; }
+      .flow-stepper .flow-step-item { gap: 4px; }
+      .flow-step-number {
+        flex-basis: 30px; width: 30px; height: 30px; font-size: 17px;
+      }
+      .flow-step-label { font-size: 12.5px; }
+      .flow-stepper .flow-step-separator { min-width: 6px; margin: 0; }
+      .flow-stepper--compact { gap: 2px; padding-right: 2px; padding-left: 2px; }
+      .flow-stepper--compact .flow-step-item { flex: 0 0 auto; gap: 3px; }
+      .flow-stepper--compact .flow-step-number { flex-basis: 28px; width: 28px; height: 28px; font-size: 16px; }
+      .flow-stepper--compact .flow-step-label { font-size: 11.5px; }
+      .flow-stepper--compact .flow-step-label-full { display: none; }
+      .flow-stepper--compact .flow-step-label-short { display: inline; }
+      .flow-stepper--compact .flow-step-separator { min-width: 4px; }
+    }
+    @media (max-width: 340px) {
+      .flow-stepper { gap: 2px; padding-right: 2px; padding-left: 2px; }
+      .flow-stepper .flow-step-item { gap: 3px; }
+      .flow-step-number { flex-basis: 28px; width: 28px; height: 28px; font-size: 16px; }
+      .flow-step-label { font-size: 11.5px; }
+      .flow-stepper .flow-step-separator { min-width: 4px; }
+    }
     .map-station-pin { width: 44px; height: 44px; display: flex; align-items: flex-end; justify-content: center; }
     @media (max-width: 380px) { .weekday-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
     :root[data-theme="dark"] .home-screen { background-color: #101C1E; background-image: radial-gradient(ellipse at 88% 21%, rgba(10, 89, 80, .35) 0 17%, transparent 17.5%), linear-gradient(145deg, #152326, #101A1C); }
@@ -3268,21 +3378,23 @@
 
     function screen18() {
       return `
-        <div class="screen pt-[66px] px-5 pb-8 justify-between">
-          <div class="space-y-5">
-            <div class="w-14 h-14 rounded-[18px] bg-teal text-white flex items-center justify-center shadow-sm">${I('bolt', 'w-7 h-7', 2.2)}</div>
-            <div class="space-y-2">
-              <div class="eyebrow text-teal">VoltIndia · Interactive demo</div>
-              <h1 class="font-display text-[27px] leading-tight font-bold tracking-tight text-label">Welcome to a simpler EV day.</h1>
-              <p class="text-[13px] leading-relaxed text-label2">Explore sample vehicles, charging stations, and roadside-service flows.</p>
-            </div>
+        <div class="screen welcome-screen">
+          <div class="welcome-hero" aria-hidden="true">
+            <img class="welcome-hero-image" src="splash-charging-hero.png" alt="" fetchpriority="high">
+            <svg class="welcome-hero-wave" viewBox="0 0 768 220" preserveAspectRatio="none" aria-hidden="true">
+              <path d="M0 128C90 165 184 214 306 204C462 200 636 55 768 0V220H0Z" fill="#FFFFFF"/>
+            </svg>
           </div>
-          <div class="space-y-3">
-            <button onclick="visitDemo()" class="btn w-full min-h-[56px]">
-              ${I('grid', 'w-4 h-4')} Visit demo
+
+          <div class="welcome-content">
+            <h1 class="welcome-title">Welcome to a simpler EV day.</h1>
+            <p class="welcome-copy">Explore charging stations, EV services, and roadside support.</p>
+            <button onclick="visitDemo()" aria-describedby="welcome-demo-disclosure" class="welcome-visit-button press">
+              ${I('grid', 'w-6 h-6', 1.8)}<span>Visit demo</span>
             </button>
           </div>
-          <p class="text-center text-[10.5px] leading-relaxed text-label3">Demo only: sample data is used. No payment or service request is sent.</p>
+
+          <p id="welcome-demo-disclosure" class="sr-only">Demo only: sample data is used. No payment or service request is sent.</p>
         </div>
       `;
     }
@@ -3486,8 +3598,10 @@
     function renderStepBar(step, labels) {
       const stepItems = (labels && labels.length ? labels : ['Location', 'Charger', 'Time & pay'])
         .map((label, index) => ({ num: index + 1, label }));
+      const compact = stepItems.some(item => item.label.length > 9);
+      const shortLabels = { 'Issue & truck': 'Issue', 'Time & pay': 'Time' };
       return `
-      <div class="flow-stepper flex items-center justify-center gap-1.5 py-1 px-1 select-none" role="group" aria-label="${state.screen === '02' ? 'Charging booking steps' : 'Checkout steps'}">
+      <div class="flow-stepper ${compact ? 'flow-stepper--compact' : ''}" role="group" aria-label="${state.screen === '02' ? 'Charging booking steps' : 'Checkout steps'}">
         ${stepItems.map((item, idx) => {
           const sNum = item.num;
           const active = step === sNum;
@@ -3496,21 +3610,11 @@
           const isLast = idx === stepItems.length - 1;
 
           return `
-          <button ${locked ? 'disabled' : ''} ${active ? 'aria-current="step"' : ''} aria-label="Step ${sNum}: ${item.label}" onclick="flowJumpToStep('${state.screen}', ${sNum})" class="flow-step-item flex items-center gap-1.5 py-1.5 pl-1.5 pr-3.5 rounded-full transition-all shrink-0 select-none press ${locked ? 'opacity-50 cursor-not-allowed' : ''} ${
-            active 
-              ? 'bg-teal text-invtext shadow-xs font-bold' 
-              : done 
-                ? 'bg-teal-soft text-teal font-semibold' 
-                : 'text-label2 font-medium'
-          }">
-            <span class="w-5 h-5 rounded-full flex items-center justify-center shrink-0 ${
-              active ? 'bg-surface text-teal font-extrabold text-[11px]' : done ? 'bg-teal text-invtext font-extrabold text-[11px]' : 'bg-surface border border-line text-label2 font-bold text-[10.5px]'
-            }">
-              ${done ? '✓' : sNum}
-            </span>
-            <span class="flow-step-label text-[11.5px] truncate">${item.label}</span>
+          <button ${locked ? 'disabled' : ''} ${active ? 'aria-current="step"' : ''} data-complete="${done}" aria-label="Step ${sNum}: ${item.label}" onclick="flowJumpToStep('${state.screen}', ${sNum})" class="flow-step-item press ${locked ? 'cursor-not-allowed' : ''}">
+            <span class="flow-step-number">${done ? '✓' : sNum}</span>
+            <span class="flow-step-label"><span class="flow-step-label-full">${item.label}</span><span class="flow-step-label-short" aria-hidden="true">${shortLabels[item.label] || item.label}</span></span>
           </button>
-          ${!isLast ? `<span class="flow-step-separator w-5 h-[1.5px] ${step > sNum ? 'bg-teal' : 'bg-fill2'} shrink-0"></span>` : ''}
+          ${!isLast ? `<span class="flow-step-separator ${done ? 'is-complete' : ''}" aria-hidden="true"></span>` : ''}
           `;
         }).join('')}
       </div>`;
@@ -4160,7 +4264,7 @@ function screen02() {
 
           </div>
           <div class="charge-address-dock">
-            <div class="bg-surface/98 backdrop-blur-md rounded-[26px] p-2.5 shadow-xl border border-line flex items-center justify-between gap-2">
+            <div class="charge-address-dock-card rounded-[26px] p-2.5 shadow-xl border border-line flex items-center justify-between gap-2">
               <div class="flex items-center gap-2 min-w-0">
                 <span class="w-8 h-8 rounded-full border border-teal/30 bg-teal-soft/40 text-teal flex items-center justify-center shrink-0">
                   ${I('pin', 'w-4 h-4 text-teal', 2)}
@@ -5192,8 +5296,8 @@ function screen02() {
             </section>
             <section class="space-y-2.5">
               <div class="px-0.5">
-                <h2 class="text-[14px] font-bold text-label">Past History</h2>
-                <p class="text-[10.5px] text-label2 mt-0.5">Completed charge tests</p>
+                <h2 class="text-[14px] font-bold text-label">History</h2>
+                <p class="text-[10.5px] text-label2 mt-0.5">Previous charge details</p>
               </div>
               ${completed.length ? `<div class="space-y-2.5">${completed.map(request => `
                 <article class="card p-3.5 space-y-2.5">
@@ -5325,11 +5429,11 @@ function screen02() {
         ` : ''}
 
         ${recent ? `
-          <!-- Past History -->
+          <!-- History -->
           <div class="space-y-2.5">
             <div>
-              <h2 class="font-display text-[16px] font-bold tracking-tight">Past History</h2>
-              <p class="text-[11px] text-label2">Completed Requests</p>
+              <h2 class="font-display text-[16px] font-bold tracking-tight">History</h2>
+              <p class="text-[11px] text-label2">Previous charge details</p>
             </div>
 
             <div class="card p-3.5 space-y-2.5">
@@ -5364,34 +5468,6 @@ function screen02() {
               </div>
             </div>
 
-            <div class="card p-3.5 space-y-2.5">
-              <div class="flex items-start gap-3">
-                <span class="w-10 h-10 rounded-full bg-teal-soft text-teal flex items-center justify-center shrink-0">${I('plug', 'w-5 h-5')}</span>
-                <div class="min-w-0 flex-1">
-                  <div class="text-[13px] font-bold text-label flex items-center gap-1"><span class="text-[#E5A93B]">⚡</span> Station Charge • Kakkanad, Kochi</div>
-                  <div class="text-[10.5px] text-label2 mt-0.5">08 Nov 2026 • Kakkanad Station</div>
-                </div>
-              </div>
-
-              <div class="flex items-center justify-between">
-                <span class="text-[11px] text-label2 flex items-center gap-1.5">${esc(c.short)} ${evPlate(esc(c.plate), 'sm')}</span>
-                <span class="font-display text-[15px] font-bold text-label num">₹291.20</span>
-              </div>
-
-              <div class="flex items-center gap-1.5">
-                <span class="chip !py-1 !px-2.5 !text-[10.5px] num">${I('bolt', 'w-3 h-3')} 18.2 kWh</span>
-                <span class="chip !py-1 !px-2.5 !text-[10.5px] num">${I('clock', 'w-3 h-3')} 45 mins</span>
-              </div>
-
-              <div class="hair"></div>
-
-              <div class="flex items-center justify-between">
-                <span class="chip !py-1 !px-2.5 !text-[10.5px]">Completed ✓</span>
-                <button onclick="openReceiptSheet('Station Charge • Kakkanad', '08 Nov 2026 • Kakkanad Station, Kochi', '18.2 kWh', '45 mins', '₹291.20')" class="min-h-[44px] px-3 py-1 rounded-full bg-fill text-label text-[11px] font-semibold flex items-center gap-1 press">
-                  ${I('receipt', 'w-3.5 h-3.5 text-label2')} Receipt
-                </button>
-              </div>
-            </div>
           </div>
         ` : `
           <div class="card p-4 text-center space-y-2">
