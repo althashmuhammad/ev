@@ -2,16 +2,17 @@
 
 ## Method and scope
 
-Viewport simulation covered the 13 primary screens and major workflow/map states. The 15 viewport sizes below were used in the browser. Across 330 screen/step-by-viewport combinations, checks found no horizontal overflow, unnamed active buttons, or active targets below 44 CSS px. This is browser emulation only; no physical phones/tablets or operating-system accessibility services were used.
+The original viewport simulation covered the 13 primary screens and major workflow/map states. The 16 viewport sizes below were used in the browser. Across 332 screen/step-by-viewport combinations, checks found no horizontal overflow, unnamed active buttons, or active targets below 44 CSS px. After adding routes 14–20, the welcome, guest vehicle setup, Kochi test-location, More, catalog, cart, and confirmation pages were spot-checked at 320x640 with no horizontal overflow after transitions settled. The clean customer-test Home, More, charging Address/Setup/Arrival steps, and the demo emergency battery card were also checked at 320x640 after transitions settled; no horizontal overflow was detected. This is browser emulation only; no physical phones/tablets or operating-system accessibility services were used.
 
 ## Viewport matrix
 
 | Viewport | Target | Screen/step coverage | Overflow | Layout/touch result | Representative screenshot |
 |---|---|---|---|---|---|
-| 320x640 | Small mobile | All primary routes and sampled steps | None detected | Pass; content scrolls within viewport; active targets >=44px | [Home](screenshots/after/Home-320x640.png) |
+| 320x640 | Small mobile | Original primary routes and sampled steps; routes 14–19 and guest charging flow spot-checked after the matrix | None detected after transitions settled | Pass; content scrolls within viewport; More and shop pages scroll vertically; active targets >=44px in original sweep | [Home](screenshots/after/Home-320x640.png) |
+| 320x700 | Small mobile | Charging setup step | None detected | Pass; stepper targets 48px, radio targets >=51px, price/payment reachable by scrolling | — |
 | 360x800 | Mobile | Same | None detected | Pass | [Home](screenshots/after/Home-360x800.png) |
 | 375x812 | Mobile | Same | None detected | Pass | [Home](screenshots/after/Home-375x812.png) |
-| 390x844 | Mobile/reference | Same | None detected | Pass | [Current Home without Dynamic Island](screenshots/after/Audit-Home-No-Dynamic-Island-390x844.png) |
+| 390x844 | Mobile/reference | Same | None detected | Pass | [Current Home](screenshots/after/Audit-Home-Carwash-Map-390x844.png) |
 | 414x896 | Mobile | Same | None detected | Pass | [Home](screenshots/after/Home-414x896.png) |
 | 430x932 | Large mobile | Same | None detected | Pass | [Home](screenshots/after/Home-430x932.png) |
 | 480x900 | Large mobile | Same | None detected | Pass | [Home](screenshots/after/Home-480x900.png) |
@@ -30,7 +31,7 @@ Each screen below was included in the viewport sweep. The `390x844` capture is r
 
 | Screen/state | Layout result | Screenshot |
 |---|---|---|
-| Home | Pass | [Home](screenshots/after/Home-390x844.png) |
+| Home | Pass | [Home](screenshots/after/Audit-Home-Carwash-Map-390x844.png) |
 | Quick Charge | Pass | [Charge](screenshots/after/Charge-390x844.png) |
 | Live Tracking | Pass | [Tracking](screenshots/after/Tracking-390x844.png) |
 | Stations | Pass | [Stations](screenshots/after/Stations-390x844.png) |
@@ -45,7 +46,7 @@ Each screen below was included in the viewport sweep. The `390x844` capture is r
 | Carwash | Pass | [Carwash](screenshots/after/Carwash-390x844.png) |
 | Wallet subview | Pass | [Wallet](screenshots/after/Wallet-390x844.png) |
 | Home Setup subview | Pass | [Home Setup](screenshots/after/Home-Setup-390x844.png) |
-| Theme presets | Pass | [Appearance](screenshots/after/Validated-Theme-mono-dark-Home-390x844.png) and other `Validated-Theme-*` captures |
+| Theme presets | Pass | [Pure Black map](screenshots/after/Audit-Home-Map-PureBlack-390x844.png); other `Validated-Theme-*` captures |
 
 ## Accessibility checks and limitations
 
@@ -54,4 +55,4 @@ Each screen below was included in the viewport sweep. The `390x844` capture is r
 - Global reduced-motion rules shorten animation/transition durations, but the complete animation system was not rechecked under reduced-motion preference in this audit.
 - Contrast ratios across every theme/state, keyboard-only coverage, screen-reader announcements, zoom/reflow, and physical safe-area behavior were not formally tested. No WCAG 2.2 AA compliance claim is made.
 - Viewport simulation cannot substitute for physical device, mobile keyboard, or assistive-technology testing.
-- The final status-bar-only change is captured at 390x844 above. Other viewport-specific screenshots predate that cosmetic change; it did not alter screen dimensions or layout geometry.
+- The Home map's background layers and route were checked in all nine themes; its theme palette changes without suppressing the map. The final status-bar, map, and Car Wash artwork changes are captured at 390x844 above. Other viewport-specific screenshots predate those visual changes; they did not alter screen dimensions or layout geometry.

@@ -4,23 +4,24 @@
 
 | Metric | Result |
 |---|---:|
-| Executed browser checks | 548 |
-| Passed | 548 |
+| Original regression matrix | 553 passed |
+| Follow-up checks for More/shop, guest entry, Kochi test location, completed-only Activity, and low-battery alert | Passed; targeted checks are not added to the historical matrix count |
 | Failed product checks | 0 |
 | Blocked | See blocked categories below; no live integration tests could start |
 | Not run | Formal build, automated suites, and production security/performance/accessibility tooling |
 
-The executed count is 20 scenario-based workflow groups + 330 responsive screen/step/viewport combinations + 198 theme/screen-state renders. These are browser checks, not a formal unit/integration test suite.
+The original 553-check count is 23 scenario-based workflow groups + 332 responsive screen/step/viewport combinations + 198 theme/screen-state renders. More/shop, guest onboarding, clean customer charging, local schedule/cancel, and demo isolation received targeted follow-ups; the full matrix was not rerun. These are browser checks, not a formal unit/integration test suite.
 
 ## Results by category
 
 | Category | Result | Evidence/notes |
 |---|---|---|
-| Focused workflows and regressions | 20/20 groups passed | See [USER_WORKFLOW_TESTING.md](USER_WORKFLOW_TESTING.md). Includes scheduled-vs-emergency routing, wallet refund, zero range, unread badge, plate formatting, service flows, notification conversation, theme, map back, vehicle validation, bottom navigation, and the final status-bar change. |
-| Responsive/accessibility smoke checks | 330 combinations passed | No horizontal overflow, unnamed active buttons, or active targets below 44 CSS px in tested combinations. See [RESPONSIVE_TESTING.md](RESPONSIVE_TESTING.md). |
+| Focused workflows and regressions | Original 23 groups passed; WF-23–WF-30 follow-ups passed | See [USER_WORKFLOW_TESTING.md](USER_WORKFLOW_TESTING.md). Follow-ups cover the local shop/cart/demo order, simplified guest vehicle and Kochi location steps, no-mock charge flow, completed-only Activity history, local scheduling/cancellation, weekly-day validation, demo isolation, and the staged low-battery alert. |
+| Responsive/accessibility smoke checks | 332 original combinations passed; guest Home, More, charge steps, Kochi location, and emergency card spot-checked at 320x640 | No horizontal overflow after transitions settled. See [RESPONSIVE_TESTING.md](RESPONSIVE_TESTING.md). |
 | Theme rendering | 198 combinations passed | Nine presets rendered without detected rendering/overflow failures. |
-| Browser console | No app JavaScript errors observed in exercised flows | Tailwind CDN production warning was observed. |
-| Screenshot evidence | Present | 248 PNGs in `reports/screenshots/` at report generation, including before/after route captures and responsive/theme sets. |
+| Home map/theme regression | 9/9 presets passed | Map background and route remained rendered for every theme; supplied Car Wash image loaded and its action opened screen 13. |
+| Browser console and script syntax | No app JavaScript errors observed; all four inline scripts parsed successfully | Tailwind CDN production warning was observed. |
+| Screenshot evidence | Present | 251 PNGs in `reports/screenshots/` at report generation, including before/after route captures and responsive/theme sets. |
 
 ## Build and automated tests
 
@@ -49,7 +50,17 @@ The executed count is 20 scenario-based workflow groups + 330 responsive screen/
 - Car Wash, Towing, Fuel, Jump Start, station search/reservation, notification chat/reply/view-update, theme selection, map expand/back, and Add Vehicle validation passed in browser checks.
 - Account navigation was verified at 390x844 with pointer hit testing; the browser was restored to Home after validation.
 - The Dynamic Island/camera pill is absent at 390x844; time and system indicators remain, and Home/Account navigation still works.
+- All nine themes retain the Home map layers; the supplied Car Wash artwork loads only in the Home shortcut, which still opens the Carwash flow.
+- Charging now follows Address > Setup (plug, charging power, energy/price, and payment) > Arrival. Now reached tracking; Schedule and Weekly appeared in Activity; Weekly submission without a selected day was blocked.
+- Demo More exposes Car Accessories and Car Care & Cleaning Supplies through the local shop flow; Customer Test gates the catalog because live inventory is not connected. Roadside Breakdown Assistance reuses the existing towing/recovery flow.
+- Customer test starts without a seeded request, location, notification, wallet, saved profile, vehicle telemetry, or preselected weekly days. Only Tata Nexon EV can be configured.
+- The guest charge flow uses an entered address, local connector/power/energy selections, and a local arrival preference. After submission it displays a generated test ID/status and clearly labeled ETA/charge-duration estimates; no tariff, payment, charger, vehicle telemetry, dispatch, or backend is connected.
+- Guest schedule save/cancel and Weekly empty-day validation passed. The separate Visit demo path retained its seeded Van En Route card and original demo values.
+- Guest onboarding now continues from the fixed Tata Nexon EV selection to an illustrative Kochi test-area screen. Continuing applies the broad Kochi test label to Home and the editable local charge address; no GPS fix, station availability, or provider service is implied.
+- A fresh guest request was created and completed in the browser. Activity showed no upcoming request and listed only that completed local test in Past History; no sample history or station entries appeared.
+- Demo Home now stages a five-second low-battery story: the readout animates from 24% to 15%, then the charge card becomes an emergency red gradient with a one-time subtle pop/shake and updated ~49 km range. The guest test remains without battery telemetry.
+- Guest Home, More, and Address/Setup/Arrival steps were checked at 320x640 after transitions settled with no horizontal overflow.
 
 ## Final assessment
 
-No failing product check remains in the exercised prototype scope. This is not a release sign-off: production build, backend/API, authentication, payment, security, performance, and formal accessibility validation are absent or blocked. The application must remain classified as a prototype until those dependencies and checks are supplied.
+No failing product check remains in the exercised prototype scope. The customer flow is a local functional test only, not a real charging service. This is not a release sign-off: production build, backend/API, authentication, payment, security, performance, and formal accessibility validation are absent or blocked. The application must remain classified as a prototype until those dependencies and checks are supplied.

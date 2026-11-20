@@ -2,42 +2,42 @@
 
 ## Executive summary
 
-The VoltIndia prototype was audited across its 13 primary screen routes, major service flows, themes, and responsive states. Six reproducible frontend defects were corrected and retested. The requested decorative Dynamic Island/camera pill was also removed from the status bar. The exercised browser checks passed, with no application JavaScript errors observed.
+The original VoltIndia audit covered its 13 primary screen routes, major service flows, themes, and responsive states. Six reproducible frontend defects were corrected and retested. Subsequent updates added six full-page routes for More, the local shop/cart/confirmation, welcome choices, and guest vehicle setup. The entry and shop flows received targeted functional and 320x640 smoke checks; the earlier full matrices were not rerun.
 
-This is a standalone UI prototype, not a production-ready EV service. It has no authentication, backend, database, API client, real payment processing, live GPS/telemetry, or automated build/test setup. Orders, wallet actions, reservations, chat, tracking, and receipts are simulated. Production readiness is therefore **blocked** until real service contracts, security controls, persistence, and deployment validation exist.
+This is a standalone UI prototype, not a production-ready EV service. It has no credential-based authentication, backend, database, API client, real payment processing, live GPS/telemetry, or automated build/test setup. The welcome page offers a local guest vehicle setup or a direct demo visit; neither creates an account. Orders, wallet actions, reservations, chat, tracking, and receipts remain simulated. Production readiness is therefore **blocked** until real service contracts, security controls, persistence, and deployment validation exist.
 
 ## Project inventory
 
 | Area | Finding |
 |---|---|
 | Frontend | One standalone HTML application: [`index.html`](../index.html). CSS and JavaScript are inline. No framework or framework version is declared. |
-| Screens and routing | Thirteen renderer routes (`01`-`13`) with in-memory navigation/history. Source inventory: [`SCREENS`](../index.html#L1546) and [`RENDERERS`](../index.html#L5044). |
-| Screens | Home, Quick Charge, Live Tracking, Stations, Station Details, Jump Start, Towing, Activity, My Vehicles, Add Vehicle, Account, Fuel & Gas, and Carwash. Wallet and Appearance are Account subviews; map-only mode is a Home state. |
+| Screens and routing | Nineteen renderer routes (`01`-`19`) with in-memory navigation/history. Routes `18`-`19` provide welcome choices and guest vehicle setup; `14`-`17` provide More and local shop pages. |
+| Screens | The 13 original routes plus More Services, Vehicle Shop, Shopping Cart, Order Confirmation, Welcome, and Guest Vehicle Setup. Wallet and Appearance are Account subviews; map-only mode is a Home state. |
 | Styling/assets | Inline CSS, utility classes from the Tailwind CDN, Google Fonts, and local image assets. Browser output includes Tailwind's production-CDN warning. |
-| State/persistence | Service, vehicle, profile, order, and wallet state is mock/in-memory. Theme and custom-theme preferences use `localStorage`; no account or service data is persisted to a server. |
+| State/persistence | Service, guest vehicle, profile, order, and wallet state is mock/in-memory. Theme and custom-theme preferences use `localStorage`; no account or service data is persisted to a server. |
 | Backend/database | No API calls/client, ASP.NET project, SQL schema, or database integration was found. |
 | Build/tests | No `package.json`, project/solution file, SQL files, or test files were found. There is no project build or formal automated test command to run. |
 
 ## Screens and workflows inspected
 
-All 13 primary routes and the available Wallet, Appearance, map-only, modal, and checkout states were inspected. Browser flow checks covered charging (now and scheduled), tracking, vehicle validation, stations/reservations, roadside and convenience services, notifications, theme selection, map expansion/back, and wallet cancellation.
+The original 13 primary routes and the available Wallet, Appearance, map-only, modal, and checkout states were inspected. The new welcome/guest setup, More, shop, cart, and confirmation routes received targeted browser checks, including validation, demo checkout, and narrow-screen layout. Earlier broader matrices cover charging, tracking, vehicle validation, stations/reservations, roadside and convenience services, notifications, themes, map expansion/back, and wallet cancellation.
 
-Authentication screens and flows (registration, login, reset, logout, and session expiry) do not exist and were not simulated as if implemented. See [USER_WORKFLOW_TESTING.md](USER_WORKFLOW_TESTING.md).
+Credential-based authentication screens and flows (registration, email/password login, reset, logout, and session expiry) are not implemented. The guest entry is explicitly local-only and is not presented as production authentication. See [USER_WORKFLOW_TESTING.md](USER_WORKFLOW_TESTING.md).
 
 ## Findings by area
 
 ### UI/UX
 
 - The existing teal design and nine theme presets remain present: Existing Light, Existing Dark, Pure Black + White, Pure White + Black, Neon, Ocean Blue, Forest Green, Graphite, and Custom. The Appearance menu remains under Account.
-- The screen set has consistent navigation, card, and theme behavior in the exercised flows. The map can expand to a map-only state and return to Home.
-- The mock Dynamic Island/camera pill was removed; the status bar retains the time and system indicators.
+- The screen set has consistent navigation, card, and theme behavior in the exercised flows. The map can expand to a map-only state and return to Home; its map layers remain visible after selecting any of the nine themes.
+- The mock Dynamic Island/camera pill was removed; the status bar retains the time and system indicators. The supplied transparent Car Wash image is used only by the Home shortcut, and its original action remains intact.
 - Most UI is backed by fixed demo values. Labels such as current GPS, driver, charging status, and station availability must not be presented as live service data in production.
 
 ### Functional and business logic
 
 Six defects were fixed: scheduled charging routing, wallet refund method capture, zero-battery range, unread notification badge, Bharat-series plate normalization, and theme-menu focus/error handling. The focused fixes are listed in the [issue register](ISSUE_REGISTER.md).
 
-Charging price, ETA, service slots, order status, station availability, and wallet transactions are locally calculated or hard-coded. The charging quote code applies a minimum energy charge and call-out fee in [`chargeQuote`](../index.html#L3283); there is no authoritative backend contract against which to validate those rules. The labels in `SLOTS` are static, so service hours, timezone rules, and availability need product/API confirmation before live booking.
+Charging price, ETA, service slots, order status, station availability, and wallet transactions are locally calculated or hard-coded. The charging quote code applies a minimum energy charge and call-out fee in [`chargeQuote`](../index.html#L3278); there is no authoritative backend contract against which to validate those rules. The labels in `SLOTS` are static, so service hours, timezone rules, and availability need product/API confirmation before live booking.
 
 ### API and integration
 
@@ -45,7 +45,9 @@ No HTTP API calls or API client were found. There are no request/response DTOs, 
 
 ### Responsive behavior
 
-Browser viewport simulation covered 15 sizes from 320x640 through 1920x1080. The recorded 330 screen/step-by-viewport combinations showed no horizontal overflow, unnamed active buttons, or active touch targets below 44 CSS px. This is viewport simulation, not physical-device testing. Details and screenshot references are in [RESPONSIVE_TESTING.md](RESPONSIVE_TESTING.md).
+Browser viewport simulation covered 16 sizes from 320x640 through 1920x1080. The recorded 332 screen/step-by-viewport combinations showed no horizontal overflow, unnamed active buttons, or active touch targets below 44 CSS px. This is viewport simulation, not physical-device testing. Details and screenshot references are in [RESPONSIVE_TESTING.md](RESPONSIVE_TESTING.md).
+
+An additional theme regression check confirmed the Home map background, map area, and route remain rendered in all nine presets. The supplied Car Wash image loaded and its Home shortcut continued to open the Carwash flow.
 
 ### Accessibility
 
@@ -56,7 +58,7 @@ Browser viewport simulation covered 15 sizes from 320x640 through 1920x1080. The
 ### Security and reliability
 
 - No credentials, API secrets, authentication state, or server endpoints were found in this prototype.
-- User-entered text is escaped by the shared `esc` helper before HTML rendering ([source](../index.html#L1350)). The app also uses inline event handlers and `innerHTML`, so a strict production Content Security Policy would require additional work.
+- User-entered text is escaped by the shared `esc` helper before HTML rendering ([source](../index.html#L1345)). The app also uses inline event handlers and `innerHTML`, so a strict production Content Security Policy would require additional work.
 - There is no server-side authentication/authorization, input validation, rate limiting, payment protection, or network retry behavior to inspect. No penetration test or automated security scan was run.
 - Theme storage failures now log an explicit error and show user feedback. Service-operation failures cannot be tested without real services.
 
@@ -73,6 +75,8 @@ No Lighthouse, bundle-size, network timing, or device profiling was available. T
 5. Valid Bharat-series registration values are normalized on save (for example, `22BH1234AB` to `22 BH 1234 AB`).
 6. Appearance navigation restores focus, and theme/fullscreen storage or browser failures are surfaced through logging/feedback.
 7. Removed the decorative Dynamic Island/camera pill while retaining the time and signal/Wi-Fi/battery indicators.
+8. Replaced only the Home Car Wash shortcut artwork with the supplied transparent image; the shortcut still opens Carwash.
+9. Removed the non-default-theme rule that suppressed the Home map background image. The map now uses the selected theme's map palette without disappearing.
 
 ## Remaining release blockers
 
@@ -87,10 +91,11 @@ The prototype's exercised regression and viewport checks pass. No P0 functional 
 
 ## Evidence
 
-The screenshot collection contains 248 PNG files at report generation. Representative evidence includes:
+The screenshot collection contains 251 PNG files at report generation. Representative evidence includes:
 
 - Scheduled-routing regression: [before](screenshots/before/Charge-Schedule-routing-390x844.png) and [after](screenshots/after/Charge-Schedule-Activity-390x844.png).
 - Emergency charging tracking: [after](screenshots/after/Charge-Emergency-Tracking-390x844.png).
 - Home baseline and zero-range state: [Home](screenshots/after/Audit-Home-390x844.png), [zero range](screenshots/after/Audit-Battery-Zero-390x844.png).
 - Final status bar without Dynamic Island: [Home, 390x844](screenshots/after/Audit-Home-No-Dynamic-Island-390x844.png).
+- Updated Home map and supplied Car Wash artwork: [Home](screenshots/after/Audit-Home-Carwash-Map-390x844.png), [Car Wash shortcut](screenshots/after/Audit-Car-Wash-Shortcut-390x844.png), [Pure Black map](screenshots/after/Audit-Home-Map-PureBlack-390x844.png).
 - Theme menu: [Account](screenshots/after/Audit-Account-390x844.png), [Appearance](screenshots/after/Audit-Appearance-390x844.png).

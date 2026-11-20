@@ -2,11 +2,11 @@
 
 ## Status
 
-Implemented in the existing application at `index.html`; no demo screen or backend changes were added. The shared visual foundation is in place and has been validated across all 13 screen renderers and all nine themes. Some page-specific Tailwind utility classes remain; see section 12.
+Implemented in the existing application at `index.html`; the original design-system work changed no backend behavior. That visual pass covered 13 screen renderers and all nine themes. The app has since grown to 19 renderers with More/shop and welcome/guest-setup pages; these newer routes reuse the shared tokens and received targeted flow/responsive checks, not the original full theme matrix. Some page-specific Tailwind utility classes remain; see section 12.
 
 ## 1. Screens inspected
 
-The app is a standalone HTML prototype with inline CSS/JavaScript, Tailwind loaded from its CDN, and 13 screen renderers:
+The app is a standalone HTML prototype with inline CSS/JavaScript, Tailwind loaded from its CDN, and 13 original screen renderers (six additional full-page routes were added afterward):
 
 | ID | Screen | Validated capture |
 |---|---|---|
@@ -56,7 +56,7 @@ The existing SVG helper remains the single line-icon source. Its default stroke 
 
 ## 7. Screens updated
 
-Shared styling applies across all 13 renderers, including account/wallet, forms, service flows, maps, tracking, activity, vehicle management, and charging. The Home map can expand into a map-only view; Back restores the header, cards, and navigation. The Home cards remain “Van En Route” and “Charge my EV”; the Car Wash shortcut uses the supplied artwork, and the vehicle pill uses the Nexon front-view image. The mock Dynamic Island/camera pill was removed from the status bar while retaining the time and system indicators. The bottom navigation is Home, Activity, My Vehicles, and Account.
+Shared styling applies across all 13 renderers, including account/wallet, forms, service flows, maps, tracking, activity, vehicle management, and charging. The Home map can expand into a map-only view; Back restores the header, cards, and navigation. Its map background layers remain visible across all nine themes. The Home cards remain “Van En Route” and “Charge my EV”; the Car Wash shortcut uses the supplied artwork in `service-carwash-home-icon.png`, and the vehicle pill uses the Nexon front-view image. The mock Dynamic Island/camera pill was removed from the status bar while retaining the time and system indicators. The bottom navigation is Home, Activity, My Vehicles, and Account.
 
 The shared checkout stepper and location picker were made theme-token driven. Existing notification selection continues into the support-chat overlay with message input, call action, and a “View update” control.
 
@@ -111,6 +111,6 @@ Five baseline screenshots were available: [Home](./screenshots/before/Home-390x8
 
 The `Validated-` captures in `screenshots/after/` were generated with actual viewport emulation. Earlier unprefixed captures in that directory came from a fixed-size browser session and are excluded from the results above.
 
-The final status bar without the Dynamic Island is captured in [Audit-Home-No-Dynamic-Island-390x844.png](./screenshots/after/Audit-Home-No-Dynamic-Island-390x844.png); other earlier captures predate that cosmetic change.
+Final Home evidence: [status bar without Dynamic Island](./screenshots/after/Audit-Home-No-Dynamic-Island-390x844.png), [map layers in Pure Black](./screenshots/after/Audit-Home-Map-PureBlack-390x844.png), and the [supplied Car Wash shortcut](./screenshots/after/Audit-Car-Wash-Shortcut-390x844.png). Earlier captures predate these visual updates and remain representative of the unchanged screen geometry.
 
 The project has no package manifest or automated test runner, so validation used the local browser. The existing Tailwind CDN emits its standard production-use warning. The app still contains page-specific utility classes; not every one-off control/card has been migrated to a named variant, to avoid broad markup changes that could disturb existing behavior.

@@ -550,6 +550,7 @@
         linear-gradient(114deg, transparent 69%, rgba(255,255,255,.3) 69.4% 70.4%, transparent 70.9%),
         linear-gradient(145deg, #EEF8F6, #E5F3F0);
     }
+    .home-screen.home-customer-test { background-color: var(--page); background-image: none; }
     .home-screen::after { display: none; }
     .home-header {
       position: relative; z-index: 2; flex: none;
@@ -668,7 +669,7 @@
     .home-shortcut-icon--image { overflow: hidden; background: var(--surface); }
     .home-shortcut-image { width: 100%; height: 100%; object-fit: cover; border-radius: inherit; }
     .home-shortcut-label { font-size: 10.5px; line-height: 1.15; font-weight: 650; color: var(--label); white-space: nowrap; }
-    :root[data-theme]:not([data-theme="light"]):not([data-theme="dark"]) .home-screen { background: var(--map-bg); background-image: none; }
+    .flow-stepper .flow-step-item { min-height: 44px; min-width: 0; }
     :root[data-theme]:not([data-theme="light"]):not([data-theme="dark"]) .home-service-sheet { background: var(--surface); border-color: var(--line); }
     :root[data-theme]:not([data-theme="light"]):not([data-theme="dark"]) .home-service-card,
     :root[data-theme]:not([data-theme="light"]):not([data-theme="dark"]) .home-shortcut { background: var(--surface); border-color: var(--line); }
@@ -772,6 +773,56 @@
     :root[data-theme="dark"] .home-service-status, :root[data-theme="dark"] .home-service-detail { color: #A9BCBF; }
     :root[data-theme="dark"] .home-service-sheet { background: linear-gradient(180deg, #172326, #121C1F); }
     :root[data-theme="dark"] .home-shortcut { background: #172528; }
+    :root .home-service-card.home-service-card--emergency,
+    :root[data-theme="dark"] .home-service-card.home-service-card--emergency,
+    :root[data-theme]:not([data-theme="light"]):not([data-theme="dark"]) .home-service-card.home-service-card--emergency {
+      background: linear-gradient(125deg, #C53030 0%, #B42318 58%, #8E1B1B 100%);
+      border-color: rgba(142, 27, 27, .3);
+      box-shadow: 0 7px 18px rgba(153, 27, 27, .22);
+    }
+    :root .home-service-card.home-service-card--emergency::after,
+    :root[data-theme]:not([data-theme="light"]):not([data-theme="dark"]) .home-service-card.home-service-card--emergency::after {
+      background: radial-gradient(ellipse at 86% 20%, rgba(255, 255, 255, .22), transparent 58%);
+      opacity: .8;
+    }
+    :root .home-service-card.home-service-card--emergency .home-service-title,
+    :root .home-service-card.home-service-card--emergency .home-service-status,
+    :root .home-service-card.home-service-card--emergency .home-service-detail,
+    :root[data-theme="dark"] .home-service-card.home-service-card--emergency .home-service-title,
+    :root[data-theme="dark"] .home-service-card.home-service-card--emergency .home-service-status,
+    :root[data-theme="dark"] .home-service-card.home-service-card--emergency .home-service-detail,
+    :root[data-theme]:not([data-theme="light"]):not([data-theme="dark"]) .home-service-card.home-service-card--emergency .home-service-title,
+    :root[data-theme]:not([data-theme="light"]):not([data-theme="dark"]) .home-service-card.home-service-card--emergency .home-service-status,
+    :root[data-theme]:not([data-theme="light"]):not([data-theme="dark"]) .home-service-card.home-service-card--emergency .home-service-detail {
+      color: #FFFFFF;
+    }
+    :root .home-service-card.home-service-card--emergency .home-service-icon,
+    :root[data-theme="dark"] .home-service-card.home-service-card--emergency .home-service-icon,
+    :root[data-theme]:not([data-theme="light"]):not([data-theme="dark"]) .home-service-card.home-service-card--emergency .home-service-icon {
+      background: linear-gradient(145deg, #F87171, #B91C1C 78%);
+      border-color: rgba(255, 255, 255, .48);
+    }
+    :root .home-service-card.home-service-card--emergency .home-service-icon svg,
+    :root[data-theme="dark"] .home-service-card.home-service-card--emergency .home-service-icon svg,
+    :root[data-theme]:not([data-theme="light"]):not([data-theme="dark"]) .home-service-card.home-service-card--emergency .home-service-icon svg {
+      fill: #FFFFFF;
+    }
+    :root .home-service-card.home-service-card--emergency .home-charge-chevron,
+    :root[data-theme="dark"] .home-service-card.home-service-card--emergency .home-charge-chevron,
+    :root[data-theme]:not([data-theme="light"]):not([data-theme="dark"]) .home-service-card.home-service-card--emergency .home-charge-chevron {
+      background: rgba(255, 255, 255, .16);
+      color: #FFFFFF;
+      border-color: rgba(255, 255, 255, .3);
+      box-shadow: none;
+    }
+    @keyframes homeEmergencyAttention {
+      0% { transform: translateX(0) scale(.985); }
+      24% { transform: translateX(-1.5px) scale(1.01); }
+      48% { transform: translateX(1.5px) scale(1.015); }
+      72% { transform: translateX(-.75px) scale(1.005); }
+      100% { transform: translateX(0) scale(1); }
+    }
+    .home-service-card.home-emergency-arrival { animation: homeEmergencyAttention 680ms var(--motion-ease-out) both; }
     @media (max-height: 760px) {
       .home-header { padding-top: 50px; }
       .home-map-center { min-height: 118px; }
@@ -978,6 +1029,33 @@
         repeating-linear-gradient(90deg, var(--map-grid) 0 1px, transparent 1px 28px);
     }
     .map > * { position: relative; z-index: 1; }
+
+    .customer-map-frame { position: relative; isolation: isolate; overflow: hidden; background: #D8EAF4; }
+    .customer-map-backdrop {
+      position: absolute; inset: 0; overflow: hidden; border-radius: inherit;
+      background: #D8EAF4; pointer-events: none;
+    }
+    .customer-map-backdrop > svg { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+    .customer-map-marker {
+      position: absolute; left: 52%; top: 52%; transform: translate(-50%, -100%);
+      width: 38px; height: 38px; border: 2px solid #FFFFFF; border-radius: 50%;
+      background: linear-gradient(145deg, #0A8F86, #005C68); color: #FFFFFF;
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 4px 12px rgba(0, 62, 70, .28);
+    }
+    .customer-map-place {
+      position: absolute; left: calc(52% + 13px); top: calc(52% - 5px);
+      padding: 4px 8px; border: 1px solid rgba(0, 92, 104, .12); border-radius: 999px;
+      background: rgba(255, 255, 255, .92); color: #16373A;
+      font-size: 9px; font-weight: 750; line-height: 1.15; white-space: nowrap;
+      box-shadow: 0 2px 6px rgba(18, 54, 59, .12);
+    }
+    .customer-map-caption {
+      position: absolute; left: 10px; bottom: 10px; padding: 4px 8px; border-radius: 999px;
+      background: rgba(255, 255, 255, .88); color: #42575B;
+      font-size: 8.5px; font-weight: 650; letter-spacing: .01em;
+      box-shadow: 0 1px 5px rgba(18, 54, 59, .1);
+    }
 
     .teal-pin-pulse {
       position: relative; width: 42px; height: 42px; border-radius: 50%;
@@ -1282,6 +1360,7 @@
       home: '<path d="M3.5 10.5 12 3.5l8.5 7V20a1 1 0 0 1-1 1H15v-6H9v6H4.5a1 1 0 0 1-1-1z"/>',
       activity: '<rect x="4" y="3.5" width="16" height="17" rx="2.5"/><path d="M8 8h8M8 12h8M8 16h5"/>',
       car: '<path d="M5 15l1.6-5.2a2 2 0 0 1 1.9-1.4h7a2 2 0 0 1 1.9 1.4L19 15M4 15h16v3.5H4z"/><circle cx="7.5" cy="18.5" r=".6"/><circle cx="16.5" cy="18.5" r=".6"/>',
+      shoppingBag: '<path d="M5 8h14l1 13H4L5 8z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/>',
       wallet: '<rect x="3" y="6" width="18" height="13" rx="3"/><path d="M3 10h18M16 14.5h2"/>',
       phone: '<path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A15 15 0 0 1 3 6a2 2 0 0 1 2-2z"/>',
       phoneEnd: '<path d="M3.5 9.5c4.8-3.2 12.2-3.2 17 0l1.5 2.5-3.5 2-2.2-1.8c-2.8-.6-5.8-.6-8.6 0L5.5 14 2 12l1.5-2.5z"/>',
@@ -1416,8 +1495,10 @@
     }
 
     const state = {
-      screen: '01',
+      screen: '18',
+      entryMode: null,
       homeMapExpanded: false,
+      demoBatteryAlertAnimating: false,
       navDirection: 'tab',
       theme: document.documentElement.getAttribute('data-theme') || 'light',
       customTheme: loadCustomTheme(),
@@ -1469,6 +1550,10 @@
       fuelQty: 10,
       washPackage: 'Waterless Eco Foam Wash',
       washAddon: 'Interior Sanitization',
+      shopCategory: 'accessories',
+      shopCart: {},
+      shopOrderCount: 0,
+      lastShopOrder: null,
       // Unified 3-Page Flow Step Trackers & Payment Mode
       chargeStep: 1,
       fuelStep: 1,
@@ -1506,6 +1591,8 @@
         { id: 4, title: 'GST Receipt Ready', body: '₹612.50 invoice for 24.5 kWh session is ready to download.', time: 'Yesterday', unread: false, target: '08' }
       ],
       addErrors: {},
+      customerOrders: [],
+      customerOrderSeq: 0,
       activeOrder: {
         id: 'VI-4821',
         serviceType: 'EV Charging',
@@ -1552,24 +1639,121 @@
       { id: '10', shortTitle: 'Add Vehicle Form', tag: 'Setup', tabBar: false, t: '10 Add Vehicle — Custom EV Registration', d: 'Register a new EV with custom green HSRP plate, Indian connector type, and battery capacity.' },
       { id: '11', shortTitle: 'Account & Settings', tag: 'Tabs', tabBar: true, tabName: 'Account', t: '11 Account — Profile, Manage Wallet, Bank Accounts & Theme', d: 'Arjun Menon account with Manage Wallet, linked bank accounts, external wallets, VoltIndia Pro pass, and theme settings.' },
       { id: '12', shortTitle: 'Mobile Fuel & Gas', tag: 'Service', tabBar: false, t: '12 Mobile Fuel & Gas Station — Petrol, Diesel & CNG', d: 'Doorstep mobile fuel bowser delivery for Petrol, Diesel, and Gas/CNG with live tracking.' },
-      { id: '13', shortTitle: 'Mobile Carwash', tag: 'Service', tabBar: false, t: '13 Mobile Carwash — Doorstep EV Spa', d: 'Waterless eco-foam wash and pressure detailing safe for EV high-voltage ports.' }
+      { id: '13', shortTitle: 'Mobile Carwash', tag: 'Service', tabBar: false, t: '13 Mobile Carwash — Doorstep EV Spa', d: 'Waterless eco-foam wash and pressure detailing safe for EV high-voltage ports.' },
+      { id: '14', shortTitle: 'More Services', tag: 'Services', tabBar: false, t: '14 More Services — Roadside & Vehicle Care', d: 'Full-page directory for EV roadside, doorstep, accessory, and cleaning options.' },
+      { id: '15', shortTitle: 'Vehicle Shop', tag: 'Shop', tabBar: false, t: '15 Vehicle Shop — Accessories & Care', d: 'Browse demo car accessories and car-care products, add items to a local cart.' },
+      { id: '16', shortTitle: 'Shopping Cart', tag: 'Shop', tabBar: false, t: '16 Shopping Cart — Review Items', d: 'Review quantities and subtotal before placing a demo order.' },
+      { id: '17', shortTitle: 'Order Confirmation', tag: 'Shop', tabBar: false, t: '17 Order Confirmation — Demo Checkout', d: 'Confirmation for a local demo order; no payment or delivery request is sent.' },
+      { id: '18', shortTitle: 'Welcome', tag: 'Entry', tabBar: false, t: '18 Welcome — Customer Test or Demo Visit', d: 'Choose guest vehicle setup for customer testing or enter the existing prototype as a demo visitor.' },
+      { id: '19', shortTitle: 'Test Vehicle', tag: 'Entry', tabBar: false, t: '19 Guest Test Vehicle — Tata Nexon EV', d: 'Confirm the Tata Nexon EV for the local guest test.' },
+      { id: '20', shortTitle: 'Test Location', tag: 'Entry', tabBar: false, t: '20 Guest Test Location — Kochi', d: 'Choose the illustrative Kochi test area before entering the customer flow.' }
     ];
-    const MAP_SCREENS = ['01', '02', '03', '04'];
+    const MAP_SCREENS = ['01', '02', '03', '04', '20'];
 
     const car = () => state.cars[state.carIdx];
     const hub = () => HUBS[state.hubIdx];
     const set = (k, v) => { state[k] = v; render(); };
+    let demoBatteryCueTimer = null;
+    let demoBatteryTransitionRunning = false;
+    let demoBatteryCueCompleted = false;
+    let demoBatteryAnimationFrame = null;
+    let demoBatteryCueVehicle = null;
+    let demoBatteryAlertResetTimer = null;
+
+    function updateHomeBatteryReadout(soc, vehicle) {
+      const rangeKm = Math.round((soc / 100) * vehicle.batteryKwh * 8.1);
+      const percent = document.getElementById('home-battery-percent');
+      const range = document.getElementById('home-battery-range');
+      const fill = document.getElementById('home-battery-level');
+      const button = document.getElementById('home-battery-button');
+      if (percent) percent.textContent = `${soc}%`;
+      if (range) range.textContent = `~${rangeKm} km est.`;
+      if (fill) fill.setAttribute('width', ((14 * soc) / 100).toFixed(2));
+      if (button) button.setAttribute('aria-label', `Battery ${soc} percent, estimated ${rangeKm} kilometres range`);
+    }
+
+    function updateDemoBatteryNotification(vehicle) {
+      const rangeKm = Math.round((vehicle.soc / 100) * vehicle.batteryKwh * 8.1);
+      const batteryNotice = state.notifications.find(notification => notification.target === '02' && /battery/i.test(notification.title));
+      if (!batteryNotice) return;
+      batteryNotice.title = `Emergency Battery Alert (${vehicle.soc}%)`;
+      batteryNotice.body = `${vehicle.short || vehicle.name} has ~${rangeKm} km estimated range left. Tap to Quick Charge.`;
+      batteryNotice.time = 'Now';
+    }
+
+    function scheduleDemoBatteryCue() {
+      if (state.entryMode !== 'demo' || state.screen !== '01' || demoBatteryCueCompleted || demoBatteryTransitionRunning || demoBatteryCueTimer !== null) return;
+      const vehicle = car();
+      if (!Number.isFinite(vehicle.soc) || vehicle.soc <= 15) return;
+      const initialSoc = vehicle.soc;
+      demoBatteryCueTimer = window.setTimeout(() => {
+        demoBatteryCueTimer = null;
+        if (state.entryMode !== 'demo' || state.screen !== '01' || car() !== vehicle) return;
+        demoBatteryTransitionRunning = true;
+        demoBatteryCueVehicle = vehicle;
+        const startTime = performance.now();
+        const animateBattery = (now) => {
+          const progress = Math.min((now - startTime) / 1200, 1);
+          const eased = 1 - Math.pow(1 - progress, 3);
+          vehicle.soc = Math.round(initialSoc + (15 - initialSoc) * eased);
+          updateHomeBatteryReadout(vehicle.soc, vehicle);
+          if (progress < 1) {
+            demoBatteryAnimationFrame = window.requestAnimationFrame(animateBattery);
+            return;
+          }
+          vehicle.soc = 15;
+          demoBatteryTransitionRunning = false;
+          demoBatteryAnimationFrame = null;
+          demoBatteryCueCompleted = true;
+          if (state.entryMode !== 'demo' || state.screen !== '01' || car() !== vehicle) return;
+          updateDemoBatteryNotification(vehicle);
+          state.demoBatteryAlertAnimating = true;
+          render();
+          demoBatteryAlertResetTimer = window.setTimeout(() => {
+            state.demoBatteryAlertAnimating = false;
+            demoBatteryAlertResetTimer = null;
+            if (state.screen === '01') render();
+          }, 720);
+        };
+        demoBatteryAnimationFrame = window.requestAnimationFrame(animateBattery);
+      }, 5000);
+    }
 
     const SCREEN_DEPTH = {
-      '01': 0, '08': 0, '09': 0, '11': 0,
-      '02': 1, '04': 1, '06': 1, '07': 1, '10': 1, '12': 1, '13': 1,
-      '03': 2, '05': 2
+      '01': 0, '08': 0, '09': 0, '11': 0, '18': 0,
+      '02': 1, '04': 1, '06': 1, '07': 1, '10': 1, '12': 1, '13': 1, '14': 1, '19': 1, '20': 1,
+      '03': 2, '05': 2, '15': 2, '16': 3, '17': 4
     };
+
+    const SHOP_PRODUCTS = [
+      { id: 'cable-bag', category: 'accessories', name: 'EV Cable Organizer', description: 'Protective carry bag for charging cables', price: 799, icon: 'plug' },
+      { id: 'boot-organizer', category: 'accessories', name: 'Foldable Boot Organizer', description: 'Compact storage for everyday essentials', price: 1299, icon: 'car' },
+      { id: 'floor-mats', category: 'accessories', name: 'All-Weather Floor Mats', description: 'Easy-clean set for cabin protection', price: 2499, icon: 'car' },
+      { id: 'phone-mount', category: 'accessories', name: 'Dashboard Phone Mount', description: 'Adjustable holder for hands-free navigation', price: 899, icon: 'phone' },
+      { id: 'car-shampoo', category: 'cleaning', name: 'pH-Neutral Car Shampoo', description: 'Gentle concentrate for exterior washing', price: 499, icon: 'drop' },
+      { id: 'microfiber-cloths', category: 'cleaning', name: 'Microfiber Detailing Cloths', description: 'Soft 3-pack for glass, paint and interior', price: 399, icon: 'sparkle' },
+      { id: 'interior-cleaner', category: 'cleaning', name: 'Interior Surface Cleaner', description: 'For dashboards, door trims and touchpoints', price: 449, icon: 'sparkle' },
+      { id: 'tyre-dressing', category: 'cleaning', name: 'Tyre & Trim Care', description: 'Water-based finish for exterior detailing', price: 549, icon: 'tyre' }
+    ];
 
     // go(id)              → push a screen (remembers where we came from)
     // go(id, 'pop')       → animate as going back
     // go(id, dir, {reset}) → start a fresh stack (used after a booking is confirmed, so Back never re-enters a finished checkout)
     function go(id, explicitDir, opts = {}) {
+      if (id !== '01' && demoBatteryCueTimer !== null) {
+        window.clearTimeout(demoBatteryCueTimer);
+        demoBatteryCueTimer = null;
+      }
+      if (id !== '01' && demoBatteryTransitionRunning) {
+        if (demoBatteryAnimationFrame !== null) window.cancelAnimationFrame(demoBatteryAnimationFrame);
+        demoBatteryAnimationFrame = null;
+        if (demoBatteryCueVehicle) {
+          demoBatteryCueVehicle.soc = 15;
+          updateDemoBatteryNotification(demoBatteryCueVehicle);
+        }
+        demoBatteryTransitionRunning = false;
+        demoBatteryCueCompleted = true;
+      }
       const prevDepth = SCREEN_DEPTH[state.screen] ?? 0;
       const nextDepth = SCREEN_DEPTH[id] ?? 0;
       if (explicitDir) {
@@ -1581,7 +1765,9 @@
       } else {
         state.navDirection = 'pop';
       }
-      if (opts.reset || nextDepth === 0) {
+      if (Array.isArray(opts.history)) {
+        state.history = opts.history.slice();
+      } else if (opts.reset || nextDepth === 0) {
         state.history = nextDepth === 0 ? [] : ['01'];
       } else if (explicitDir !== 'pop' && state.screen !== id) {
         state.history.push(state.screen);
@@ -1593,6 +1779,7 @@
       render(true);
       const vp = document.getElementById('ios-viewport');
       if (vp) vp.scrollTop = 0;
+      if (id === '01') scheduleDemoBatteryCue();
     }
     function openHomeMap() {
       if (state.screen !== '01' || state.homeMapExpanded) return;
@@ -1616,6 +1803,7 @@
       if (id === '11') {
         state.tabLabel = label || 'Account';
         state.accountView = null;
+        state.homeMapExpanded = false;
       }
       go(id, 'tab');
     }
@@ -1869,16 +2057,150 @@
     }
     // Entry points into the multi-step flows always start at step 1
     function startCharge(mode = 'Emergency') {
+      closeSheet();
       state.serviceArrivalSlot = null; // each checkout starts with the soonest slot, not one left over from another service
       state.vanMode = mode;
       state.chargeStep = 1;
-      if (mode === 'Emergency') useCurrentGpsLocation(true);
+      if (mode === 'Emergency' && state.entryMode !== 'customer') useCurrentGpsLocation(true);
       syncPlugToCar();
       go('02');
     }
     function startFuel() { state.serviceArrivalSlot = null; state.fuelStep = 1; go('12'); }
     function startWash() { state.serviceArrivalSlot = null; state.washStep = 1; go('13'); }
     function startTow()  { state.serviceArrivalSlot = null; state.towFlowStep = 1; go('07'); }
+    function openShop(category) {
+      if (state.entryMode === 'customer') return showCustomerUnavailable('Shop catalog');
+      if (!['accessories', 'cleaning'].includes(category)) throw new Error(`Unknown shop category: ${category}`);
+      state.shopCategory = category;
+      go('15');
+    }
+    function setShopCategory(category) {
+      if (!['accessories', 'cleaning'].includes(category)) throw new Error(`Unknown shop category: ${category}`);
+      state.shopCategory = category;
+      render();
+    }
+    function shopCartLines() {
+      return SHOP_PRODUCTS.filter(product => state.shopCart[product.id] > 0)
+        .map(product => ({ ...product, quantity: state.shopCart[product.id] }));
+    }
+    function shopCartCount() {
+      return shopCartLines().reduce((count, item) => count + item.quantity, 0);
+    }
+    function shopCartTotal() {
+      return shopCartLines().reduce((total, item) => total + item.price * item.quantity, 0);
+    }
+    function addShopProduct(id) {
+      const product = SHOP_PRODUCTS.find(item => item.id === id);
+      if (!product) throw new Error(`Unknown shop product: ${id}`);
+      state.shopCart[id] = (state.shopCart[id] || 0) + 1;
+      render();
+      showBanner(`${product.name} added to cart`);
+    }
+    function changeShopQuantity(id, delta) {
+      const product = SHOP_PRODUCTS.find(item => item.id === id);
+      if (!product) throw new Error(`Unknown shop product: ${id}`);
+      if (delta !== 1 && delta !== -1) throw new Error(`Invalid quantity change: ${delta}`);
+      const quantity = Math.max(0, (state.shopCart[id] || 0) + delta);
+      if (quantity) state.shopCart[id] = quantity;
+      else delete state.shopCart[id];
+      render();
+    }
+    function placeShopOrder() {
+      const items = shopCartLines();
+      if (!items.length) { showBanner('Add a product to your cart first'); return; }
+      state.shopOrderCount += 1;
+      state.lastShopOrder = {
+        id: `VSHOP-${String(state.shopOrderCount).padStart(3, '0')}`,
+        items: items.map(({ id, name, price, quantity }) => ({ id, name, price, quantity })),
+        total: shopCartTotal()
+      };
+      state.shopCart = {};
+      go('17');
+    }
+    function startCustomerTest() {
+      state.entryMode = 'customer';
+      state.cars = [];
+      state.carIdx = 0;
+      state.activeOrder = null;
+      state.scheduledOrder = null;
+      state.customerOrders = [];
+      state.customerOrderSeq = 0;
+      state.notifications = [];
+      state.chatMessages = [];
+      state.chatDraft = '';
+      state.driverTyping = false;
+      state.chatNotificationId = null;
+      state.notificationChatSnapshot = null;
+      state.notificationChats = {};
+      state.reservation = null;
+      state.stallHoldActive = false;
+      state.walletInr = 0;
+      state.walletTransactions = [];
+      state.bankAccounts = [];
+      state.linkedWallets = [];
+      state.autoReload = false;
+      state.proMember = false;
+      state.shopCart = {};
+      state.shopOrderCount = 0;
+      state.lastShopOrder = null;
+      state.accountView = null;
+      state.homeMapExpanded = false;
+      state.callActive = false;
+      state.callSeconds = 0;
+      state.pay = 'gpay';
+      state.paymentMode = 'Postpayment';
+      state.activityTab = 'Recent';
+      state.recurDays = [];
+      state.vanMode = 'Emergency';
+      state.chargeStep = 1;
+      state.selectedPlug = 'CCS2';
+      state.selectedKwSpeed = 60;
+      state.pickKwh = 25;
+      state.locationTitle = 'Set service address';
+      state.locationShort = 'Address not set';
+      state.locationFull = '';
+      state.locIdx = -1;
+      state.usingCurrentGps = false;
+      state.serviceArrivalSlot = null;
+      state.history = [];
+      go('19');
+    }
+    function visitDemo() {
+      state.entryMode = 'demo';
+      go('01', 'tab', { reset: true });
+    }
+    function continueCustomerTestWithVehicle() {
+      state.cars = [{
+        name: 'Tata Nexon EV',
+        short: 'Nexon EV',
+        trim: 'Empowered+ LR',
+        plate: '',
+        connector: 'CCS2',
+        batteryKwh: 40.5,
+        soc: null,
+        soh: 'Not connected',
+        appSync: '',
+        isNexon: true
+      }];
+      state.carIdx = 0;
+      syncPlugToCar();
+      go('20');
+    }
+    function continueCustomerTestWithLocation() {
+      state.locationTitle = 'Kochi Test Area';
+      state.locationShort = 'Kochi, Kerala';
+      state.locationFull = 'Kochi, Kerala (test area)';
+      state.locIdx = -1;
+      state.usingCurrentGps = false;
+      go('01', 'tab', { reset: true });
+      showBanner('Kochi test location selected');
+    }
+    function continueShopFromOrder() {
+      go('15', 'push', { history: ['01', '14'] });
+    }
+    function returnToMoreFromOrder() {
+      go('14', 'push', { history: ['01'] });
+    }
     // Pre-select the active car's connector and a power level it supports
     function syncPlugToCar() {
       const conn = car().connector === 'GB/T' ? 'Bharat DC-001' : car().connector;
@@ -1981,6 +2303,27 @@
       render(); showBanner('Location set to ' + state.locationTitle);
     }
     function useCurrentGpsLocation(silent) {
+      if (state.entryMode === 'customer') {
+        if (!navigator.geolocation) {
+          showBanner('GPS is unavailable; enter the address manually');
+          return;
+        }
+        navigator.geolocation.getCurrentPosition(position => {
+          const { latitude, longitude } = position.coords;
+          state.locIdx = -1;
+          state.usingCurrentGps = true;
+          state.locationTitle = 'Current GPS location';
+          state.locationShort = 'Current location';
+          state.locationFull = `${latitude.toFixed(5)}, ${longitude.toFixed(5)}`;
+          render();
+          showBanner('Current GPS location added');
+        }, error => {
+          console.error('Unable to get current location', error);
+          showBanner('Could not access GPS; enter the address manually');
+        }, { enableHighAccuracy: true, timeout: 10000, maximumAge: 0 });
+        if (!silent) showBanner('Getting your current location…');
+        return;
+      }
       state.locIdx = -1; // GPS is its own choice; it no longer also highlights the saved "Home" tile
       state.usingCurrentGps = true;
       state.locationTitle = 'Kadavanthra • Kochi';
@@ -1991,6 +2334,21 @@
       if (silent === true) return;
       render();
       showBanner('Using your current GPS location');
+    }
+    function saveCustomerLocation(inputId = 'customer-location-input') {
+      const input = document.getElementById(inputId);
+      const address = input ? input.value.trim() : state.locationFull.trim();
+      if (!address) {
+        showBanner('Enter a pickup address to continue');
+        if (input) input.focus();
+        return false;
+      }
+      state.locationFull = address;
+      state.locationTitle = address;
+      state.locationShort = address.length > 24 ? `${address.slice(0, 21)}…` : address;
+      state.usingCurrentGps = false;
+      state.locIdx = -1;
+      return true;
     }
     function moveMapPin(e) {
       const rect = e.currentTarget.getBoundingClientRect();
@@ -2165,14 +2523,32 @@
     // =====================================================================
     function makeActiveOrder(o) {
       return {
-        id: o.id, serviceType: o.serviceType, status: o.status || 'En Route',
+        id: o.id, title: o.title, serviceType: o.serviceType, detail: o.detail,
+        status: o.status || 'En Route',
         boostLabel: o.detail, etaMins: o.etaMins, paymentMode: o.paymentMode || 'Postpayment',
-        paymentMethod: o.paymentMethod || state.pay, total: o.total || 0, cancelled: false
+        paymentMethod: o.paymentMethod || state.pay, total: o.total || 0, cancelled: false,
+        customerTest: !!o.customerTest, chargingMins: o.chargingMins || null,
+        locationLabel: o.locationLabel || state.locationFull || state.locationTitle,
+        vehicleName: o.vehicleName || car().name,
+        vehiclePlate: o.vehiclePlate || car().plate,
+        requestedAt: o.requestedAt || new Date().toISOString()
       };
     }
     function placeOrder(o) {
+      const customerTest = state.entryMode === 'customer';
+      if (customerTest) {
+        state.customerOrderSeq += 1;
+        o = {
+          ...o,
+          id: `TEST-${String(state.customerOrderSeq).padStart(3, '0')}`,
+          status: 'Test request received',
+          paymentMode: 'No payment',
+          customerTest: true,
+          requestedAt: new Date().toISOString()
+        };
+      }
       const paymentMethod = o.paymentMethod || state.pay;
-      if (!o.scheduledLabel && o.paymentMode === 'Prepayment' && paymentMethod === 'wallet') {
+      if (!customerTest && !o.scheduledLabel && o.paymentMode === 'Prepayment' && paymentMethod === 'wallet') {
         if (state.walletInr < o.total) {
           showBanner(`Wallet has ₹${state.walletInr.toLocaleString('en-IN')} — top up or pick UPI`);
           return openPayMethodSheet();
@@ -2182,30 +2558,40 @@
       if (o.scheduledLabel) {
         state.scheduledOrder = {
           active: true, serviceType: o.serviceType, title: o.title, detail: o.detail,
-          timeLabel: o.scheduledLabel, locationLabel: state.locationTitle, progressStep: 1
+          timeLabel: o.scheduledLabel, locationLabel: state.locationTitle, progressStep: 1,
+          customerTest, id: o.id
         };
+        if (customerTest) state.customerOrders.unshift({ ...o, scheduled: true, cancelled: false });
         state.activityTab = 'Scheduled';
         go('08', 'tab', { reset: true });
-        showBanner(`${o.title} scheduled • ${o.scheduledLabel}`);
+        showBanner(customerTest
+          ? `Local test schedule saved • ${o.scheduledLabel}; no provider contacted`
+          : `${o.title} scheduled • ${o.scheduledLabel}`);
         return;
       }
       state.activeOrder = makeActiveOrder({ ...o, paymentMethod });
+      if (customerTest) state.customerOrders.unshift(state.activeOrder);
       resetChat();
       go('03', 'push', { reset: true });
-      showBanner(`${o.title} confirmed • ETA ${o.etaMins} min`);
+      showBanner(customerTest
+        ? `Local test request created • ETA estimate ${o.etaMins} min; not dispatched`
+        : `${o.title} confirmed • ETA ${o.etaMins} min`);
     }
     function cancelActiveOrder() {
       const o = state.activeOrder;
       if (!o || o.cancelled) return;
-      if (o.paymentMode === 'Prepayment' && o.paymentMethod === 'wallet' && o.total) state.walletInr += o.total;
+      if (state.entryMode !== 'customer' && o.paymentMode === 'Prepayment' && o.paymentMethod === 'wallet' && o.total) state.walletInr += o.total;
       o.cancelled = true;
+      o.status = state.entryMode === 'customer' ? 'Test request cancelled' : o.status;
       go('01', 'pop');
-      showBanner(o.paymentMode === 'Prepayment' ? 'Request cancelled • refund initiated' : 'Request cancelled');
+      showBanner(state.entryMode === 'customer' ? 'Local test request cancelled' : o.paymentMode === 'Prepayment' ? 'Request cancelled • refund initiated' : 'Request cancelled');
     }
     function askCancelActiveOrder() {
       confirmSheet({
         title: 'Cancel this request?',
-        body: `${esc(state.activeOrder.boostLabel)} • crew is ${state.activeOrder.etaMins} min away.${state.activeOrder.paymentMode === 'Prepayment' ? ' Your prepayment will be refunded.' : ''}`,
+        body: state.entryMode === 'customer'
+          ? `${esc(state.activeOrder.boostLabel)} • cancel this local test request? No service provider was contacted.`
+          : `${esc(state.activeOrder.boostLabel)} • crew is ${state.activeOrder.etaMins} min away.${state.activeOrder.paymentMode === 'Prepayment' ? ' Your prepayment will be refunded.' : ''}`,
         confirmLabel: 'Yes, cancel request',
         confirmFn: 'cancelActiveOrder()'
       });
@@ -2213,12 +2599,34 @@
     function askCancelScheduled() {
       confirmSheet({
         title: 'Cancel scheduled booking?',
-        body: `${esc(state.scheduledOrder.title)} • ${esc(state.scheduledOrder.timeLabel)}`,
+        body: state.entryMode === 'customer'
+          ? 'Remove this scheduled test request? No service provider was contacted.'
+          : `${esc(state.scheduledOrder.title)} • ${esc(state.scheduledOrder.timeLabel)}`,
         confirmLabel: 'Yes, cancel booking',
-        confirmFn: "state.scheduledOrder.active = false; render(); showBanner('Scheduled booking cancelled')"
+        confirmFn: 'cancelScheduledOrder()'
       });
     }
-    function hasLiveOrder() { return !state.activeOrder.cancelled; }
+    function cancelScheduledOrder() {
+      if (!state.scheduledOrder || !state.scheduledOrder.active) return;
+      state.scheduledOrder.active = false;
+      if (state.entryMode === 'customer') {
+        const request = state.customerOrders.find(order => order.id === state.scheduledOrder.id);
+        if (request) request.status = 'Test schedule cancelled';
+      }
+      render();
+      showBanner(state.entryMode === 'customer' ? 'Local test schedule cancelled' : 'Scheduled booking cancelled');
+    }
+    function completeCustomerTestOrder() {
+      const order = state.activeOrder;
+      if (state.entryMode !== 'customer' || !order || order.cancelled) return;
+      order.status = 'Test session completed';
+      order.completedAt = new Date().toISOString();
+      state.activeOrder = null;
+      state.activityTab = 'Recent';
+      go('08', 'tab', { reset: true });
+      showBanner('Local test session marked complete');
+    }
+    function hasLiveOrder() { return !!state.activeOrder && !state.activeOrder.cancelled; }
     // Notification / deep-link routing that never shows a dead screen
     function openTarget(target) {
       if (target === '03' && !hasLiveOrder()) return go('08');
@@ -2228,6 +2636,15 @@
 
     // Arrival-time choices depend on the service and on the booking mode
     function arrivalSlots(etaMins, { allowLater = true, mode = 'Now' } = {}) {
+      const customerTest = state.entryMode === 'customer';
+      if (customerTest && mode === 'Schedule') return SLOTS.map(label => ({ label, sub: 'Local test only', later: true }));
+      if (customerTest && mode === 'Recurring') return ['7:00 AM', '9:00 AM', '9:00 PM'].map(label => ({ label, sub: 'Local test only', later: true }));
+      if (customerTest) {
+        return [
+          { label: 'As soon as possible', sub: 'Local test preference', eta: etaMins },
+          { label: 'Later today', sub: 'Local test preference', eta: 45 }
+        ];
+      }
       const isPre = state.paymentMode === 'Prepayment';
       if (mode === 'Schedule') return SLOTS.map(s => ({ label: s, sub: 'Scheduled', later: true }));
       if (mode === 'Recurring') return ['7:00 AM', '9:00 AM', '9:00 PM'].map(t => ({ label: t, sub: 'Every selected day', later: true }));
@@ -2248,6 +2665,7 @@
     }
     // CTA wording tells the user exactly what will happen when they tap
     function ctaLabel(total, slot, verb = 'book') {
+      if (state.entryMode === 'customer') return slot.later ? 'Save local test schedule' : 'Create local test request';
       if (slot.later) return 'Confirm schedule';
       return state.paymentMode === 'Prepayment' ? `Pay ₹${total.toLocaleString('en-IN')} & ${verb}` : `Confirm • pay later`;
     }
@@ -2271,6 +2689,21 @@
     }
 
     function openLocationSheet() {
+      if (state.entryMode === 'customer') {
+        openSheet(`
+          <div class="bg-surface rounded-[26px] p-4 shadow-2xl border border-line space-y-3">
+            <div class="flex items-center justify-between px-1">
+              <h3 class="font-display text-[16px] font-bold tracking-tight">Service address</h3>
+              ${closeBtn()}
+            </div>
+            <label for="customer-location-sheet" class="block text-[11.5px] font-semibold text-label2">Pickup address</label>
+            <textarea id="customer-location-sheet" rows="3" oninput="state.locationFull = this.value" placeholder="Enter the address for this test request" class="w-full bg-fill border border-line rounded-xl p-3 text-[13px] outline-none focus:border-teal">${esc(state.locationFull)}</textarea>
+            <button onclick="closeSheet(); useCurrentGpsLocation()" class="btn-outline w-full min-h-[44px]">${I('crosshair', 'w-4 h-4')} Use device location</button>
+            <button onclick="if(saveCustomerLocation('customer-location-sheet')){ closeSheet(); render(); showBanner('Test address saved') }" class="btn w-full min-h-[44px]">Save address</button>
+            <p class="text-[10px] leading-relaxed text-label2">No saved locations or map provider is connected in this local test.</p>
+          </div>`);
+        return;
+      }
       openSheet(`
         <div class="bg-surface rounded-[26px] p-4 shadow-2xl border border-line space-y-2">
           <div class="flex items-center justify-between px-1">
@@ -2309,6 +2742,18 @@
     // SOS EMERGENCY SHEET & NOTIFICATION MENU DRAWER
     // =====================================================================
     function openSosSheet() {
+      if (state.entryMode === 'customer') {
+        openSheet(`
+          <div class="bg-surface rounded-[26px] p-5 shadow-2xl border border-coral/30 space-y-3">
+            <div class="flex items-center justify-between">
+              <h3 class="font-display text-[16px] font-bold tracking-tight">Emergency services unavailable</h3>
+              ${closeBtn()}
+            </div>
+            <p class="text-[12px] leading-relaxed text-label2">This local customer test cannot contact emergency services or dispatch a technician. If you need urgent help, use your local emergency number.</p>
+            <button onclick="closeSheet(); startCharge('Emergency')" class="btn w-full min-h-[44px]">Create a local charge test</button>
+          </div>`);
+        return;
+      }
       openSheet(`
         <div class="bg-surface rounded-[26px] p-4 shadow-2xl border border-coral/30 space-y-3">
           <div class="flex items-center justify-between px-1">
@@ -2365,6 +2810,18 @@
       `);
     }
 
+    function showCustomerUnavailable(feature) {
+      if (state.entryMode !== 'customer') return;
+      openSheet(`
+        <div class="bg-surface rounded-[26px] p-5 shadow-2xl border border-line space-y-3">
+          <div class="flex items-center justify-between">
+            <h3 class="font-display text-[16px] font-bold tracking-tight">${esc(feature)} unavailable</h3>
+            ${closeBtn()}
+          </div>
+          <p class="text-[12px] leading-relaxed text-label2">This customer test has no live ${esc(feature.toLowerCase())} service connected. No sample provider, availability, or response will be shown.</p>
+        </div>`);
+    }
+
     function openNotificationsSheet() {
       const unreadCount = state.notifications.filter(n => n.unread).length;
       openSheet(`
@@ -2381,7 +2838,7 @@
           </div>
 
           <div class="space-y-2 max-h-[340px] overflow-y-auto ios-scroll">
-            ${state.notifications.map(n => `
+            ${state.notifications.length ? state.notifications.map(n => `
               <button onclick="openNotificationChat(${n.id})" aria-label="Open conversation about ${esc(n.title)}" class="w-full min-h-[64px] p-3 rounded-2xl text-left flex items-start gap-3 transition-all press ${n.unread ? 'bg-teal-soft/75 border border-teal/20' : 'bg-fill'}">
                 <span class="w-8 h-8 rounded-full ${n.unread ? 'bg-teal text-white' : 'bg-surface text-teal'} flex items-center justify-center shrink-0 mt-0.5">
                   ${I('bell', 'w-4 h-4')}
@@ -2394,7 +2851,10 @@
                   <p class="text-[11px] text-label2 mt-0.5 leading-snug">${n.body}</p>
                 </div>
               </button>
-            `).join('')}
+            `).join('') : `<div class="card p-5 text-center space-y-1">
+              <div class="text-[13px] font-semibold text-label">No notifications</div>
+              <p class="text-[11px] text-label2">Updates will appear here after you create a request in this session.</p>
+            </div>`}
           </div>
         </div>
         <button onclick="closeSheet()" class="w-full py-3.5 rounded-[18px] bg-surface text-[14px] font-bold shadow-lg press border border-line">Close</button>
@@ -2435,13 +2895,13 @@
     // 3-OPTION SHEET BEFORE QUICK CHARGE (Quick Charge, Schedule, Recurring)
     // =====================================================================
     function openQuickChargeChoiceSheet() {
-      const c = car();
+      const customerTest = state.entryMode === 'customer';
       openSheet(`
         <div class="bg-surface rounded-[26px] p-4 shadow-2xl border border-line space-y-3">
           <div class="flex items-center justify-between px-1">
             <div>
-              <div class="eyebrow text-teal">Mobile Van Charging</div>
-              <h3 class="font-display text-[16px] font-bold tracking-tight mt-0.5">When do you need charge?</h3>
+              <div class="eyebrow text-teal">${customerTest ? 'Local charging test' : 'Mobile Van Charging'}</div>
+              <h3 class="font-display text-[16px] font-bold tracking-tight mt-0.5">${customerTest ? 'Choose a test flow' : 'When do you need charge?'}</h3>
             </div>
             ${closeBtn()}
           </div>
@@ -2453,10 +2913,10 @@
                 <span class="w-11 h-11 rounded-[14px] bg-white/15 flex items-center justify-center shrink-0">${I('bolt', 'w-5 h-5', 2)}</span>
                 <div>
                   <div class="flex items-center gap-2">
-                    <span class="font-display text-[14px] font-bold">Charge now</span>
-                    <span class="text-[9.5px] font-bold px-2 py-0.5 rounded-full bg-white/20">Van in ~12 min</span>
+                    <span class="font-display text-[14px] font-bold">${customerTest ? 'Create charge request' : 'Charge now'}</span>
+                    ${customerTest ? '<span class="text-[9.5px] font-bold px-2 py-0.5 rounded-full bg-white/20">Local only</span>' : '<span class="text-[9.5px] font-bold px-2 py-0.5 rounded-full bg-white/20">Van in ~12 min</span>'}
                   </div>
-                  <div class="text-[11px] text-white/80 mt-0.5">Mobile van comes to your car</div>
+                  <div class="text-[11px] text-white/80 mt-0.5">${customerTest ? 'No provider contacted or dispatched' : 'Mobile van comes to your car'}</div>
                 </div>
               </div>
               ${I('chevR', 'w-4 h-4 text-white/75 shrink-0')}
@@ -2467,8 +2927,8 @@
               <div class="flex items-center gap-3">
                 <span class="w-11 h-11 rounded-[14px] bg-teal-soft text-teal flex items-center justify-center shrink-0">${I('calendar', 'w-5 h-5', 2)}</span>
                 <div>
-                  <div class="font-display text-[14px] font-bold text-label">Schedule</div>
-                  <div class="text-[11px] text-label2 mt-0.5">Pick a date &amp; time slot</div>
+                  <div class="font-display text-[14px] font-bold text-label">${customerTest ? 'Schedule a test' : 'Schedule'}</div>
+                  <div class="text-[11px] text-label2 mt-0.5">${customerTest ? 'Save a local time selection' : 'Pick a date &amp; time slot'}</div>
                 </div>
               </div>
               ${I('chevR', 'w-4 h-4 text-label3 shrink-0')}
@@ -2479,8 +2939,8 @@
               <div class="flex items-center gap-3">
                 <span class="w-11 h-11 rounded-[14px] bg-teal-soft text-teal flex items-center justify-center shrink-0">${I('repeat', 'w-5 h-5', 2)}</span>
                 <div>
-                  <div class="font-display text-[14px] font-bold text-label">Recurring</div>
-                  <div class="text-[11px] text-label2 mt-0.5">Same time every week, auto-billed</div>
+                  <div class="font-display text-[14px] font-bold text-label">${customerTest ? 'Recurring test' : 'Recurring'}</div>
+                  <div class="text-[11px] text-label2 mt-0.5">${customerTest ? 'Preview a weekly schedule; not billed' : 'Same time every week, auto-billed'}</div>
                 </div>
               </div>
               ${I('chevR', 'w-4 h-4 text-label3 shrink-0')}
@@ -2773,52 +3233,283 @@
       `);
     }
 
-    function openMoreServicesSheet() {
-      openSheet(`
-        <div class="bg-surface rounded-[26px] p-4 shadow-2xl border border-line space-y-2">
-          <div class="px-2 py-1 flex items-center justify-between">
-            <div>
-              <div class="eyebrow text-teal">On-Demand Services</div>
-              <div class="font-display text-[15px] font-bold mt-0.5">All roadside &amp; doorstep services</div>
-            </div>
-            ${closeBtn()}
+    function screen14() {
+      const customerTest = state.entryMode === 'customer';
+      return `
+        <div class="screen pt-[54px] px-4 pb-5 space-y-3">
+          <div class="flex items-center justify-between">
+            <button onclick="back()" aria-label="Back" class="navbtn min-h-[44px] pr-2 flex items-center gap-1.5 text-label font-bold text-[17px] press">
+              ${I('chevL', 'w-5 h-5', 2.2)}
+              <span>Back</span>
+            </button>
           </div>
-          <button onclick="startCharge('Emergency')" class="w-full p-3 rounded-2xl bg-teal-soft/70 hover:bg-teal-soft flex items-center gap-3 text-left press">
-            <span class="w-10 h-10 rounded-xl bg-teal text-white flex items-center justify-center shrink-0">${I('bolt', 'w-5 h-5')}</span>
-            <div class="flex-1"><div class="text-[13px] font-bold text-teal">Emergency Mobile EV</div><div class="text-[11px] text-label2">DC van boost anywhere in Kochi</div></div>
-            ${I('chevR', 'w-4 h-4 text-teal')}
-          </button>
-          <button onclick="startFuel()" class="w-full p-3 rounded-2xl hover:bg-fill flex items-center gap-3 text-left press">
-            <span class="w-10 h-10 rounded-xl bg-teal-soft text-teal flex items-center justify-center shrink-0">${I('fuel', 'w-5 h-5')}</span>
-            <div class="flex-1"><div class="text-[13px] font-semibold">Mobile Fuel &amp; Gas Station</div><div class="text-[11px] text-label2">Petrol, Diesel &amp; CNG to your door</div></div>
-            ${I('chevR', 'w-4 h-4 text-label3')}
-          </button>
-          <button onclick="startWash()" class="w-full p-3 rounded-2xl hover:bg-fill flex items-center gap-3 text-left press">
-            <span class="w-10 h-10 rounded-xl bg-teal-soft text-teal flex items-center justify-center shrink-0">${I('drop', 'w-5 h-5')}</span>
-            <div class="flex-1"><div class="text-[13px] font-semibold">Mobile Carwash</div><div class="text-[11px] text-label2">Waterless eco-foam &amp; detailing</div></div>
-            ${I('chevR', 'w-4 h-4 text-label3')}
-          </button>
-          <button onclick="startTow()" class="w-full p-3 rounded-2xl hover:bg-fill flex items-center gap-3 text-left press">
-            <span class="w-10 h-10 rounded-xl bg-teal-soft text-teal flex items-center justify-center shrink-0">${I('truck', 'w-5 h-5')}</span>
-            <div class="flex-1"><div class="text-[13px] font-semibold">Flatbed Towing</div><div class="text-[11px] text-label2">Zero-drag hydraulic EV recovery</div></div>
-            ${I('chevR', 'w-4 h-4 text-label3')}
-          </button>
-          <button onclick="go('06')" class="w-full p-3 rounded-2xl hover:bg-fill flex items-center gap-3 text-left press">
-            <span class="w-10 h-10 rounded-xl bg-teal-soft text-teal flex items-center justify-center shrink-0">${I('battery12v', 'w-5 h-5')}</span>
-            <div class="flex-1"><div class="text-[13px] font-semibold">12V Jump Start</div><div class="text-[11px] text-label2">Dead 12V battery • ₹799 fixed</div></div>
-            ${I('chevR', 'w-4 h-4 text-label3')}
-          </button>
+          <div class="px-1 space-y-1">
+            <div class="eyebrow text-teal">Services &amp; Shop</div>
+            <h1 class="font-display text-[21px] font-bold tracking-tight text-label">More services</h1>
+            <p class="text-[12px] text-label2">${customerTest ? 'Local test actions only; no live service provider is connected' : 'Roadside, doorstep &amp; vehicle care'}</p>
+          </div>
+          ${customerTest ? `<div class="rounded-2xl bg-amber-50 border border-amber-200 p-3 text-[10.5px] leading-relaxed text-amber-900">Requests from this test stay on this device. Nothing is dispatched or charged.</div>` : ''}
+          <div class="space-y-2">
+            <button onclick="startCharge('Emergency')" class="w-full card min-h-[72px] p-3.5 flex items-center gap-3 text-left press border-teal/20 bg-teal-soft/30">
+              <span class="w-10 h-10 rounded-xl bg-teal text-white flex items-center justify-center shrink-0">${I('bolt', 'w-5 h-5')}</span>
+              <span class="flex-1 min-w-0"><span class="block text-[13px] font-bold text-teal">Emergency Mobile EV</span><span class="block text-[11px] text-label2">${customerTest ? 'Create a local charge request test' : 'DC van boost anywhere in Kochi'}</span></span>
+              ${I('chevR', 'w-4 h-4 text-teal')}
+            </button>
+            <button onclick="${customerTest ? "showCustomerUnavailable('Fuel &amp; Gas')" : 'startFuel()'}" class="w-full card min-h-[72px] p-3.5 flex items-center gap-3 text-left press">
+              <span class="w-10 h-10 rounded-xl bg-teal-soft text-teal flex items-center justify-center shrink-0">${I('fuel', 'w-5 h-5')}</span>
+              <span class="flex-1 min-w-0"><span class="block text-[13px] font-semibold">Mobile Fuel &amp; Gas Station</span><span class="block text-[11px] text-label2">${customerTest ? 'Local request flow only; no delivery dispatch' : 'Petrol, Diesel &amp; CNG to your door'}</span></span>
+              ${I('chevR', 'w-4 h-4 text-label3')}
+            </button>
+            <button onclick="${customerTest ? "showCustomerUnavailable('Car wash')" : 'startWash()'}" class="w-full card min-h-[72px] p-3.5 flex items-center gap-3 text-left press">
+              <span class="w-10 h-10 rounded-xl bg-teal-soft text-teal flex items-center justify-center shrink-0">${I('drop', 'w-5 h-5')}</span>
+              <span class="flex-1 min-w-0"><span class="block text-[13px] font-semibold">Mobile Carwash</span><span class="block text-[11px] text-label2">${customerTest ? 'Local request flow only; no technician dispatch' : 'Waterless eco-foam &amp; detailing'}</span></span>
+              ${I('chevR', 'w-4 h-4 text-label3')}
+            </button>
+            <button onclick="${customerTest ? "showCustomerUnavailable('Towing')" : 'startTow()'}" class="w-full card min-h-[72px] p-3.5 flex items-center gap-3 text-left press">
+              <span class="w-10 h-10 rounded-xl bg-teal-soft text-teal flex items-center justify-center shrink-0">${I('truck', 'w-5 h-5')}</span>
+              <span class="flex-1 min-w-0"><span class="block text-[13px] font-semibold">Flatbed Towing</span><span class="block text-[11px] text-label2">${customerTest ? 'Local request flow only; no towing dispatch' : 'Zero-drag hydraulic EV recovery'}</span></span>
+              ${I('chevR', 'w-4 h-4 text-label3')}
+            </button>
+            <button onclick="${customerTest ? "showCustomerUnavailable('Jump start')" : "go('06')"}" class="w-full card min-h-[72px] p-3.5 flex items-center gap-3 text-left press">
+              <span class="w-10 h-10 rounded-xl bg-teal-soft text-teal flex items-center justify-center shrink-0">${I('battery12v', 'w-5 h-5')}</span>
+              <span class="flex-1 min-w-0"><span class="block text-[13px] font-semibold">12V Jump Start</span><span class="block text-[11px] text-label2">${customerTest ? 'Local request flow only; no technician dispatch' : 'Dead 12V battery • ₹799 fixed'}</span></span>
+              ${I('chevR', 'w-4 h-4 text-label3')}
+            </button>
+            <button onclick="${customerTest ? "showCustomerUnavailable('Breakdown assistance')" : 'startTow()'}" class="w-full card min-h-[72px] p-3.5 flex items-center gap-3 text-left press">
+              <span class="w-10 h-10 rounded-xl bg-teal-soft text-teal flex items-center justify-center shrink-0">${I('truck', 'w-5 h-5')}</span>
+              <span class="flex-1 min-w-0"><span class="block text-[13px] font-semibold">Roadside Breakdown Assistance</span><span class="block text-[11px] text-label2">${customerTest ? 'Local request flow only; no recovery vehicle dispatch' : 'EV-safe recovery for roadside faults and breakdowns'}</span></span>
+              ${I('chevR', 'w-4 h-4 text-label3')}
+            </button>
+            ${customerTest ? `<div class="card p-3.5 text-[11px] leading-relaxed text-label2">Shop catalog and inventory are not connected in customer test mode.</div>` : `<button onclick="openShop('accessories')" class="w-full card min-h-[72px] p-3.5 flex items-center gap-3 text-left press">
+              <span class="w-10 h-10 rounded-xl bg-teal-soft text-teal flex items-center justify-center shrink-0">${I('car', 'w-5 h-5')}</span>
+              <span class="flex-1 min-w-0"><span class="block text-[13px] font-semibold">Car Accessories</span><span class="block text-[11px] text-label2">Interior, charging &amp; travel essentials</span></span>
+              ${I('chevR', 'w-4 h-4 text-label3')}
+            </button>
+            <button onclick="openShop('cleaning')" class="w-full card min-h-[72px] p-3.5 flex items-center gap-3 text-left press">
+              <span class="w-10 h-10 rounded-xl bg-teal-soft text-teal flex items-center justify-center shrink-0">${I('sparkle', 'w-5 h-5')}</span>
+              <span class="flex-1 min-w-0"><span class="block text-[13px] font-semibold">Car Care &amp; Cleaning Supplies</span><span class="block text-[11px] text-label2">Wash, interior care &amp; detailing essentials</span></span>
+              ${I('chevR', 'w-4 h-4 text-label3')}
+            </button>`}
+          </div>
         </div>
-        <button onclick="closeSheet()" class="w-full py-3.5 rounded-[18px] bg-surface text-[14px] font-bold shadow-lg press border border-line">Close</button>
-      `);
+      `;
+    }
+
+    function screen18() {
+      return `
+        <div class="screen pt-[66px] px-5 pb-8 justify-between">
+          <div class="space-y-5">
+            <div class="w-14 h-14 rounded-[18px] bg-teal text-white flex items-center justify-center shadow-sm">${I('bolt', 'w-7 h-7', 2.2)}</div>
+            <div class="space-y-2">
+              <div class="eyebrow text-teal">VoltIndia · Test experience</div>
+              <h1 class="font-display text-[27px] leading-tight font-bold tracking-tight text-label">Welcome to a simpler EV day.</h1>
+              <p class="text-[13px] leading-relaxed text-label2">Test the customer flow with a Tata Nexon EV, or explore the existing app as a demo visitor.</p>
+            </div>
+          </div>
+          <div class="space-y-3">
+            <button onclick="startCustomerTest()" class="w-full card min-h-[76px] p-4 flex items-center gap-3 text-left press border-teal/25 bg-teal-soft/35">
+              <span class="w-11 h-11 rounded-2xl bg-teal text-white flex items-center justify-center shrink-0">${I('user', 'w-5 h-5')}</span>
+              <span class="flex-1"><span class="block text-[14px] font-bold text-teal">Login as guest</span><span class="block mt-1 text-[11px] text-label2">Customer test · Tata Nexon EV only</span></span>
+              ${I('chevR', 'w-4 h-4 text-teal')}
+            </button>
+            <button onclick="visitDemo()" class="w-full min-h-[52px] rounded-2xl bg-surface border border-line px-4 flex items-center justify-center gap-2 text-[13px] font-semibold text-label press">
+              ${I('grid', 'w-4 h-4 text-teal')} Visit demo
+            </button>
+          </div>
+          <p class="text-center text-[10.5px] leading-relaxed text-label3">Prototype only: guest details stay in this browser session. No account, payment, or service request is sent.</p>
+        </div>
+      `;
+    }
+
+    function screen19() {
+      return `
+        <div class="screen pt-[54px] px-5 pb-7 justify-between">
+          <div class="flex items-center">
+            <button onclick="back()" aria-label="Back to welcome" class="navbtn min-h-[44px] pr-2 flex items-center gap-1.5 text-label font-bold text-[17px] press">
+              ${I('chevL', 'w-5 h-5', 2.2)}<span>Back</span>
+            </button>
+          </div>
+          <div class="flex-1 flex flex-col items-center justify-center text-center gap-5 py-5">
+            <div class="w-full max-w-[360px] h-[190px] flex items-center justify-center">
+              <img src="${NEXON_FRONT_IMG}" alt="Front view of the Tata Nexon EV" class="max-h-full max-w-full object-contain drop-shadow-sm" decoding="async">
+            </div>
+            <div class="space-y-2">
+              <div class="eyebrow text-teal">Customer test vehicle</div>
+              <h1 class="font-display text-[24px] leading-tight font-bold tracking-tight text-label">Tata Nexon EV</h1>
+              <p class="text-[12px] leading-relaxed text-label2">Continue with this vehicle to try the charging request flow. No account or vehicle details are needed.</p>
+            </div>
+          </div>
+          <div class="space-y-3">
+            <div class="rounded-2xl bg-teal-soft/55 p-3 text-[10.5px] leading-relaxed text-label2">This test stays in your browser. No charger, payment, vehicle telemetry, or service provider is connected.</div>
+            <button onclick="continueCustomerTestWithVehicle()" class="btn w-full min-h-[50px]">${I('arrowRight', 'w-4 h-4', 2.2)} Continue as test with this vehicle</button>
+          </div>
+        </div>
+      `;
+    }
+
+    function screen20() {
+      return `
+        <div class="screen min-h-full relative overflow-hidden justify-between">
+          ${customerMapBackdrop()}
+          <div class="relative z-10 px-4 pt-[54px]">
+            <button onclick="back()" aria-label="Back to vehicle" class="navbtn min-h-[44px] pr-2 flex items-center gap-1.5 text-label font-bold text-[17px] press bg-surface/90 rounded-full shadow-sm">
+              ${I('chevL', 'w-5 h-5', 2.2)}<span>Vehicle</span>
+            </button>
+          </div>
+          <div class="relative z-10 p-4">
+            <div class="card p-4 space-y-3">
+              <div>
+                <div class="eyebrow text-teal">Test location</div>
+                <h1 class="font-display text-[22px] font-bold tracking-tight text-label mt-1">Kochi, Kerala</h1>
+                <p class="text-[11.5px] leading-relaxed text-label2 mt-1">Use this illustrative Kochi area to explore the guest test. It is not a GPS fix and does not indicate live stations or service availability.</p>
+              </div>
+              <button onclick="continueCustomerTestWithLocation()" class="btn w-full min-h-[50px]">${I('arrowRight', 'w-4 h-4', 2.2)} Continue with Kochi test location</button>
+            </div>
+          </div>
+        </div>`;
+    }
+
+    function formatShopMoney(amount) {
+      return new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR', maximumFractionDigits: 0 }).format(amount);
+    }
+
+    function screen15() {
+      const category = state.shopCategory === 'cleaning' ? 'cleaning' : 'accessories';
+      const products = SHOP_PRODUCTS.filter(product => product.category === category);
+      return `
+        <div class="screen pt-[54px] px-4 pb-8 space-y-4">
+          <div class="flex items-center justify-between">
+            <button onclick="back()" aria-label="Back to services" class="navbtn min-h-[44px] pr-2 flex items-center gap-1.5 text-label font-bold text-[17px] press">
+              ${I('chevL', 'w-5 h-5', 2.2)}<span>Back</span>
+            </button>
+            <button onclick="go('16')" aria-label="Shopping cart, ${shopCartCount()} items" class="navbtn relative w-11 h-11 flex items-center justify-center text-label press">
+              ${I('shoppingBag', 'w-5 h-5')}
+              ${shopCartCount() ? `<span class="absolute top-0 right-0 min-w-[18px] h-[18px] px-1 rounded-full bg-teal text-white text-[10px] font-bold flex items-center justify-center">${shopCartCount()}</span>` : ''}
+            </button>
+          </div>
+          <div class="px-1 space-y-1">
+            <div class="eyebrow text-teal">Vehicle shop · Demo</div>
+            <h1 class="font-display text-[21px] font-bold tracking-tight text-label">${category === 'accessories' ? 'Car accessories' : 'Car care & cleaning'}</h1>
+            <p class="text-[12px] text-label2">Useful picks for your vehicle, ready to browse.</p>
+          </div>
+          <div class="grid grid-cols-2 gap-2 p-1 rounded-[18px] bg-fill" role="tablist" aria-label="Shop categories">
+            <button onclick="setShopCategory('accessories')" role="tab" aria-selected="${category === 'accessories'}" class="min-h-[44px] rounded-[14px] px-2 text-[12px] font-semibold ${category === 'accessories' ? 'bg-surface text-teal shadow-sm' : 'text-label2'}">Accessories</button>
+            <button onclick="setShopCategory('cleaning')" role="tab" aria-selected="${category === 'cleaning'}" class="min-h-[44px] rounded-[14px] px-2 text-[12px] font-semibold ${category === 'cleaning' ? 'bg-surface text-teal shadow-sm' : 'text-label2'}">Car care</button>
+          </div>
+          <div class="space-y-2.5">
+            ${products.map(product => `
+              <article class="card p-3.5 flex items-center gap-3">
+                <span class="w-12 h-12 rounded-2xl bg-teal-soft text-teal flex items-center justify-center shrink-0">${I(product.icon, 'w-5 h-5')}</span>
+                <div class="min-w-0 flex-1">
+                  <h2 class="text-[13px] leading-snug font-semibold text-label">${product.name}</h2>
+                  <p class="mt-1 text-[11px] leading-snug text-label2">${product.description}</p>
+                  <div class="mt-2 flex items-center justify-between gap-2">
+                    <span class="text-[13px] font-bold text-label num">${formatShopMoney(product.price)}</span>
+                    <button onclick="addShopProduct('${product.id}')" class="min-h-[40px] min-w-[76px] px-3 rounded-xl bg-teal text-white text-[12px] font-bold press">Add</button>
+                  </div>
+                </div>
+              </article>
+            `).join('')}
+          </div>
+          <p class="px-1 text-[10px] leading-relaxed text-label3">Demo catalog with sample prices. No payment or delivery request is sent.</p>
+          ${shopCartCount() ? `<button onclick="go('16')" class="btn w-full min-h-[48px]">${I('shoppingBag', 'w-4 h-4')} Review cart · ${shopCartCount()} ${shopCartCount() === 1 ? 'item' : 'items'} · ${formatShopMoney(shopCartTotal())}</button>` : ''}
+        </div>
+      `;
+    }
+
+    function screen16() {
+      const items = shopCartLines();
+      return `
+        <div class="screen pt-[54px] px-4 pb-8 space-y-4">
+          <div class="flex items-center justify-between">
+            <button onclick="back()" aria-label="Back to shop" class="navbtn min-h-[44px] pr-2 flex items-center gap-1.5 text-label font-bold text-[17px] press">
+              ${I('chevL', 'w-5 h-5', 2.2)}<span>Back</span>
+            </button>
+            <span class="text-[12px] font-semibold text-label2">${shopCartCount()} ${shopCartCount() === 1 ? 'item' : 'items'}</span>
+          </div>
+          <div class="px-1 space-y-1">
+            <div class="eyebrow text-teal">Your selection</div>
+            <h1 class="font-display text-[21px] font-bold tracking-tight text-label">Shopping cart</h1>
+          </div>
+          ${items.length ? `
+            <div class="space-y-2.5">
+              ${items.map(item => `
+                <article class="card p-3.5 flex items-center gap-3">
+                  <span class="w-11 h-11 rounded-xl bg-teal-soft text-teal flex items-center justify-center shrink-0">${I(item.icon, 'w-5 h-5')}</span>
+                  <div class="min-w-0 flex-1">
+                    <h2 class="text-[13px] font-semibold text-label">${item.name}</h2>
+                    <p class="mt-1 text-[11px] text-label2">${formatShopMoney(item.price)} each</p>
+                  </div>
+                  <div class="flex items-center gap-2">
+                    <button onclick="changeShopQuantity('${item.id}', -1)" aria-label="Remove one ${item.name}" class="w-9 h-9 rounded-full bg-fill text-label font-bold text-[17px] press">−</button>
+                    <span class="w-5 text-center text-[13px] font-semibold num" aria-label="Quantity">${item.quantity}</span>
+                    <button onclick="changeShopQuantity('${item.id}', 1)" aria-label="Add one ${item.name}" class="w-9 h-9 rounded-full bg-fill text-label font-bold text-[17px] press">+</button>
+                  </div>
+                </article>
+              `).join('')}
+            </div>
+            <div class="card p-4 space-y-3">
+              <div class="flex justify-between text-[13px]"><span class="text-label2">Demo subtotal</span><span class="font-bold text-label num">${formatShopMoney(shopCartTotal())}</span></div>
+              <p class="text-[11px] leading-relaxed text-label2">Sample prices only. This demo does not collect payment or arrange delivery.</p>
+            </div>
+            <button onclick="placeShopOrder()" class="btn w-full min-h-[48px]">Place demo order · ${formatShopMoney(shopCartTotal())}</button>
+          ` : `
+            <div class="card p-6 text-center space-y-3">
+              <span class="mx-auto w-12 h-12 rounded-2xl bg-teal-soft text-teal flex items-center justify-center">${I('shoppingBag', 'w-5 h-5')}</span>
+              <h2 class="text-[15px] font-bold text-label">Your cart is empty</h2>
+              <p class="text-[12px] text-label2">Browse accessories or car-care essentials to get started.</p>
+              <button onclick="go('15')" class="btn min-h-[44px]">Browse the shop</button>
+            </div>
+          `}
+        </div>
+      `;
+    }
+
+    function screen17() {
+      const order = state.lastShopOrder;
+      return `
+        <div class="screen pt-[54px] px-4 pb-8 space-y-4">
+          <div class="flex items-center">
+            <button onclick="back()" aria-label="Back" class="navbtn min-h-[44px] pr-2 flex items-center gap-1.5 text-label font-bold text-[17px] press">
+              ${I('chevL', 'w-5 h-5', 2.2)}<span>Back</span>
+            </button>
+          </div>
+          ${order ? `
+            <div class="card p-5 text-center space-y-3">
+              <span class="mx-auto w-14 h-14 rounded-full bg-teal-soft text-teal flex items-center justify-center">${I('check', 'w-6 h-6', 2.2)}</span>
+              <div>
+                <div class="eyebrow text-teal">Demo order recorded</div>
+                <h1 class="mt-1 font-display text-[21px] font-bold tracking-tight text-label">Thanks for trying the shop</h1>
+                <p class="mt-1 text-[12px] text-label2">Reference ${order.id}</p>
+              </div>
+            </div>
+            <div class="card p-4 space-y-3">
+              <h2 class="text-[13px] font-bold text-label">Order summary</h2>
+              ${order.items.map(item => `<div class="flex justify-between gap-3 text-[12px]"><span class="text-label2">${item.name} × ${item.quantity}</span><span class="font-semibold text-label num">${formatShopMoney(item.price * item.quantity)}</span></div>`).join('')}
+              <div class="hair"></div>
+              <div class="flex justify-between text-[14px]"><span class="font-bold text-label">Demo total</span><span class="font-bold text-teal num">${formatShopMoney(order.total)}</span></div>
+            </div>
+            <div class="rounded-2xl bg-teal-soft/60 p-3.5 text-[11px] leading-relaxed text-label2" role="status">This is a local demo only. No payment was taken and no order, delivery, or personal information was sent anywhere.</div>
+            <button onclick="continueShopFromOrder()" class="btn w-full min-h-[48px]">Continue shopping</button>
+            <button onclick="returnToMoreFromOrder()" class="w-full min-h-[44px] text-[12px] font-semibold text-teal">Back to services</button>
+          ` : `
+            <div class="card p-6 text-center space-y-3">
+              <h1 class="font-display text-[18px] font-bold text-label">No demo order to show</h1>
+              <p class="text-[12px] text-label2">Your order summary is not available in this session.</p>
+              <button onclick="go('15')" class="btn min-h-[44px]">Return to shop</button>
+            </div>
+          `}
+        </div>
+      `;
     }
 
     // =====================================================================
-    // SHARED REUSABLE UI HELPERS FOR 3-PAGE FLOWS
+    // SHARED REUSABLE UI HELPERS FOR MULTI-STEP FLOWS
     // =====================================================================
     function flowJumpToStep(screenId, sNum) {
       const k = STEP_KEY[screenId];
       if (k) {
+        if (screenId === '02' && sNum > state[k]) return;
         state[k] = sNum;
         render(true);
         const vp = document.getElementById('ios-viewport');
@@ -2827,21 +3518,19 @@
     }
 
     function renderStepBar(step, labels) {
-      const stepItems = [
-        { num: 1, label: labels[0] || 'Location' },
-        { num: 2, label: labels[1] || 'Charger' },
-        { num: 3, label: labels[2] || 'Time & pay' }
-      ];
+      const stepItems = (labels && labels.length ? labels : ['Location', 'Charger', 'Time & pay'])
+        .map((label, index) => ({ num: index + 1, label }));
       return `
-      <div class="flow-stepper flex items-center justify-center gap-1.5 py-1 px-1 select-none" role="group" aria-label="Checkout steps">
+      <div class="flow-stepper flex items-center justify-center gap-1.5 py-1 px-1 select-none" role="group" aria-label="${state.screen === '02' ? 'Charging booking steps' : 'Checkout steps'}">
         ${stepItems.map((item, idx) => {
           const sNum = item.num;
           const active = step === sNum;
           const done = step > sNum;
+          const locked = state.screen === '02' && sNum > step;
           const isLast = idx === stepItems.length - 1;
 
           return `
-          <button onclick="flowJumpToStep('${state.screen}', ${sNum})" class="flow-step-item flex items-center gap-1.5 py-1.5 pl-1.5 pr-3.5 rounded-full transition-all shrink-0 select-none press ${
+          <button ${locked ? 'disabled' : ''} ${active ? 'aria-current="step"' : ''} aria-label="Step ${sNum}: ${item.label}" onclick="flowJumpToStep('${state.screen}', ${sNum})" class="flow-step-item flex items-center gap-1.5 py-1.5 pl-1.5 pr-3.5 rounded-full transition-all shrink-0 select-none press ${locked ? 'opacity-50 cursor-not-allowed' : ''} ${
             active 
               ? 'bg-teal text-invtext shadow-xs font-bold' 
               : done 
@@ -2945,7 +3634,53 @@
       </div>`;
     }
 
+    function customerMapBackdrop() {
+      return `
+        <div class="customer-map-backdrop" role="img" aria-label="Illustrative map of Kochi. The marked test area is approximate; no live location, route, or charger data is shown.">
+          <svg viewBox="0 0 390 800" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+            <rect width="390" height="800" fill="#EFF0DC"/>
+            <path d="M0 0h143c-17 42 12 69-9 111s8 77-11 116 11 76-5 119 11 77-8 119 8 81-9 124 8 77-5 211H0z" fill="#CDE7F4"/>
+            <path d="M128 0c31 52-1 75 28 126s-7 79 25 126-8 80 20 125-6 79 20 129-5 84 19 131-2 86 13 163" fill="none" stroke="#B5DFEA" stroke-width="18" opacity=".82"/>
+            <path d="M149 177c43 19 48 52 26 82s-14 56 24 74 42 43 23 70" fill="none" stroke="#BDE3ED" stroke-width="12" opacity=".9"/>
+            <path d="M167 437c36-12 66 5 72 35s34 36 66 23" fill="none" stroke="#BDE3ED" stroke-width="10" opacity=".9"/>
+            <path d="M246 48c35-21 94-13 124 13v73c-35 21-70 15-95-4s-42-43-29-82z" fill="#D9EACB"/>
+            <path d="M269 239c31-23 81-17 121 3v78c-39 17-70 8-93-11s-39-43-28-70z" fill="#DBEBCF"/>
+            <path d="M215 605c28-22 60-16 82 3s48 20 93 1v108c-46 17-80 11-104-9s-45-39-71-31z" fill="#D9EACB"/>
+            <g fill="none" stroke="#FFFFFF" stroke-linecap="round" opacity=".96">
+              <path d="M164-20c25 87 1 124 31 200s-2 122 28 194-4 125 23 204 2 133 36 244" stroke-width="10"/>
+              <path d="M205 78c45 27 88 16 132-3M171 229c51-21 107-16 183 8M190 351c49 15 107-2 187-31M207 491c53-29 111-29 177-6M227 653c49-20 99-17 163 7" stroke-width="7"/>
+              <path d="M233 121c-24 47-27 90-7 130M302 173c-25 46-27 91-8 136M250 386c-22 36-25 78-7 119M327 450c-21 43-21 78-4 117M278 548c-19 35-17 70 4 102" stroke-width="4"/>
+              <path d="M181 296l78-30m-42 130 132 22m-80 98 105-18m-128 158 111-26" stroke-width="3"/>
+            </g>
+            <g fill="none" stroke="#BA796A" stroke-linecap="round" stroke-linejoin="round" opacity=".76">
+              <path d="M163-10c27 90 4 126 34 202s-1 123 29 194-3 125 24 204 2 133 36 244" stroke-width="2.1"/>
+              <path d="M145 201c64 8 102 30 134 72s58 54 117 50M178 438c57-23 106-11 145 33s43 57 74 67" stroke-width="2"/>
+              <path d="M210 59c29 42 37 85 23 129m70 123c-30 47-34 91-10 134m-35 143c-15 45-7 88 26 126" stroke-width="1.7"/>
+            </g>
+            <g fill="#4B5B55" font-family="system-ui, sans-serif" font-size="10" font-weight="650" letter-spacing=".2">
+              <text x="169" y="286">FORT KOCHI</text>
+              <text x="203" y="397" font-size="12" font-weight="750">KOCHI</text>
+              <text x="245" y="318">KAKKANAD</text>
+              <text x="229" y="535">VYTTILA</text>
+              <text x="218" y="627">MARADU</text>
+              <text x="229" y="213">EDAPPALLY</text>
+              <text x="35" y="408" fill="#628398" font-size="9">ARABIAN SEA</text>
+            </g>
+          </svg>
+          <div class="customer-map-marker" aria-hidden="true">${I('pin', 'w-5 h-5', 2.2)}</div>
+          <div class="customer-map-place" aria-hidden="true">Kochi test area</div>
+          <div class="customer-map-caption" aria-hidden="true">Illustrative map · not live</div>
+        </div>`;
+    }
+
     function renderPrePostPaymentCard(total) {
+      if (state.entryMode === 'customer') {
+        return `
+          <div class="card p-3.5 space-y-2">
+            <div class="text-[12.5px] font-bold">Payment unavailable</div>
+            <p class="text-[11px] leading-relaxed text-label2">No pricing or payment service is connected. This request is local and nothing will be charged.</p>
+          </div>`;
+      }
       const isPre = state.paymentMode === 'Prepayment';
       const walletShort = state.pay === 'wallet' && state.walletInr < total;
       return `
@@ -3005,7 +3740,7 @@
       </div>`;
     }
 
-    // Shared header + sticky footer for the 3-step checkout flows
+    // Shared header + sticky footer for multi-step checkout flows
     function flowShell({ title, badge, step, labels, body, footerLeft, footerBtn, extraHeader = '', rightAction = '' }) {
       return `
       <div class="screen pt-[54px] justify-between">
@@ -3088,24 +3823,28 @@
     }
 
     // =====================================================================
-    // SCREENS (01 – 13 IN LOGICAL UX FLOW ORDER)
+    // SCREENS (01 – 20 IN LOGICAL UX FLOW ORDER)
     // =====================================================================
 
     // 01 — HOME COMMAND (EXPANDED MAP, LIVE DISPATCH OVERLAY ON HOME & SOS)
     function screen01() {
       const c = car();
-      const estRangeKm = Math.round((c.soc / 100) * c.batteryKwh * 8.1);
+      const customerTest = state.entryMode === 'customer';
+      const hasBatteryEstimate = Number.isFinite(c.soc);
+      const estRangeKm = hasBatteryEstimate ? Math.round((c.soc / 100) * c.batteryKwh * 8.1) : null;
       const unreadNotifs = state.notifications.filter(n => n.unread).length;
       const live = hasLiveOrder();
-      const lowBattery = c.soc <= 25;
+      const lowBattery = hasBatteryEstimate && c.soc <= 25;
+      const emergencyBattery = hasBatteryEstimate && c.soc <= 15;
+      const batteryFillWidth = hasBatteryEstimate ? ((14 * c.soc) / 100).toFixed(2) : '0';
       const services = [
-        { l: 'Stations', svg: SERVICE_3D_SVGS.stations, fn: "go('04')" },
-        { l: 'Car Wash', image: 'service-carwash-home.png', fn: 'startWash()' },
-        { l: 'Towing', svg: SERVICE_3D_SVGS.towing, fn: "startTow()" },
-        { l: 'More', i: 'grid', color: 'text-teal', fn: "openMoreServicesSheet()" }
+        { l: customerTest ? 'Mobile Charging' : 'Stations', svg: customerTest ? null : SERVICE_3D_SVGS.stations, i: 'bolt', fn: "go('04')" },
+        { l: 'Car Wash', image: customerTest ? null : 'service-carwash-home-icon.png', i: 'drop', fn: customerTest ? "showCustomerUnavailable('Car wash')" : 'startWash()' },
+        { l: 'Towing', svg: SERVICE_3D_SVGS.towing, fn: customerTest ? "showCustomerUnavailable('Towing')" : 'startTow()' },
+        { l: 'More', i: 'grid', color: 'text-teal', fn: "go('14')" }
       ];
       return `
-      <div class="screen map home-screen relative overflow-hidden justify-between ${state.homeMapExpanded ? 'home-map-expanded' : ''}">
+      <div class="screen map home-screen relative overflow-hidden justify-between ${customerTest ? 'home-customer-test' : ''} ${state.homeMapExpanded ? 'home-map-expanded' : ''}">
         <!-- Top Floating Header (Exact Design from Reference) -->
         <div class="home-header select-none">
           <!-- Row 1: Location Pill + Notification Squircle -->
@@ -3119,7 +3858,7 @@
                   </svg>
                 </span>
                 <div class="min-w-0 flex-1">
-                  <div class="home-location-label text-[11px] font-medium leading-tight">Current Location</div>
+                  <div class="home-location-label text-[11px] font-medium leading-tight">${customerTest ? 'Service location' : 'Current Location'}</div>
                   <div class="home-location-title font-display text-[15px] font-bold leading-tight truncate mt-0.5">${state.locationTitle}</div>
                 </div>
               </div>
@@ -3141,42 +3880,42 @@
           <!-- Row 2: Vehicle Pill (Using Real Background-Removed Car Image) -->
           <div class="flex items-center">
             <button onclick="go('09')" aria-label="Active vehicle ${esc(c.name)}, switch vehicle" class="home-vehicle-button press">
-              <span class="home-vehicle-icon" aria-hidden="true"><img src="${NEXON_FRONT_IMG}" alt="" class="home-vehicle-car-image" decoding="async"></span>
+              <span class="home-vehicle-icon" aria-hidden="true">${customerTest ? I('car', 'w-5 h-5 text-teal') : `<img src="${NEXON_FRONT_IMG}" alt="" class="home-vehicle-car-image" decoding="async">`}</span>
               <span class="home-vehicle-name">${esc(c.short || 'Nexon EV')}</span>
               <span class="home-vehicle-divider" aria-hidden="true"></span>
               <span class="home-plate-pill">
                 ${I('car', 'home-plate-icon', 2)}
-                <span>${esc(c.plate || 'KL 07 CD 1234')}</span>
+                <span>${esc(c.plate || (customerTest ? 'Test vehicle' : 'KL 07 CD 1234'))}</span>
               </span>
             </button>
           </div>
 
           <!-- Row 3: Battery & Range Pill -->
           <div class="flex items-center">
-            <button onclick="go('09')" aria-label="Battery ${c.soc} percent, about ${estRangeKm} kilometres range" class="home-battery-button backdrop-blur-sm shadow-sm border rounded-full py-1.5 px-3.5 inline-flex items-center gap-2 press">
+            <button id="home-battery-button" onclick="go('09')" aria-label="${emergencyBattery ? `Emergency: charge your vehicle now. Battery ${c.soc} percent, estimated ${estRangeKm} kilometres range` : hasBatteryEstimate ? `Battery ${c.soc} percent, estimated ${estRangeKm} kilometres range` : 'Battery and range are not connected'}" class="home-battery-button backdrop-blur-sm shadow-sm border rounded-full py-1.5 px-3.5 inline-flex items-center gap-2 press">
               <!-- Outlined Battery Icon in Coral/Orange -->
               <svg class="w-5 h-3.5 ${lowBattery ? 'home-battery-low' : 'home-battery-normal'}" viewBox="0 0 24 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <rect x="1" y="1" width="18" height="14" rx="3"/>
                 <line x1="21" y1="5.5" x2="21" y2="10.5"/>
-                <rect x="3" y="3" width="4" height="10" rx="1" fill="currentColor" stroke="none"/>
+                <rect id="home-battery-level" x="3" y="3" width="${batteryFillWidth}" height="10" rx="1" fill="currentColor" stroke="none"/>
               </svg>
-              <span class="home-battery-percent font-display text-[13.5px] font-extrabold ${lowBattery ? 'text-coral' : ''} num">${c.soc}%</span>
+              <span id="home-battery-percent" class="home-battery-percent font-display text-[13.5px] font-extrabold ${lowBattery ? 'text-coral' : ''} num">${hasBatteryEstimate ? `${c.soc}%` : '—'}</span>
               <span class="home-battery-divider w-[1px] h-3.5 mx-0.5"></span>
-              <span class="home-battery-range text-[12.5px] font-medium num">~${estRangeKm} km</span>
+              <span id="home-battery-range" class="home-battery-range text-[12.5px] font-medium num">${hasBatteryEstimate ? `~${estRangeKm} km est.` : 'No range data'}</span>
             </button>
           </div>
         </div>
 
         <!-- Expanded Center Map Area (Shows Live Van Route on Home Map when Active) -->
         <div class="home-map-center flex flex-col items-center justify-center relative">
-          ${state.homeMapExpanded ? `
+          ${customerTest ? '' : state.homeMapExpanded ? `
             <button id="home-map-back" type="button" onclick="closeHomeMap()" aria-label="Back to Home" class="home-map-back press">
               ${I('chevL', 'w-5 h-5', 2)}
             </button>
           ` : `
             <button id="home-map-open" type="button" onclick="openHomeMap()" aria-label="Expand map" class="home-map-open"></button>
           `}
-          ${live ? `
+          ${live && !customerTest ? `
             <!-- Live Route Polyline & Moving Fleet Van directly on Home Map -->
             <svg class="home-map-route w-56 h-32 overflow-visible absolute" viewBox="0 0 220 120">
               <path d="M 155 26 L 94 18 L 86 78" fill="none" stroke="#005C68" stroke-width="3" stroke-dasharray="5 4" stroke-linecap="round" stroke-linejoin="round"/>
@@ -3191,7 +3930,12 @@
             </button>
           ` : ''}
 
-          <div class="home-map-location flex flex-col items-center mt-4">
+          ${customerTest ? `
+            <div class="card max-w-[230px] p-3 text-center bg-surface/90 backdrop-blur-sm">
+              <div class="text-[11px] font-bold text-label">${state.locationFull ? esc(state.locationShort) : 'No service address set'}</div>
+              <div class="mt-1 text-[10px] leading-relaxed text-label2">Map and live vehicle location are unavailable in this local test.</div>
+            </div>
+          ` : `<div class="home-map-location flex flex-col items-center mt-4">
             <div class="teal-pin-pulse">
               <div class="w-8 h-8 rounded-full bg-teal text-white shadow-lg flex items-center justify-center border-2 border-white">
                 ${I('pin', 'w-4 h-4', 2.2)}
@@ -3200,7 +3944,7 @@
             <div class="text-center mt-1 leading-tight bg-surface/85 backdrop-blur-xs px-2.5 py-0.5 rounded-full">
               <div class="text-[10.5px] font-bold text-teal">${state.locationShort}</div>
             </div>
-          </div>
+          </div>`}
 
           <!-- Floating Coral Red SOS Button -->
           <button onclick="openSosSheet()" aria-label="SOS emergency help" class="btn-fab absolute right-4 bottom-3 w-[52px] h-[52px] rounded-full bg-coral text-white font-display font-extrabold text-[12px] tracking-wide flex items-center justify-center shadow-lg press" style="box-shadow: 0 0 0 5px rgba(224, 79, 38, 0.18), 0 8px 20px rgba(224, 79, 38, 0.35);">
@@ -3214,7 +3958,7 @@
 
           <div class="flex items-center justify-between mb-2 px-0.5">
             <h2 class="font-display text-[17px] font-bold tracking-tight text-label">What does your EV need?</h2>
-            <button onclick="openMoreServicesSheet()" class="text-[12px] font-bold text-teal min-h-[44px] px-1">All services</button>
+            <button onclick="go('14')" class="text-[12px] font-bold text-teal min-h-[44px] px-1">All services</button>
           </div>
 
           ${state.reservation ? `
@@ -3224,33 +3968,33 @@
             </button>` : ''}
 
           ${live ? `
-            <button onclick="go('03')" aria-label="Track ${state.activeOrder.serviceType || 'EV Charging'}, van arrives in ${state.activeOrder.etaMins || 14} minutes" class="home-service-card card-feature card-interactive press">
+            <button onclick="go('03')" aria-label="${customerTest ? 'View local test request' : `Track ${state.activeOrder.serviceType || 'EV Charging'}, van arrives in ${state.activeOrder.etaMins || 14} minutes`}" class="home-service-card card-feature card-interactive press">
               <span class="home-service-content">
                 <span class="home-service-icon icon-container icon-container--liquid" aria-hidden="true">
                   <svg class="w-6 h-6 fill-white" viewBox="0 0 24 24"><path d="M13 2L4 14h7l-1 8 9-12h-7l1-8z"/></svg>
                 </span>
                 <span class="home-service-divider" aria-hidden="true"></span>
                 <span class="home-service-copy">
-                  <span class="home-service-title block">${state.activeOrder.status || 'Van En Route'}</span>
-                  <span class="home-service-status"><span class="w-2 h-2 rounded-full bg-[#10B981]"></span>${state.activeOrder.serviceType || 'EV Charging'}</span>
+                  <span class="home-service-title block">${state.activeOrder.status || (customerTest ? 'Test request received' : 'Van En Route')}</span>
+                  <span class="home-service-status"><span class="w-2 h-2 rounded-full ${customerTest ? 'bg-[#D69E2E]' : 'bg-[#10B981]'}"></span>${customerTest ? 'Local test · not dispatched' : state.activeOrder.serviceType || 'EV Charging'}</span>
                   <span class="home-service-detail block truncate">${state.activeOrder.detail || state.activeOrder.boostLabel || '25 kWh (CCS2 • 60 kW)'}</span>
                 </span>
               </span>
               <span class="home-track-button">
-                Track ${state.activeOrder.etaMins || 14}m
+                ${customerTest ? 'Estimate' : 'Track'} ${state.activeOrder.etaMins || 14}m
                 <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
               </span>
             </button>
           ` : ''}
 
-          <button onclick="openQuickChargeChoiceSheet()" aria-label="Charge my EV, low battery with about ${estRangeKm} kilometres remaining" class="home-service-card card-feature card-interactive press">
+          <button onclick="openQuickChargeChoiceSheet()" aria-live="polite" aria-label="${emergencyBattery ? `Emergency: charge your vehicle now. Battery ${c.soc} percent, estimated ${estRangeKm} kilometres range` : hasBatteryEstimate ? `Charge my EV, ${lowBattery ? 'low battery' : `battery at ${c.soc} percent`}, about ${estRangeKm} kilometres estimated range` : 'Charge my EV; battery and range data are not connected'}" class="home-service-card card-feature card-interactive press ${emergencyBattery ? 'home-service-card--emergency' : ''} ${emergencyBattery && state.demoBatteryAlertAnimating ? 'home-emergency-arrival' : ''}">
             <span class="home-service-content">
               <span class="home-service-icon icon-container icon-container--liquid" aria-hidden="true">
                 <svg class="w-6 h-6 fill-white" viewBox="0 0 24 24"><path d="M13 2L4 14h7l-1 8 9-12h-7l1-8z"/></svg>
               </span>
               <span class="home-service-copy">
-                <span class="home-service-title block">Charge my EV</span>
-                <span class="home-service-detail block">${lowBattery ? `Low battery • ~${estRangeKm} km left` : 'Ready when you are'}</span>
+                <span class="home-service-title block">${emergencyBattery ? 'Emergency' : 'Charge my EV'}</span>
+                <span class="home-service-detail block">${!hasBatteryEstimate ? 'Battery data not connected' : emergencyBattery ? `Charge your vehicle now • ~${estRangeKm} km est.` : lowBattery ? `Low battery • ~${estRangeKm} km est.` : 'Ready when you are'}</span>
               </span>
             </span>
             <span class="home-charge-chevron" aria-hidden="true">
@@ -3272,33 +4016,75 @@
       </div>`;
     }
 
-    // 02 — 3-STEP CHARGE FLOW (Now / Schedule / Weekly)
-    // Step 1: Where → Step 2: Connector, power & energy → Step 3: Time & payment
+    // 02 — CHARGE FLOW (Address → Charging setup → Arrival)
     const KWH_OPTIONS = [15, 25, 35, 50];
     const MIN_CHARGE = 300;
     function chargeQuote() {
       const kwh = KWH_OPTIONS.includes(state.pickKwh) ? state.pickKwh : 25;
-      const unitPrice = KW_PRICE[state.selectedKwSpeed] || 20;
-      const energyCost = Math.max(MIN_CHARGE, kwh * unitPrice);
-      const callout = state.proMember ? 0 : (state.paymentMode === 'Prepayment' ? 129 : 149);
+      const customerTest = state.entryMode === 'customer';
+      const unitPrice = customerTest ? null : KW_PRICE[state.selectedKwSpeed] || 20;
+      const energyCost = customerTest ? null : Math.max(MIN_CHARGE, kwh * unitPrice);
+      const callout = customerTest ? null : state.proMember ? 0 : (state.paymentMode === 'Prepayment' ? 129 : 149);
       const mins = Math.max(12, Math.round((kwh / state.selectedKwSpeed) * 60));
       const etaMins = state.paymentMode === 'Prepayment' ? 12 : 22;
       const mode = state.vanMode === 'Emergency' ? 'Now' : state.vanMode;
       const slots = arrivalSlots(etaMins, { allowLater: false, mode });
       const slot = currentSlot(slots);
-      return { kwh, unitPrice, energyCost, callout, total: callout + energyCost, mins, etaMins, slots, slot,
+      return { kwh, unitPrice, energyCost, callout, total: customerTest ? null : callout + energyCost, mins, etaMins, slots, slot,
                detail: `${kwh} kWh (${state.selectedPlug} • ${state.selectedKwSpeed} kW)` };
+    }
+    function continueCustomerAddress() {
+      if (!saveCustomerLocation('customer-address')) return;
+      state.chargeStep = 2;
+      render(true);
+    }
+    function screen02CustomerAddress(modeTitle, modeSeg, headerRightBtn) {
+      return `
+        <div class="screen relative flex flex-col justify-between" style="min-height:100%;height:100%">
+          <div class="px-4 pt-[54px] pb-3 space-y-3">
+            <div class="flex items-center justify-between">
+              <button onclick="flowBack()" class="navbtn min-h-[44px] pr-2 flex items-center gap-1.5 text-label font-bold text-[17px] press" aria-label="Back">
+                ${I('chevL', 'w-5 h-5', 2.2)}<span>${modeTitle}</span>
+              </button>
+              ${headerRightBtn}
+            </div>
+            ${modeSeg}
+            ${renderStepBar(1, ['Address', 'Setup', 'Arrival'])}
+            <div class="card p-4 space-y-3">
+              <div>
+                <label for="customer-address" class="block text-[12px] font-bold text-label">Charging location</label>
+                <p class="text-[10.5px] text-label2 mt-1">Use or edit the location for this local estimate. It is not sent to a service provider.</p>
+              </div>
+              <textarea id="customer-address" rows="3" oninput="state.locationFull = this.value" placeholder="Street address, area, city" class="w-full bg-fill border border-line rounded-xl p-3 text-[13px] text-label outline-none focus:border-teal">${esc(state.locationFull)}</textarea>
+              <button onclick="useCurrentGpsLocation()" class="btn-outline w-full min-h-[44px]">${I('crosshair', 'w-4 h-4')} Use device location</button>
+            </div>
+            <div class="card p-4 text-center space-y-1">
+              <div class="text-[12px] font-semibold text-label">Map and live station data unavailable</div>
+              <p class="text-[10.5px] leading-relaxed text-label2">This customer test uses only the address you enter. No route, station, or service provider is simulated as live.</p>
+            </div>
+          </div>
+          <div class="bar px-4 py-3 flex items-center justify-between gap-3">
+            <div class="min-w-0">
+              <div class="text-[10px] text-label2">Address</div>
+              <div class="font-display text-[12px] font-bold text-label truncate">${state.locationFull ? esc(state.locationFull) : 'Required to continue'}</div>
+            </div>
+            <button onclick="continueCustomerAddress()" class="min-h-[44px] bg-teal text-white font-bold text-[13px] px-5 py-2.5 rounded-full flex items-center gap-2 press shrink-0">
+              Continue ${I('arrowRight', 'w-4 h-4', 2.2)}
+            </button>
+          </div>
+        </div>`;
     }
     function chargeModeTitle() {
       return state.vanMode === 'Schedule' ? 'Schedule charge' : state.vanMode === 'Recurring' ? 'Weekly charge' : 'Charge now';
     }
     function confirmCharge() {
-      if (state.vanMode === 'Recurring' && !state.recurDays.length) { state.chargeStep = 1; render(); return showBanner('Pick at least one day for weekly charging'); }
+      if (state.vanMode === 'Recurring' && !state.recurDays.length) { state.chargeStep = 3; render(); return showBanner('Pick at least one day for weekly charging'); }
       const q = chargeQuote();
       const later = state.vanMode !== 'Emergency';
       placeOrder({
         id: later ? 'VI-4822' : 'VI-4821', serviceType: 'EV Charging', title: later ? chargeModeTitle() : 'Mobile charge',
-        detail: q.detail, status: 'Van En Route', etaMins: q.slot.eta || q.etaMins, paymentMode: state.paymentMode, total: q.total,
+        detail: q.detail, status: state.entryMode === 'customer' ? 'Test request received' : 'Van En Route',
+        etaMins: state.vanMode === 'Emergency' ? q.slot.eta || q.etaMins : null, chargingMins: q.mins, paymentMode: state.paymentMode, total: q.total,
         scheduledLabel: state.vanMode === 'Recurring' ? recurLabel(q.slot.label) : state.vanMode === 'Schedule' ? q.slot.label : null
       });
     }
@@ -3309,7 +4095,7 @@ function screen02() {
       const q = chargeQuote();
       const modeTitle = chargeModeTitle();
 
-      const headerRightBtn = `
+      const headerRightBtn = state.entryMode === 'customer' ? '' : `
         <button onclick="openChargeFiltersSheet()" class="w-11 h-11 rounded-full bg-surface border border-line shadow-xs flex items-center justify-center text-label press" aria-label="Preferences">
           ${I('sliders', 'w-4 h-4', 2)}
         </button>
@@ -3323,8 +4109,11 @@ function screen02() {
         </div>
       `;
 
+      if (step === 1 && state.entryMode === 'customer') {
+        return screen02CustomerAddress(modeTitle, modeSeg, headerRightBtn);
+      }
+
       if (step === 1) {
-        const noDays = state.vanMode === 'Recurring' && !state.recurDays.length;
         return `
         <div class="screen relative flex flex-col justify-between overflow-hidden" style="min-height: 100%; height: 100%;">
           <!-- Top Section (Header + Mode Tabs + Stepper + Location Selection Card) -->
@@ -3341,21 +4130,10 @@ function screen02() {
             <!-- Mode Switch Tabs (Now / Schedule / Weekly) -->
             ${modeSeg}
 
-            <!-- Stepper (3rd Section on screen - Image 3 Design) -->
-            ${renderStepBar(step, ['Location', 'Charger', 'Time & pay'], ['pin', 'bolt', 'wallet'])}
+            ${renderStepBar(step, ['Address', 'Setup', 'Arrival'])}
 
             <!-- Location Selection Card (Image 2 Design) -->
             ${renderLocationPickerCard({ inlineMap: false })}
-
-            ${state.vanMode === 'Recurring' ? `
-              <div class="card p-3 space-y-1.5 shadow-sm">
-                <div class="text-[11.5px] font-bold">Repeat every</div>
-                <div class="weekday-grid grid grid-cols-7 gap-1">
-                  ${DAYS.map((d, i) => `<button onclick="toggleDay(${i})" aria-pressed="${state.recurDays.includes(i)}" aria-label="${['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'][i]}" class="min-h-[44px] rounded-full text-[11px] font-bold press ${state.recurDays.includes(i) ? 'bg-teal text-white' : 'bg-fill text-label2'}">${d}</button>`).join('')}
-                </div>
-                ${noDays ? '<div class="field-error text-[10px]">Pick at least one day</div>' : ''}
-              </div>
-            ` : ''}
           </div>
 
           <!-- Expansive Interactive Kochi Vector Map (Image 2) -->
@@ -3460,11 +4238,11 @@ function screen02() {
                     ${I('pin', 'w-4 h-4 text-teal', 2)}
                   </span>
                   <div class="min-w-0">
-                    <div class="text-[10px] font-medium text-label2 leading-none">Step 1 of 3 • Location</div>
+                    <div class="text-[10px] font-medium text-label2 leading-none">Step 1 of 3 • Address</div>
                     <div class="font-display text-[13.5px] font-bold text-label truncate mt-1">${state.locationTitle}</div>
                   </div>
                 </div>
-                <button ${noDays ? 'disabled' : ''} onclick="flowNext('chargeStep')" class="min-h-[44px] bg-teal hover:bg-teal-dark text-white font-bold text-[13px] px-6 py-2.5 rounded-full flex items-center gap-2 shadow-md shrink-0 press transition-transform">
+                <button onclick="flowNext('chargeStep')" class="min-h-[44px] bg-teal hover:bg-teal-dark text-white font-bold text-[13px] px-6 py-2.5 rounded-full flex items-center gap-2 shadow-md shrink-0 press transition-transform">
                   <span>Continue</span>
                   ${I('arrowRight', 'w-4 h-4', 2.2)}
                 </button>
@@ -3493,39 +4271,92 @@ function screen02() {
                     ${fits ? `<span class="text-[9px] font-extrabold px-1.5 py-0.5 rounded-full bg-teal text-white shrink-0">FITS</span>` : ''}
                   </div>
                   <div class="text-[10px] opacity-75 mt-0.5 leading-tight">${pl.sub}</div>
-                  <div class="text-[10px] font-bold text-teal mt-1 num">${pl.speeds.join(' / ')} kW</div>
                 </button>`;
               }).join('')}
             </div>
             ${state.selectedPlug !== c.connector && !(c.connector === 'GB/T' && state.selectedPlug === 'Bharat DC-001') ? `<div class="field-error">${state.selectedPlug} doesn't match your ${c.short} (${c.connector}). The van crew won't be able to plug in.</div>` : ''}
           </div>
 
-          <div class="card p-3.5 space-y-2.5 shadow-sm border border-line">
-            <div class="flex items-center justify-between">
-              <span class="text-[12.5px] font-bold">Charging power</span>
-              <span class="text-[10.5px] text-teal font-bold num">~${q.mins} min to deliver</span>
+          <div class="card p-3.5 space-y-3 shadow-sm border border-line">
+            <div class="flex items-center justify-between gap-2">
+              <div>
+                <div class="text-[12.5px] font-bold">Charging power</div>
+                <div class="text-[10.5px] text-label2 mt-0.5">For ${state.selectedPlug}</div>
+              </div>
+              <span class="text-[10.5px] text-teal font-bold num">~${q.mins} min</span>
             </div>
             <div class="grid grid-cols-${CONNECTORS[state.selectedPlug].speeds.length} gap-2" role="radiogroup" aria-label="Charging power">
               ${CONNECTORS[state.selectedPlug].speeds.map(kw => `
-                <button role="radio" aria-checked="${state.selectedKwSpeed === kw}" onclick="set('selectedKwSpeed', ${kw})" class="opt py-2.5 px-1.5 ${state.selectedKwSpeed === kw ? 'on' : ''}">
+                <button role="radio" aria-checked="${state.selectedKwSpeed === kw}" onclick="set('selectedKwSpeed', ${kw})" class="opt min-h-[56px] py-2.5 px-1.5 ${state.selectedKwSpeed === kw ? 'on' : ''}">
                   <div class="font-display text-[13px] font-extrabold num">${kw} kW</div>
                   <div class="text-[10px] opacity-75">${KW_LABEL[kw]}</div>
-                  <div class="text-[10px] font-extrabold text-teal mt-0.5 num">₹${KW_PRICE[kw]}/kWh</div>
                 </button>
               `).join('')}
             </div>
+          </div>
 
-            <div class="text-[11px] font-bold text-label2 pt-1">Energy to add <span class="font-medium">(min. bill ₹${MIN_CHARGE})</span></div>
+          <div class="card p-3.5 space-y-3 shadow-sm border border-line">
+            <div class="flex items-center justify-between">
+              <span class="text-[12.5px] font-bold">Energy to add</span>
+              <span class="text-[10.5px] text-label2">${state.entryMode === 'customer' ? 'Test estimate' : '₹' + q.unitPrice + '/kWh'}</span>
+            </div>
+            ${state.entryMode === 'customer' ? '<div class="text-[10.5px] text-label2">Choose an amount to estimate charging duration. Pricing is not connected.</div>' : `<div class="text-[10.5px] text-label2">Minimum charge ₹${MIN_CHARGE}</div>`}
             <div class="grid grid-cols-4 gap-1.5" role="radiogroup" aria-label="Energy to add">
               ${KWH_OPTIONS.map(v => `
-                <button role="radio" aria-checked="${q.kwh === v}" onclick="set('pickKwh', ${v})" class="opt py-2 ${q.kwh === v ? 'on' : ''}">
+                <button role="radio" aria-checked="${q.kwh === v}" onclick="set('pickKwh', ${v})" class="opt min-h-[52px] py-2 ${q.kwh === v ? 'on' : ''}">
                   <div class="font-display text-[12px] font-bold num">${v} kWh</div>
-                  <div class="text-[10px] font-bold text-teal num">₹${Math.max(MIN_CHARGE, v * q.unitPrice)}</div>
+                  ${state.entryMode === 'customer' ? '<div class="text-[10px] font-bold text-teal">Charge amount</div>' : `<div class="text-[10px] font-bold text-teal num">₹${Math.max(MIN_CHARGE, v * q.unitPrice)}</div>`}
                 </button>
               `).join('')}
             </div>
-            <div class="text-[10.5px] text-label2">≈ +${Math.min(100 - c.soc, Math.round(q.kwh / c.batteryKwh * 100))}% battery on your ${c.batteryKwh} kWh pack${c.soc + q.kwh / c.batteryKwh * 100 > 100 ? ' (tops out at 100%)' : ''}</div>
+            <div class="text-[10.5px] text-label2">${state.entryMode === 'customer' && (c.soc === null || c.soc === undefined) ? 'Battery gain unavailable until you enter your current charge level.' : `≈ +${Math.min(100 - c.soc, Math.round(q.kwh / c.batteryKwh * 100))}% battery on your ${c.batteryKwh} kWh pack${c.soc + q.kwh / c.batteryKwh * 100 > 100 ? ' (tops out at 100%)' : ''}`}</div>
+            <div class="hair"></div>
+            <div class="flex justify-between items-center text-[11px]">
+              <span class="text-label2">Estimated charge duration</span>
+              <span class="font-bold text-label num">~${q.mins} min</span>
+            </div>
           </div>
+
+          ${state.entryMode === 'customer' ? `
+            <div class="card p-3.5 space-y-2 shadow-sm border border-line text-[12px]">
+              <div class="text-[10px] font-extrabold tracking-wider text-teal uppercase">Local duration estimate</div>
+              <div class="font-semibold text-label">About ${q.mins} minutes at ${state.selectedKwSpeed} kW</div>
+              <p class="text-[10.5px] leading-relaxed text-label2">This calculation is for testing only. Actual charging time depends on the vehicle and charger. No live charger or tariff is connected.</p>
+            </div>
+          ` : `
+            <div class="card p-3.5 space-y-2.5 shadow-sm border border-line text-[12px]">
+              <div class="text-[10px] font-extrabold tracking-wider text-teal uppercase">Price estimate</div>
+              <div class="space-y-1.5 text-label2">
+                <div class="flex justify-between items-center gap-2">
+                  <span>Energy (${q.kwh} kWh × ₹${q.unitPrice})</span>
+                  <span class="font-bold text-label num">₹${q.energyCost.toLocaleString('en-IN')}</span>
+                </div>
+                <div class="flex justify-between items-center gap-2">
+                  <span>Van call-out fee${state.proMember ? ' (Pro Member)' : ''}</span>
+                  <span class="font-bold text-label num">${q.callout === 0 ? '<span class="text-teal font-extrabold">FREE</span>' : '₹' + q.callout}</span>
+                </div>
+              </div>
+              <div class="hair"></div>
+              <div class="flex justify-between items-center text-[14px] font-extrabold">
+                <span class="text-label">Estimated total</span>
+                <span class="font-display text-teal text-[17px] num">₹${q.total.toLocaleString('en-IN')}</span>
+              </div>
+            </div>
+          `}
+
+          ${state.entryMode === 'customer' ? renderPrePostPaymentCard(q.total) : state.vanMode === 'Emergency' ? renderPrePostPaymentCard(q.total) : `
+            <div class="card p-3.5 flex items-center justify-between shadow-sm border border-line">
+              <div class="flex items-center gap-2.5">
+                <span class="w-8 h-8 rounded-full bg-teal-soft text-teal flex items-center justify-center shrink-0">${I('wallet', 'w-4 h-4 text-teal')}</span>
+                <div>
+                  <div class="text-[10.5px] text-label2 font-medium">Billed on the day to</div>
+                  <div class="text-[12.5px] font-bold text-label">${PAY_METHODS[state.pay]}</div>
+                </div>
+              </div>
+              <button onclick="openPayMethodSheet()" class="min-h-[44px] px-3 py-1 rounded-full text-[11px] font-bold text-teal bg-teal-soft hover:bg-teal-soft2 press">Change</button>
+            </div>
+          `}
+
         `;
         footerLeft = `
           <div class="flex items-center gap-2.5 min-w-0">
@@ -3533,8 +4364,8 @@ function screen02() {
               ${I('bolt', 'w-4 h-4 text-teal', 2)}
             </span>
             <div class="min-w-0">
-              <div class="text-[10px] text-label2 num">Step 2 of 3 • ₹${q.unitPrice}/kWh</div>
-              <div class="font-display text-[17px] font-bold num text-label">₹${q.energyCost.toLocaleString('en-IN')}</div>
+              <div class="text-[10px] text-label2 num">Step 2 of 3 • Charging setup</div>
+              <div class="font-display text-[14px] font-bold text-label">${state.entryMode === 'customer' ? `Charge time ~${q.mins} min` : '₹' + q.total.toLocaleString('en-IN')}</div>
             </div>
           </div>
         `;
@@ -3545,18 +4376,31 @@ function screen02() {
           </button>
         `;
       } else {
-        // Step 3 (Time & pay) - Modern, Elevated Redesign ("teh 3rd section use diff design")
-        const slotTitle = state.vanMode === 'Schedule' ? 'Pick a slot' : state.vanMode === 'Recurring' ? 'Time each week' : 'Arrival slot';
+        // Final step: choose arrival time and review the order.
+        const slotTitle = state.entryMode === 'customer'
+          ? state.vanMode === 'Recurring' ? 'Preferred time each week' : state.vanMode === 'Schedule' ? 'Preferred arrival time' : 'Arrival preference'
+          : state.vanMode === 'Schedule' ? 'Arrival time' : state.vanMode === 'Recurring' ? 'Arrival time each week' : 'Arrival slot';
         const cur = q.slot;
+        const noDays = state.vanMode === 'Recurring' && !state.recurDays.length;
         body = `
-          <!-- 1. Arrival Slot Card with ETA Badge -->
+          ${state.vanMode === 'Recurring' ? `
+            <div class="card p-3.5 space-y-2.5 shadow-sm border border-line">
+              <div class="text-[12.5px] font-bold">Repeat every</div>
+              <div class="weekday-grid grid grid-cols-7 gap-1">
+                ${DAYS.map((d, i) => `<button onclick="toggleDay(${i})" aria-pressed="${state.recurDays.includes(i)}" aria-label="${['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'][i]}" class="min-h-[44px] rounded-full text-[11px] font-bold press ${state.recurDays.includes(i) ? 'bg-teal text-white' : 'bg-fill text-label2'}">${d}</button>`).join('')}
+              </div>
+              ${noDays ? '<div class="field-error text-[10px]">Pick at least one day</div>' : ''}
+            </div>
+          ` : ''}
+
+          <!-- Arrival Slot Card -->
           <div class="card p-3.5 space-y-2.5 shadow-sm border border-line">
             <div class="flex items-center justify-between">
               <div class="flex items-center gap-1.5">
                 ${I('clock', 'w-4 h-4 text-teal', 2)}
                 <span class="text-[12.5px] font-bold text-label">${slotTitle}</span>
               </div>
-              <span class="text-[10.5px] font-bold px-2 py-0.5 rounded-full bg-teal-soft text-teal num">${cur.later ? 'Booked in advance' : '⚡ Express ~' + (cur.eta || q.etaMins) + ' min'}</span>
+              <span class="text-[10.5px] font-bold px-2 py-0.5 rounded-full bg-teal-soft text-teal num">${state.entryMode === 'customer' ? cur.later ? 'Local test choice' : 'Local test only' : cur.later ? 'Booked in advance' : '⚡ Express ~' + (cur.eta || q.etaMins) + ' min'}</span>
             </div>
             <div class="grid grid-cols-${q.slots.length} gap-2" role="radiogroup" aria-label="${slotTitle}">
               ${q.slots.map(sl => {
@@ -3570,25 +4414,11 @@ function screen02() {
             </div>
           </div>
 
-          <!-- 2. Payment Method Card -->
-          ${state.vanMode === 'Emergency' ? renderPrePostPaymentCard(q.total) : `
-            <div class="card p-3.5 flex items-center justify-between shadow-sm border border-line">
-              <div class="flex items-center gap-2.5">
-                <span class="w-8 h-8 rounded-full bg-teal-soft text-teal flex items-center justify-center shrink-0">${I('wallet', 'w-4 h-4 text-teal')}</span>
-                <div>
-                  <div class="text-[10.5px] text-label2 font-medium">Billed on the day to</div>
-                  <div class="text-[12.5px] font-bold text-label">${PAY_METHODS[state.pay]}</div>
-                </div>
-              </div>
-              <button onclick="openPayMethodSheet()" class="min-h-[44px] px-3 py-1 rounded-full text-[11px] font-bold text-teal bg-teal-soft hover:bg-teal-soft2 press">Change</button>
-            </div>
-          `}
-
-          <!-- 3. Summary Card (Upgraded Modern Look) -->
+          <!-- Order Summary -->
           <div class="card p-3.5 space-y-2.5 shadow-sm border border-line text-[12px]">
             <div class="flex items-center justify-between">
-              <span class="text-[10px] font-extrabold tracking-wider text-teal uppercase">Order Summary</span>
-              <span class="text-[9.5px] font-bold px-2 py-0.5 rounded-full bg-fill text-label2">VoltIndia Dispatch</span>
+              <span class="text-[10px] font-extrabold tracking-wider text-teal uppercase">${state.entryMode === 'customer' ? 'Test estimate' : 'Order Summary'}</span>
+              <span class="text-[9.5px] font-bold px-2 py-0.5 rounded-full bg-fill text-label2">${state.entryMode === 'customer' ? 'Local only · not dispatched' : 'VoltIndia Dispatch'}</span>
             </div>
 
             <div class="space-y-1.5 text-label2">
@@ -3596,30 +4426,38 @@ function screen02() {
                 <span class="flex items-center gap-1.5">${I('pin', 'w-3.5 h-3.5 text-teal')} Location</span>
                 <span class="font-bold text-label truncate max-w-[190px]">${state.locationTitle}</span>
               </div>
+              <div class="flex justify-between items-center gap-2">
+                <span class="flex items-center gap-1.5">${I('clock', 'w-3.5 h-3.5 text-teal')} Arrival</span>
+                <span class="font-bold text-label">${q.slot.label}</span>
+              </div>
               ${state.vanMode === 'Recurring' ? `
                 <div class="flex justify-between items-center gap-2">
                   <span class="flex items-center gap-1.5">${I('repeat', 'w-3.5 h-3.5 text-teal')} Repeats</span>
-                  <span class="font-bold text-label">${recurLabel(q.slot.label)}</span>
+                  <span class="font-bold text-label">${noDays ? 'Choose days' : recurLabel(q.slot.label)}</span>
                 </div>` : ''}
               <div class="flex justify-between items-center gap-2">
                 <span class="flex items-center gap-1.5">${I('bolt', 'w-3.5 h-3.5 text-teal')} Connector &amp; power</span>
                 <span class="font-bold text-label num">${state.selectedPlug} • ${state.selectedKwSpeed} kW</span>
               </div>
               <div class="flex justify-between items-center gap-2">
-                <span>Energy (${q.kwh} kWh × ₹${q.unitPrice})</span>
-                <span class="font-bold text-label num">₹${q.energyCost.toLocaleString('en-IN')}</span>
+                <span>${state.entryMode === 'customer' ? 'Energy pricing' : `Energy (${q.kwh} kWh × ₹${q.unitPrice})`}</span>
+                <span class="font-bold text-label num">${state.entryMode === 'customer' ? 'Unavailable' : '₹' + q.energyCost.toLocaleString('en-IN')}</span>
               </div>
               <div class="flex justify-between items-center gap-2">
-                <span>Van call-out fee${state.proMember ? ' (Pro Member)' : ''}</span>
-                <span class="font-bold text-label num">${q.callout === 0 ? '<span class="text-teal font-extrabold">FREE</span>' : '₹' + q.callout}</span>
+                <span>${state.entryMode === 'customer' ? 'Service fee' : `Van call-out fee${state.proMember ? ' (Pro Member)' : ''}`}</span>
+                <span class="font-bold text-label num">${state.entryMode === 'customer' ? 'Unavailable' : q.callout === 0 ? '<span class="text-teal font-extrabold">FREE</span>' : '₹' + q.callout}</span>
+              </div>
+              <div class="flex justify-between items-center gap-2">
+                <span>Payment</span>
+                <span class="font-bold text-label">${state.entryMode === 'customer' ? 'Not charged' : state.vanMode === 'Emergency' ? (state.paymentMode === 'Prepayment' ? 'Pay now · ' + PAY_METHODS[state.pay] : 'Pay after service') : PAY_METHODS[state.pay]}</span>
               </div>
             </div>
 
             <div class="hair"></div>
 
             <div class="flex justify-between items-center text-[14.5px] font-extrabold">
-              <span class="text-label">${state.vanMode === 'Recurring' ? 'Per session' : q.slot.later ? 'Charged on the day' : state.paymentMode === 'Prepayment' ? 'Pay now' : 'Pay after service'}</span>
-              <span class="font-display text-teal text-[17px] num">₹${q.total.toLocaleString('en-IN')}</span>
+              <span class="text-label">${state.entryMode === 'customer' ? 'Pricing' : state.vanMode === 'Recurring' ? 'Per session' : q.slot.later ? 'Charged on the day' : state.paymentMode === 'Prepayment' ? 'Pay now' : 'Pay after service'}</span>
+              <span class="font-display text-teal text-[17px] num">${state.entryMode === 'customer' ? 'Not connected' : '₹' + q.total.toLocaleString('en-IN')}</span>
             </div>
           </div>
         `;
@@ -3630,8 +4468,8 @@ function screen02() {
               ${I('receipt', 'w-4 h-4 text-teal', 2)}
             </span>
             <div class="min-w-0">
-              <div class="text-[10px] text-label2 num">Step 3 of 3 • ${q.slot.later ? 'Scheduled' : 'ETA ' + (q.slot.eta || q.etaMins) + ' min'}</div>
-              <div class="font-display text-[18px] font-bold num text-label">₹${q.total.toLocaleString('en-IN')}</div>
+              <div class="text-[10px] text-label2 num">Step 3 of 3 • ${state.entryMode === 'customer' ? 'Local test · no provider contacted' : q.slot.later ? 'Scheduled' : `ETA ${q.slot.eta || q.etaMins} min`}</div>
+              <div class="font-display text-[14px] font-bold text-label">${state.entryMode === 'customer' ? `Charge time ~${q.mins} min` : '₹' + q.total.toLocaleString('en-IN')}</div>
             </div>
           </div>
         `;
@@ -3647,7 +4485,7 @@ function screen02() {
         title: modeTitle,
         badge: '',
         step,
-        labels: ['Location', 'Charger', 'Time & pay'],
+        labels: ['Address', 'Setup', 'Arrival'],
         body,
         footerLeft,
         footerBtn,
@@ -3658,7 +4496,60 @@ function screen02() {
     function setVanMode(v) { state.vanMode = v; render(); }
 
     // 03 — LIVE TRACKING MAP (SMOOTH POP-BACK TO HOME SCREEN WHERE MAP IS SHOWN)
+    function screen03Customer() {
+      const order = state.activeOrder;
+      if (!order || order.cancelled) {
+        return `
+          <div class="screen pt-[58px] px-4 items-center justify-center text-center space-y-3">
+            <div class="w-14 h-14 rounded-full bg-fill text-label2 flex items-center justify-center">${I('bolt', 'w-6 h-6')}</div>
+            <h1 class="font-display text-[18px] font-bold text-label">No active test request</h1>
+            <p class="text-[12px] text-label2">Create a request from Home to see its test estimate.</p>
+            <button onclick="go('01','pop')" class="btn">Back to home</button>
+          </div>`;
+      }
+      return `
+        <div class="screen pt-[58px] px-4 pb-6 space-y-4">
+          <div class="flex items-center justify-between">
+            <button onclick="go('01','pop')" aria-label="Back to home" class="navbtn min-h-[44px] pr-2 flex items-center gap-1.5 text-label font-bold press">
+              ${I('chevL', 'w-5 h-5', 2)}<span>Home</span>
+            </button>
+            <span class="chip !text-[10px]">Local test</span>
+          </div>
+          <div class="card p-4 space-y-3">
+            <div class="eyebrow text-teal">Request ${esc(order.id)}</div>
+            <div>
+              <h1 class="font-display text-[20px] font-bold tracking-tight text-label">${esc(order.status)}</h1>
+              <p class="mt-1 text-[12px] text-label2">${esc(order.serviceType)} · ${esc(order.boostLabel)}</p>
+            </div>
+            <div class="grid grid-cols-2 gap-2">
+              <div class="rounded-xl bg-fill p-3">
+                <div class="text-[10px] text-label2">Arrival estimate</div>
+                <div class="mt-1 text-[15px] font-bold text-teal num">${order.etaMins ? `${order.etaMins} min` : 'Not available'}</div>
+              </div>
+              <div class="rounded-xl bg-fill p-3">
+                <div class="text-[10px] text-label2">Charging time estimate</div>
+                <div class="mt-1 text-[15px] font-bold text-label num">${order.chargingMins ? `${order.chargingMins} min` : 'Not calculated'}</div>
+              </div>
+            </div>
+            <div class="flex items-start gap-2 text-[11px] text-label2">
+              ${I('pin', 'w-4 h-4 text-teal shrink-0')}
+              <span>${esc(state.locationFull || state.locationTitle)}</span>
+            </div>
+          </div>
+          <div class="rounded-2xl bg-amber-50 border border-amber-200 p-3.5 text-[11px] leading-relaxed text-amber-900" role="status">
+            This estimate was calculated for the local test only. No charger, driver, map, payment, or service provider is connected or dispatched.
+          </div>
+          <div class="card p-4 space-y-2">
+            <div class="flex justify-between text-[12px]"><span class="text-label2">Pricing</span><strong class="text-label">Not connected</strong></div>
+            <div class="flex justify-between text-[12px]"><span class="text-label2">Payment</span><strong class="text-label">Not charged</strong></div>
+          </div>
+          <button onclick="completeCustomerTestOrder()" class="btn w-full min-h-[48px]">Complete local test session</button>
+          <button onclick="askCancelActiveOrder()" class="w-full min-h-[44px] text-[12px] font-semibold text-coral">Cancel test request</button>
+        </div>`;
+    }
+
     function screen03() {
+      if (state.entryMode === 'customer') return screen03Customer();
       const boostLabel = state.activeOrder.boostLabel || `${state.pickKwh} kWh Boost`;
       const svcType = state.activeOrder.serviceType || 'EV Charging';
       const cr = crew();
@@ -3799,7 +4690,9 @@ function screen02() {
     function checkoutFooter(stepLabel, total, slot, etaMins, confirmFn) {
       const blocked = !slot.later && state.paymentMode === 'Prepayment' && state.pay === 'wallet' && state.walletInr < total;
       return {
-        footerLeft: `<div class="text-[10px] text-label2">${stepLabel} • ${slot.later ? 'Scheduled' : 'ETA ' + (slot.eta || etaMins) + ' min'}</div><div class="font-display text-[19px] font-bold num">₹${total.toLocaleString('en-IN')}</div>`,
+        footerLeft: state.entryMode === 'customer'
+          ? `<div class="text-[10px] text-label2">${slot.later ? 'Local test schedule' : `Test ETA ~${slot.eta || etaMins} min`}</div><div class="font-display text-[13px] font-bold text-label">Pricing unavailable</div>`
+          : `<div class="text-[10px] text-label2">${stepLabel} • ${slot.later ? 'Scheduled' : 'ETA ' + (slot.eta || etaMins) + ' min'}</div><div class="font-display text-[19px] font-bold num">₹${total.toLocaleString('en-IN')}</div>`,
         footerBtn: `<button ${blocked ? 'disabled' : ''} onclick="${confirmFn}" class="btn shrink-0">${ctaLabel(total, slot)}</button>`
       };
     }
@@ -4052,6 +4945,20 @@ function screen02() {
       });
     }
     function screen04() {
+      if (state.entryMode === 'customer') {
+        return `
+          <div class="screen pt-[58px] px-4 pb-6 space-y-4">
+            <button onclick="back()" class="navbtn min-h-[44px] pr-2 flex items-center gap-1.5 text-label font-bold press">${I('chevL', 'w-5 h-5', 2)}<span>Back</span></button>
+            <div>
+              <div class="eyebrow text-teal">Mobile charging</div>
+              <h1 class="font-display text-[21px] font-bold text-label">Mobile charge request</h1>
+            </div>
+            <div class="card p-4 space-y-2">
+              <p class="text-[12px] leading-relaxed text-label2">No mobile unit availability is connected in this local test. Create a charge request to see a local estimate; no provider will be contacted.</p>
+            </div>
+            <button onclick="startCharge('Emergency')" class="btn min-h-[48px]">Create a test charge request</button>
+          </div>`;
+      }
       const c = car();
       if (!['all', 'fits', 'fast', 'free'].includes(state.chargerFilter)) state.chargerFilter = 'fits';
       const filters = [['fits', `Fits my car · ${c.connector}`], ['fast', 'DC Fast 60kW+'], ['free', 'Available now'], ['all', 'All']];
@@ -4300,7 +5207,110 @@ function screen02() {
     }
 
     // 08 — ACTIVITY PAGE (WITH SCHEDULE PROGRESS STEPPER)
+    function screen08Customer() {
+      const recent = state.activityTab === 'Recent';
+      const requests = state.customerOrders || [];
+      const active = state.activeOrder && !state.activeOrder.cancelled && state.activeOrder.serviceType === 'EV Charging'
+        ? state.activeOrder : null;
+      const completed = requests
+        .filter(request => request.serviceType === 'EV Charging' && request.completedAt && !request.cancelled && !request.scheduled)
+        .sort((a, b) => new Date(b.completedAt) - new Date(a.completedAt));
+      const scheduled = state.scheduledOrder && state.scheduledOrder.active && state.scheduledOrder.serviceType === 'EV Charging'
+        ? state.scheduledOrder : null;
+      return `
+        <div class="screen pt-[58px] px-4 pb-6 space-y-4">
+          <div class="flex items-center justify-between gap-3">
+            <h1 class="h-large">Activity</h1>
+            <div class="bg-fill p-1 rounded-full flex items-center" role="tablist" aria-label="Test activity">
+              <button role="tab" aria-selected="${recent}" onclick="set('activityTab','Recent')" class="px-4 py-2 rounded-full text-[12px] font-bold ${recent ? 'bg-teal text-white shadow-sm' : 'text-label2'}">Recent</button>
+              <button role="tab" aria-selected="${!recent}" onclick="set('activityTab','Scheduled')" class="px-4 py-2 rounded-full text-[12px] font-bold ${!recent ? 'bg-teal text-white shadow-sm' : 'text-label2'}">Scheduled${scheduled ? ' (1)' : ''}</button>
+            </div>
+          </div>
+          ${recent ? `
+            <section class="space-y-2.5">
+              <div class="flex items-center justify-between px-0.5">
+                <h2 class="text-[14px] font-bold text-label">Upcoming Request</h2>
+                <span class="eyebrow text-label2">${active ? '1 request' : ''}</span>
+              </div>
+              ${active ? `
+                <article class="rounded-[20px] bg-teal text-white p-3.5 space-y-2.5 shadow-sm">
+                  <div class="flex items-center justify-between gap-2">
+                    <span class="text-[9px] font-extrabold tracking-wide px-2 py-1 rounded-full bg-white/15 uppercase">${esc(active.id)} · local test</span>
+                    <span class="text-[10px] font-bold whitespace-nowrap">${active.etaMins ? `ETA estimate ${active.etaMins} min` : 'No ETA estimate'}</span>
+                  </div>
+                  <div>
+                    <h3 class="font-display text-[14px] font-bold">${esc(active.title || 'EV charging request')}</h3>
+                    <p class="text-[11px] text-white/80 mt-1">${esc(active.detail || '')}</p>
+                  </div>
+                  <div class="flex items-center justify-between gap-2 text-[10px] text-white/80">
+                    <span class="truncate">${esc(active.locationLabel || 'Address not set')}</span>
+                    <span class="whitespace-nowrap">${active.chargingMins ? `Charge estimate ${active.chargingMins} min` : ''}</span>
+                  </div>
+                  <button onclick="go('03')" class="min-h-[44px] w-full rounded-xl bg-white/15 text-[12px] font-bold text-white press">View request</button>
+                </article>
+              ` : `
+                <div class="card p-4 text-center">
+                  <p class="text-[12px] font-semibold text-label">No upcoming charge requests</p>
+                </div>
+              `}
+            </section>
+            <section class="space-y-2.5">
+              <div class="px-0.5">
+                <h2 class="text-[14px] font-bold text-label">Past History</h2>
+                <p class="text-[10.5px] text-label2 mt-0.5">Completed charge tests</p>
+              </div>
+              ${completed.length ? `<div class="space-y-2.5">${completed.map(request => `
+                <article class="card p-3.5 space-y-2.5">
+                  <div class="flex items-start justify-between gap-2">
+                    <div class="min-w-0">
+                      <h3 class="text-[13px] font-bold text-label">${esc(request.title || 'EV charging request')}</h3>
+                      <p class="text-[10px] text-label2 mt-0.5">${new Date(request.completedAt).toLocaleString('en-IN', { day: '2-digit', month: 'short', year: 'numeric', hour: 'numeric', minute: '2-digit' })}</p>
+                    </div>
+                    <span class="chip !text-[10px] shrink-0">Test completed</span>
+                  </div>
+                  <p class="text-[11px] text-label2">${esc(request.vehicleName || 'Tata Nexon EV')}${request.vehiclePlate ? ` · ${esc(request.vehiclePlate)}` : ''}</p>
+                  <div class="flex flex-wrap items-center gap-2 text-[10px]">
+                    <span class="chip chip-neutral">${esc(request.detail || '')}</span>
+                    ${request.chargingMins ? `<span class="chip chip-neutral">Charge duration estimate · ${request.chargingMins} min</span>` : ''}
+                  </div>
+                  <div class="flex items-center justify-between text-[10px] text-label2">
+                    <span class="truncate">${esc(request.locationLabel || 'Address not set')}</span>
+                    <span class="font-semibold shrink-0">Not charged</span>
+                  </div>
+                </article>
+              `).join('')}</div>` : `
+                <div class="card p-4 text-center">
+                  <p class="text-[12px] font-semibold text-label">No completed charge tests yet</p>
+                  <p class="text-[10.5px] text-label2 mt-1">Completed test requests will appear here.</p>
+                </div>
+              `}
+            </section>
+            <div class="rounded-2xl bg-teal-soft/55 p-3 text-[10.5px] leading-relaxed text-label2">Only charge requests created and completed in this browser session are shown. No sample history, live dispatch, or payment records are included.</div>
+          ` : scheduled ? `
+            <article class="card p-4 space-y-3">
+              <div class="flex items-center justify-between">
+                <span class="chip !text-[10px]">Local test schedule</span>
+                <span class="text-[11px] text-label2">${esc(scheduled.timeLabel)}</span>
+              </div>
+              <h2 class="text-[14px] font-bold text-label">${esc(scheduled.title)}</h2>
+              <p class="text-[11px] text-label2">${esc(scheduled.detail)} · ${esc(scheduled.locationLabel)}</p>
+              <div class="flex gap-2">
+                <button onclick="startCharge('Schedule'); showBanner('Choose a new test slot')" class="btn-outline min-h-[44px] flex-1">Reschedule</button>
+                <button onclick="askCancelScheduled()" class="min-h-[44px] px-3 text-[12px] font-semibold text-coral">Cancel</button>
+              </div>
+            </article>
+          ` : `
+            <div class="card p-5 text-center space-y-3">
+              <div class="text-[14px] font-bold text-label">No scheduled requests</div>
+              <p class="text-[11px] text-label2">Scheduled charge tests will appear here.</p>
+              <button onclick="startCharge('Schedule')" class="btn min-h-[44px]">Schedule a test charge</button>
+            </div>
+          `}
+        </div>`;
+    }
+
     function screen08() {
+      if (state.entryMode === 'customer') return screen08Customer();
       const c = car();
       const so = state.scheduledOrder;
       const steps = ['Booked', 'Van assigned', 'En route', 'Done'];
@@ -4459,6 +5469,7 @@ function screen02() {
     // 09 — MY VEHICLES (REPLACED GARAGE)
     function screen09() {
       const c = car();
+      const customerTest = state.entryMode === 'customer';
       const bays = [
         { i: 'home', t: 'Home • Kadavanthra, Kochi', s: 'Sahodaran Ayyappan Rd • Open Parking' },
         { i: 'building', t: 'Office • Infopark, Kakkanad', s: 'Phase 2 Basement B1 • Slot EV-04' }
@@ -4467,14 +5478,14 @@ function screen02() {
       <div class="screen pt-[58px] px-4 pb-4 space-y-4">
         <div class="flex items-end justify-between">
           <h1 class="h-large">My Vehicles</h1>
-          <button onclick="go('10')" class="chip chip-inv font-bold !px-3.5 !py-2 min-h-[44px] press">+ Add vehicle</button>
+          ${customerTest ? '' : '<button onclick="startAddNexon()" class="chip chip-inv font-bold !px-3.5 !py-2 min-h-[44px] press">+ Add vehicle</button>'}
         </div>
 
         <!-- Active Vehicle Card -->
         <div class="rounded-[24px] p-4 border border-teal/20 shadow-sm relative overflow-hidden" style="background: linear-gradient(145deg, var(--surface) 0%, var(--teal-soft) 100%);">
           <div class="flex items-center justify-between">
             <span class="eyebrow text-teal">Active Vehicle</span>
-            ${evPlate(esc(c.plate))}
+            ${c.plate ? evPlate(esc(c.plate)) : customerTest ? '<span class="chip !text-[10px]">Test vehicle</span>' : evPlate(esc(c.plate))}
           </div>
 
           <div class="flex items-center justify-between gap-3 mt-3">
@@ -4483,7 +5494,7 @@ function screen02() {
               <div class="text-[11.5px] font-medium text-label2 mt-1 leading-snug">${esc(c.trim)} • ${c.connector}${c.appSync ? ' • Synced via ' + c.appSync : ''}</div>
             </div>
             <div class="w-[96px] h-[72px] rounded-[22px] bg-teal-soft/60 border border-teal/15 flex items-center justify-center p-1.5 shrink-0 shadow-2xs overflow-hidden">
-              <img src="${NEXON_ANGLE_IMG}" alt="${esc(c.name)}" class="w-full h-full object-contain drop-shadow-sm">
+              ${customerTest ? I('car', 'w-8 h-8 text-teal') : `<img src="${NEXON_ANGLE_IMG}" alt="${esc(c.name)}" class="w-full h-full object-contain drop-shadow-sm">`}
             </div>
           </div>
 
@@ -4491,15 +5502,15 @@ function screen02() {
 
           <div class="grid grid-cols-3 gap-2">
             <div>
-              <div class="text-[10.5px] font-medium text-label2">Live SOC</div>
-              <div class="font-display text-[17px] font-extrabold text-teal mt-0.5 num">${c.soc}%</div>
+              <div class="text-[10.5px] font-medium text-label2">${customerTest ? 'Entered battery' : 'Live SOC'}</div>
+              <div class="font-display text-[17px] font-extrabold text-teal mt-0.5 num">${Number.isFinite(c.soc) ? `${c.soc}%` : 'Not connected'}</div>
             </div>
             <div>
               <div class="text-[10.5px] font-medium text-label2">Health</div>
               <div class="font-display text-[17px] font-extrabold text-teal mt-0.5 num">${c.soh}</div>
             </div>
             <div>
-              <div class="text-[10.5px] font-medium text-label2">Battery</div>
+              <div class="text-[10.5px] font-medium text-label2">${customerTest ? 'Configured battery' : 'Battery'}</div>
               <div class="font-display text-[17px] font-extrabold text-teal mt-0.5 num">${c.batteryKwh} kWh</div>
             </div>
           </div>
@@ -4519,7 +5530,7 @@ function screen02() {
                   </span>
                   <div>
                     <div class="font-display text-[13px] font-bold tracking-tight">${esc(it.name)}</div>
-                    <div class="mt-1">${evPlate(esc(it.plate), 'sm')}</div>
+                    <div class="mt-1">${it.plate ? evPlate(esc(it.plate), 'sm') : customerTest ? '<span class="text-[10px] text-label2">Test vehicle</span>' : evPlate(esc(it.plate), 'sm')}</div>
                   </div>
                 </div>
                 <span class="w-5 h-5 rounded-full flex items-center justify-center shrink-0 ${state.carIdx === idx ? 'bg-teal text-white' : 'border border-line text-transparent'}">${I('check', 'w-3 h-3', 3)}</span>
@@ -4529,7 +5540,9 @@ function screen02() {
           </div>
         </div>
 
-        <div>
+        ${customerTest ? `
+          <div class="card p-3.5 text-[11px] leading-relaxed text-label2">Vehicle battery telemetry is not connected in this test.</div>
+        ` : `<div>
           <div class="eyebrow px-1 mb-2">Saved locations • tap to use</div>
           <div class="card overflow-hidden">
             ${bays.map((b, i) => `
@@ -4541,19 +5554,23 @@ function screen02() {
               </button>`).join('')}
           </div>
         </div>
-      </div>`;
+      </div>`}`;
     }
 
     // 10 — ADD VEHICLE (validated form + quick-fill of popular Indian EVs)
     const POPULAR_EVS = [
-      { name: 'Tata Nexon EV', batteryKwh: '40.5', connector: 'CCS2' },
-      { name: 'Tata Punch.ev', batteryKwh: '35', connector: 'CCS2' },
-      { name: 'MG ZS EV', batteryKwh: '50.3', connector: 'CCS2' },
-      { name: 'Tata Tiago.ev', batteryKwh: '24', connector: 'CCS2' }
+      { name: 'Tata Nexon EV', batteryKwh: '40.5', connector: 'CCS2' }
     ];
     const ADD_CONNECTORS = ['CCS2', 'Type 2', 'Bharat DC-001'];
+    function startAddNexon() {
+      state.addForm = { name: 'Tata Nexon EV', trim: 'Empowered+ LR', plate: '', connector: 'CCS2', batteryKwh: '40.5' };
+      state.addErrors = {};
+      state.addSuccessVehicle = null;
+      go('10');
+    }
     function quickFill(i) {
       const m = POPULAR_EVS[i];
+      if (!m) throw new Error(`Unknown vehicle preset: ${i}`);
       Object.assign(state.addForm, { name: m.name, batteryKwh: m.batteryKwh, connector: m.connector });
       state.addErrors = {};
       render();
@@ -4567,7 +5584,7 @@ function screen02() {
     }
     function validateAddForm() {
       const f = state.addForm, e = {};
-      if (f.name.trim().length < 2) e.name = 'Enter the make and model, e.g. Tata Punch.ev';
+      if (f.name.trim() !== 'Tata Nexon EV') e.name = 'This test is configured for Tata Nexon EV only';
       const plate = normalisePlate(f.plate);
       if (!f.plate.trim()) e.plate = 'Enter the registration number';
       else if (!/^[A-Z]{2} \d{2}( [A-Z]{1,3})? \d{4}$/.test(plate) && !/^\d{2} BH \d{4} [A-Z]{1,2}$/.test(plate))
@@ -4657,7 +5674,7 @@ function screen02() {
 
           <div class="space-y-2">
             <button onclick="go('01', 'tab')" class="btn w-full">Done</button>
-            <button onclick="state.addSuccessVehicle = null; render()" class="w-full py-3 rounded-full bg-fill text-[13px] font-semibold text-label press">Add another vehicle</button>
+            <button onclick="startAddNexon()" class="w-full py-3 rounded-full bg-fill text-[13px] font-semibold text-label press">Add another Nexon EV</button>
           </div>
         </div>`;
       }
@@ -4682,8 +5699,9 @@ function screen02() {
           <form class="card p-4 space-y-3.5" onsubmit="event.preventDefault(); submitAddVehicle()" novalidate>
             <div>
               <label for="add-name" class="block text-[11.5px] font-semibold text-label2 mb-1">Make &amp; model</label>
-              <input id="add-name" type="text" autocomplete="off" value="${esc(state.addForm.name)}" oninput="state.addForm.name = this.value" placeholder="e.g. Tata Punch.ev" aria-invalid="${!!err.name}" class="${inp} ${err.name ? 'input-invalid' : ''}" />
+              <input id="add-name" type="text" autocomplete="off" value="${esc(state.addForm.name)}" readonly aria-describedby="add-model-test-note" aria-invalid="${!!err.name}" class="${inp} ${err.name ? 'input-invalid' : ''}" />
               ${err.name ? `<div class="field-error" role="alert">${err.name}</div>` : ''}
+              <div id="add-model-test-note" class="text-[10.5px] text-label2 mt-1">This test is configured for Tata Nexon EV.</div>
             </div>
 
             <div>
@@ -4727,6 +5745,33 @@ function screen02() {
     }
     function screen11() {
       const isManageWallet = state.accountView === 'wallet';
+
+      if (state.entryMode === 'customer' && state.accountView !== 'appearance') {
+        const c = car();
+        return `
+          <div class="screen pt-[58px] px-4 pb-6 space-y-4">
+            <h1 class="h-large">Account</h1>
+            <div class="card p-4 flex items-center gap-3.5">
+              <div class="w-12 h-12 rounded-full bg-teal text-white font-display font-bold text-[16px] flex items-center justify-center">GT</div>
+              <div class="min-w-0">
+                <div class="font-display text-[15.5px] font-bold">Guest test session</div>
+                <div class="text-[11.5px] text-label2 mt-0.5">No account or saved profile is connected</div>
+              </div>
+            </div>
+            <div class="card p-4 space-y-2">
+              <div class="eyebrow text-teal">Test vehicle</div>
+              <div class="text-[13px] font-bold text-label">${esc(c.name)}</div>
+              <div class="text-[11px] text-label2">${c.plate ? esc(c.plate) + ' · ' : ''}${esc(c.connector)} · ${c.batteryKwh} kWh</div>
+              <div class="text-[10.5px] text-label2">${Number.isFinite(c.soc) ? `User-entered battery level: ${c.soc}%` : 'Battery telemetry is not connected'}</div>
+            </div>
+            <div class="card p-4 text-[11px] leading-relaxed text-label2">No wallet, bank account, receipts, or profile data is preloaded in this customer test.</div>
+            <div class="card overflow-hidden">
+              <button onclick="set('activityTab','Recent'); go('08')" class="w-full min-h-[48px] px-4 flex items-center justify-between text-left text-[13px] font-semibold press">Test activity ${I('chevR', 'w-4 h-4 text-label3')}</button>
+              <button onclick="go('09')" class="w-full min-h-[48px] px-4 flex items-center justify-between text-left text-[13px] font-semibold press border-t border-line">My vehicle ${I('chevR', 'w-4 h-4 text-label3')}</button>
+              <button onclick="openAccountAppearance()" class="w-full min-h-[48px] px-4 flex items-center justify-between text-left text-[13px] font-semibold press border-t border-line">Appearance ${I('chevR', 'w-4 h-4 text-label3')}</button>
+            </div>
+          </div>`;
+      }
 
       if (isManageWallet) {
         // MANAGE WALLET SCREEN VIEW
@@ -5041,7 +6086,8 @@ function screen02() {
       '01': screen01, '02': screen02, '03': screen03, '04': screen04,
       '05': screen05, '06': screen06, '07': screen07, '08': screen08,
       '09': screen09, '10': screen10, '11': screen11, '12': screen12,
-      '13': screen13
+      '13': screen13, '14': screen14, '15': screen15, '16': screen16,
+      '17': screen17, '18': screen18, '19': screen19, '20': screen20
     };
 
     function render(animate) {
