@@ -2541,7 +2541,7 @@
         o = {
           ...o,
           id: `TEST-${String(state.customerOrderSeq).padStart(3, '0')}`,
-          status: 'Test request received',
+          status: 'Charge request received',
           paymentMode: 'No payment',
           customerTest: true,
           requestedAt: new Date().toISOString()
@@ -2574,7 +2574,7 @@
       resetChat();
       go('03', 'push', { reset: true });
       showBanner(customerTest
-        ? `Local test request created • ETA estimate ${o.etaMins} min; not dispatched`
+        ? `Charge request received • ETA estimate ${o.etaMins} min; not dispatched`
         : `${o.title} confirmed • ETA ${o.etaMins} min`);
     }
     function cancelActiveOrder() {
@@ -2582,15 +2582,15 @@
       if (!o || o.cancelled) return;
       if (state.entryMode !== 'customer' && o.paymentMode === 'Prepayment' && o.paymentMethod === 'wallet' && o.total) state.walletInr += o.total;
       o.cancelled = true;
-      o.status = state.entryMode === 'customer' ? 'Test request cancelled' : o.status;
+      o.status = state.entryMode === 'customer' ? 'Charge request cancelled' : o.status;
       go('01', 'pop');
-      showBanner(state.entryMode === 'customer' ? 'Local test request cancelled' : o.paymentMode === 'Prepayment' ? 'Request cancelled • refund initiated' : 'Request cancelled');
+      showBanner(state.entryMode === 'customer' ? 'Charge request cancelled' : o.paymentMode === 'Prepayment' ? 'Request cancelled • refund initiated' : 'Request cancelled');
     }
     function askCancelActiveOrder() {
       confirmSheet({
         title: 'Cancel this request?',
         body: state.entryMode === 'customer'
-          ? `${esc(state.activeOrder.boostLabel)} • cancel this local test request? No service provider was contacted.`
+          ? `${esc(state.activeOrder.boostLabel)} • cancel this charge request? No service provider was contacted.`
           : `${esc(state.activeOrder.boostLabel)} • crew is ${state.activeOrder.etaMins} min away.${state.activeOrder.paymentMode === 'Prepayment' ? ' Your prepayment will be refunded.' : ''}`,
         confirmLabel: 'Yes, cancel request',
         confirmFn: 'cancelActiveOrder()'
@@ -2600,7 +2600,7 @@
       confirmSheet({
         title: 'Cancel scheduled booking?',
         body: state.entryMode === 'customer'
-          ? 'Remove this scheduled test request? No service provider was contacted.'
+          ? 'Remove this charging schedule? No service provider was contacted.'
           : `${esc(state.scheduledOrder.title)} • ${esc(state.scheduledOrder.timeLabel)}`,
         confirmLabel: 'Yes, cancel booking',
         confirmFn: 'cancelScheduledOrder()'
@@ -2611,20 +2611,20 @@
       state.scheduledOrder.active = false;
       if (state.entryMode === 'customer') {
         const request = state.customerOrders.find(order => order.id === state.scheduledOrder.id);
-        if (request) request.status = 'Test schedule cancelled';
+        if (request) request.status = 'Schedule cancelled';
       }
       render();
-      showBanner(state.entryMode === 'customer' ? 'Local test schedule cancelled' : 'Scheduled booking cancelled');
+      showBanner(state.entryMode === 'customer' ? 'Charging schedule cancelled' : 'Scheduled booking cancelled');
     }
     function completeCustomerTestOrder() {
       const order = state.activeOrder;
       if (state.entryMode !== 'customer' || !order || order.cancelled) return;
-      order.status = 'Test session completed';
+      order.status = 'Charging flow completed';
       order.completedAt = new Date().toISOString();
       state.activeOrder = null;
       state.activityTab = 'Recent';
       go('08', 'tab', { reset: true });
-      showBanner('Local test session marked complete');
+      showBanner('Charging flow completed');
     }
     function hasLiveOrder() { return !!state.activeOrder && !state.activeOrder.cancelled; }
     // Notification / deep-link routing that never shows a dead screen
@@ -2665,7 +2665,7 @@
     }
     // CTA wording tells the user exactly what will happen when they tap
     function ctaLabel(total, slot, verb = 'book') {
-      if (state.entryMode === 'customer') return slot.later ? 'Save local test schedule' : 'Create local test request';
+      if (state.entryMode === 'customer') return slot.later ? 'Save schedule' : 'Request charging';
       if (slot.later) return 'Confirm schedule';
       return state.paymentMode === 'Prepayment' ? `Pay ₹${total.toLocaleString('en-IN')} & ${verb}` : `Confirm • pay later`;
     }
@@ -2697,7 +2697,7 @@
               ${closeBtn()}
             </div>
             <label for="customer-location-sheet" class="block text-[11.5px] font-semibold text-label2">Pickup address</label>
-            <textarea id="customer-location-sheet" rows="3" oninput="state.locationFull = this.value" placeholder="Enter the address for this test request" class="w-full bg-fill border border-line rounded-xl p-3 text-[13px] outline-none focus:border-teal">${esc(state.locationFull)}</textarea>
+            <textarea id="customer-location-sheet" rows="3" oninput="state.locationFull = this.value" placeholder="Enter the charging location" class="w-full bg-fill border border-line rounded-xl p-3 text-[13px] outline-none focus:border-teal">${esc(state.locationFull)}</textarea>
             <button onclick="closeSheet(); useCurrentGpsLocation()" class="btn-outline w-full min-h-[44px]">${I('crosshair', 'w-4 h-4')} Use device location</button>
             <button onclick="if(saveCustomerLocation('customer-location-sheet')){ closeSheet(); render(); showBanner('Test address saved') }" class="btn w-full min-h-[44px]">Save address</button>
             <p class="text-[10px] leading-relaxed text-label2">No saved locations or map provider is connected in this local test.</p>
@@ -3908,6 +3908,7 @@
 
         <!-- Expanded Center Map Area (Shows Live Van Route on Home Map when Active) -->
         <div class="home-map-center flex flex-col items-center justify-center relative">
+          ${customerTest ? customerMapBackdrop() : ''}
           ${customerTest ? '' : state.homeMapExpanded ? `
             <button id="home-map-back" type="button" onclick="closeHomeMap()" aria-label="Back to Home" class="home-map-back press">
               ${I('chevL', 'w-5 h-5', 2)}
@@ -3930,12 +3931,7 @@
             </button>
           ` : ''}
 
-          ${customerTest ? `
-            <div class="card max-w-[230px] p-3 text-center bg-surface/90 backdrop-blur-sm">
-              <div class="text-[11px] font-bold text-label">${state.locationFull ? esc(state.locationShort) : 'No service address set'}</div>
-              <div class="mt-1 text-[10px] leading-relaxed text-label2">Map and live vehicle location are unavailable in this local test.</div>
-            </div>
-          ` : `<div class="home-map-location flex flex-col items-center mt-4">
+          ${customerTest ? '' : `<div class="home-map-location flex flex-col items-center mt-4">
             <div class="teal-pin-pulse">
               <div class="w-8 h-8 rounded-full bg-teal text-white shadow-lg flex items-center justify-center border-2 border-white">
                 ${I('pin', 'w-4 h-4', 2.2)}
@@ -3968,14 +3964,14 @@
             </button>` : ''}
 
           ${live ? `
-            <button onclick="go('03')" aria-label="${customerTest ? 'View local test request' : `Track ${state.activeOrder.serviceType || 'EV Charging'}, van arrives in ${state.activeOrder.etaMins || 14} minutes`}" class="home-service-card card-feature card-interactive press">
+            <button onclick="go('03')" aria-label="${customerTest ? 'View charge request' : `Track ${state.activeOrder.serviceType || 'EV Charging'}, van arrives in ${state.activeOrder.etaMins || 14} minutes`}" class="home-service-card card-feature card-interactive press">
               <span class="home-service-content">
                 <span class="home-service-icon icon-container icon-container--liquid" aria-hidden="true">
                   <svg class="w-6 h-6 fill-white" viewBox="0 0 24 24"><path d="M13 2L4 14h7l-1 8 9-12h-7l1-8z"/></svg>
                 </span>
                 <span class="home-service-divider" aria-hidden="true"></span>
                 <span class="home-service-copy">
-                  <span class="home-service-title block">${state.activeOrder.status || (customerTest ? 'Test request received' : 'Van En Route')}</span>
+                  <span class="home-service-title block">${state.activeOrder.status || (customerTest ? 'Charge request received' : 'Van En Route')}</span>
                   <span class="home-service-status"><span class="w-2 h-2 rounded-full ${customerTest ? 'bg-[#D69E2E]' : 'bg-[#10B981]'}"></span>${customerTest ? 'Local test · not dispatched' : state.activeOrder.serviceType || 'EV Charging'}</span>
                   <span class="home-service-detail block truncate">${state.activeOrder.detail || state.activeOrder.boostLabel || '25 kWh (CCS2 • 60 kW)'}</span>
                 </span>
@@ -4058,9 +4054,11 @@
               <textarea id="customer-address" rows="3" oninput="state.locationFull = this.value" placeholder="Street address, area, city" class="w-full bg-fill border border-line rounded-xl p-3 text-[13px] text-label outline-none focus:border-teal">${esc(state.locationFull)}</textarea>
               <button onclick="useCurrentGpsLocation()" class="btn-outline w-full min-h-[44px]">${I('crosshair', 'w-4 h-4')} Use device location</button>
             </div>
-            <div class="card p-4 text-center space-y-1">
-              <div class="text-[12px] font-semibold text-label">Map and live station data unavailable</div>
-              <p class="text-[10.5px] leading-relaxed text-label2">This customer test uses only the address you enter. No route, station, or service provider is simulated as live.</p>
+            <div class="customer-map-frame h-[132px] rounded-[18px] border border-line shadow-sm">
+              ${customerMapBackdrop()}
+            </div>
+            <div class="rounded-2xl bg-teal-soft/45 px-3 py-2 text-[10px] leading-relaxed text-label2">
+              Illustrative map only. Your address is used for the estimate; no live routes, stations, or service availability are shown.
             </div>
           </div>
           <div class="bar px-4 py-3 flex items-center justify-between gap-3">
@@ -4083,7 +4081,7 @@
       const later = state.vanMode !== 'Emergency';
       placeOrder({
         id: later ? 'VI-4822' : 'VI-4821', serviceType: 'EV Charging', title: later ? chargeModeTitle() : 'Mobile charge',
-        detail: q.detail, status: state.entryMode === 'customer' ? 'Test request received' : 'Van En Route',
+        detail: q.detail, status: state.entryMode === 'customer' ? 'Charge request received' : 'Van En Route',
         etaMins: state.vanMode === 'Emergency' ? q.slot.eta || q.etaMins : null, chargingMins: q.mins, paymentMode: state.paymentMode, total: q.total,
         scheduledLabel: state.vanMode === 'Recurring' ? recurLabel(q.slot.label) : state.vanMode === 'Schedule' ? q.slot.label : null
       });
@@ -4462,19 +4460,24 @@ function screen02() {
           </div>
         `;
         const blocked = state.paymentMode === 'Prepayment' && state.pay === 'wallet' && state.walletInr < q.total && !q.slot.later;
-        footerLeft = `
+        footerLeft = state.entryMode === 'customer' ? `
+          <div class="min-w-0">
+            <div class="text-[10px] text-label2">Charge estimate</div>
+            <div class="font-display text-[14px] font-bold text-label">${q.mins} min</div>
+          </div>
+        ` : `
           <div class="flex items-center gap-2.5 min-w-0">
             <span class="w-8 h-8 rounded-full border border-teal/30 bg-teal-soft/40 text-teal flex items-center justify-center shrink-0">
               ${I('receipt', 'w-4 h-4 text-teal', 2)}
             </span>
             <div class="min-w-0">
-              <div class="text-[10px] text-label2 num">Step 3 of 3 • ${state.entryMode === 'customer' ? 'Local test · no provider contacted' : q.slot.later ? 'Scheduled' : `ETA ${q.slot.eta || q.etaMins} min`}</div>
-              <div class="font-display text-[14px] font-bold text-label">${state.entryMode === 'customer' ? `Charge time ~${q.mins} min` : '₹' + q.total.toLocaleString('en-IN')}</div>
+              <div class="text-[10px] text-label2 num">Step 3 of 3 • ${q.slot.later ? 'Scheduled' : `ETA ${q.slot.eta || q.etaMins} min`}</div>
+              <div class="font-display text-[14px] font-bold text-label">₹${q.total.toLocaleString('en-IN')}</div>
             </div>
           </div>
         `;
         footerBtn = `
-          <button ${blocked ? 'disabled' : ''} onclick="confirmCharge()" class="min-h-[44px] bg-teal hover:bg-teal-dark text-white font-bold text-[13px] px-6 py-2.5 rounded-full flex items-center gap-2 shadow-md shrink-0 press transition-transform">
+          <button ${blocked ? 'disabled' : ''} onclick="confirmCharge()" class="min-h-[44px] bg-teal hover:bg-teal-dark text-white font-bold text-[13px] ${state.entryMode === 'customer' ? 'px-4' : 'px-6'} py-2.5 rounded-full flex items-center gap-2 shadow-md shrink-0 whitespace-nowrap press transition-transform">
             <span>${ctaLabel(q.total, q.slot)}</span>
             ${I('arrowRight', 'w-4 h-4', 2.2)}
           </button>
@@ -4502,8 +4505,8 @@ function screen02() {
         return `
           <div class="screen pt-[58px] px-4 items-center justify-center text-center space-y-3">
             <div class="w-14 h-14 rounded-full bg-fill text-label2 flex items-center justify-center">${I('bolt', 'w-6 h-6')}</div>
-            <h1 class="font-display text-[18px] font-bold text-label">No active test request</h1>
-            <p class="text-[12px] text-label2">Create a request from Home to see its test estimate.</p>
+            <h1 class="font-display text-[18px] font-bold text-label">No active charge request</h1>
+            <p class="text-[12px] text-label2">Choose Charge my EV from Home to review a charging estimate.</p>
             <button onclick="go('01','pop')" class="btn">Back to home</button>
           </div>`;
       }
@@ -4514,6 +4517,9 @@ function screen02() {
               ${I('chevL', 'w-5 h-5', 2)}<span>Home</span>
             </button>
             <span class="chip !text-[10px]">Local test</span>
+          </div>
+          <div class="customer-map-frame h-[160px] rounded-[20px] border border-line shadow-sm">
+            ${customerMapBackdrop()}
           </div>
           <div class="card p-4 space-y-3">
             <div class="eyebrow text-teal">Request ${esc(order.id)}</div>
@@ -4543,8 +4549,8 @@ function screen02() {
             <div class="flex justify-between text-[12px]"><span class="text-label2">Pricing</span><strong class="text-label">Not connected</strong></div>
             <div class="flex justify-between text-[12px]"><span class="text-label2">Payment</span><strong class="text-label">Not charged</strong></div>
           </div>
-          <button onclick="completeCustomerTestOrder()" class="btn w-full min-h-[48px]">Complete local test session</button>
-          <button onclick="askCancelActiveOrder()" class="w-full min-h-[44px] text-[12px] font-semibold text-coral">Cancel test request</button>
+          <button onclick="completeCustomerTestOrder()" class="btn w-full min-h-[48px]">Complete charging flow</button>
+          <button onclick="askCancelActiveOrder()" class="w-full min-h-[44px] text-[12px] font-semibold text-coral">Cancel charge request</button>
         </div>`;
     }
 
@@ -4953,10 +4959,13 @@ function screen02() {
               <div class="eyebrow text-teal">Mobile charging</div>
               <h1 class="font-display text-[21px] font-bold text-label">Mobile charge request</h1>
             </div>
-            <div class="card p-4 space-y-2">
-              <p class="text-[12px] leading-relaxed text-label2">No mobile unit availability is connected in this local test. Create a charge request to see a local estimate; no provider will be contacted.</p>
+            <div class="customer-map-frame h-[180px] rounded-[20px] border border-line shadow-sm">
+              ${customerMapBackdrop()}
             </div>
-            <button onclick="startCharge('Emergency')" class="btn min-h-[48px]">Create a test charge request</button>
+            <div class="card p-4 space-y-2">
+              <p class="text-[12px] leading-relaxed text-label2">Review a mobile charging request using your selected Kochi test area. This prototype does not check live unit availability or contact a provider.</p>
+            </div>
+            <button onclick="startCharge('Emergency')" class="btn min-h-[48px]">Request charging</button>
           </div>`;
       }
       const c = car();
@@ -5280,8 +5289,8 @@ function screen02() {
                 </article>
               `).join('')}</div>` : `
                 <div class="card p-4 text-center">
-                  <p class="text-[12px] font-semibold text-label">No completed charge tests yet</p>
-                  <p class="text-[10.5px] text-label2 mt-1">Completed test requests will appear here.</p>
+                  <p class="text-[12px] font-semibold text-label">No completed charges yet</p>
+                  <p class="text-[10.5px] text-label2 mt-1">Completed charge requests will appear here.</p>
                 </div>
               `}
             </section>
