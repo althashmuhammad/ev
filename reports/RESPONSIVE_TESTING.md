@@ -11,7 +11,7 @@ Viewport simulation covered the 13 primary screens and major workflow/map states
 | 320x640 | Small mobile | All primary routes and sampled steps | None detected | Pass; content scrolls within viewport; active targets >=44px | [Home](screenshots/after/Home-320x640.png) |
 | 360x800 | Mobile | Same | None detected | Pass | [Home](screenshots/after/Home-360x800.png) |
 | 375x812 | Mobile | Same | None detected | Pass | [Home](screenshots/after/Home-375x812.png) |
-| 390x844 | Mobile/reference | Same | None detected | Pass | [Home](screenshots/after/Home-390x844.png) |
+| 390x844 | Mobile/reference | Same | None detected | Pass | [Current Home without Dynamic Island](screenshots/after/Audit-Home-No-Dynamic-Island-390x844.png) |
 | 414x896 | Mobile | Same | None detected | Pass | [Home](screenshots/after/Home-414x896.png) |
 | 430x932 | Large mobile | Same | None detected | Pass | [Home](screenshots/after/Home-430x932.png) |
 | 480x900 | Large mobile | Same | None detected | Pass | [Home](screenshots/after/Home-480x900.png) |
@@ -36,7 +36,7 @@ Each screen below was included in the viewport sweep. The `390x844` capture is r
 | Stations | Pass | [Stations](screenshots/after/Stations-390x844.png) |
 | Station Details | Pass | [Station Details](screenshots/after/Station-Detail-390x844.png) |
 | Jump Start | Pass | [Jump Start](screenshots/after/Jump-Start-390x844.png) |
-| Towing | Pass | [Towing](screenshots/after/Towing-390x844.png) |
+| Towing | Pass | [Towing](screenshots/after/Towing-320x640.png) |
 | Activity | Pass | [Activity](screenshots/after/Activity-390x844.png) |
 | My Vehicles | Pass | [Vehicles](screenshots/after/Vehicles-390x844.png) |
 | Add Vehicle | Pass | [Add Vehicle](screenshots/after/Add-Vehicle-390x844.png) |
@@ -54,3 +54,4 @@ Each screen below was included in the viewport sweep. The `390x844` capture is r
 - Reduced-motion CSS was found for smooth scrolling, but the complete animation system was not verified under reduced-motion preference.
 - Contrast ratios across every theme/state, keyboard-only coverage, screen-reader announcements, zoom/reflow, and physical safe-area behavior were not formally tested. No WCAG 2.2 AA compliance claim is made.
 - Viewport simulation cannot substitute for physical device, mobile keyboard, or assistive-technology testing.
+- The final status-bar-only change is captured at 390x844 above. Other viewport-specific screenshots predate that cosmetic change; it did not alter screen dimensions or layout geometry.

@@ -4,19 +4,19 @@
 
 | Metric | Result |
 |---|---:|
-| Executed browser checks | 547 |
-| Passed | 547 |
+| Executed browser checks | 548 |
+| Passed | 548 |
 | Failed product checks | 0 |
 | Blocked | See blocked categories below; no live integration tests could start |
 | Not run | Formal build, automated suites, and production security/performance/accessibility tooling |
 
-The executed count is 19 scenario-based workflow groups + 330 responsive screen/step/viewport combinations + 198 theme/screen-state renders. These are browser checks, not a formal unit/integration test suite.
+The executed count is 20 scenario-based workflow groups + 330 responsive screen/step/viewport combinations + 198 theme/screen-state renders. These are browser checks, not a formal unit/integration test suite.
 
 ## Results by category
 
 | Category | Result | Evidence/notes |
 |---|---|---|
-| Focused workflows and regressions | 19/19 groups passed | See [USER_WORKFLOW_TESTING.md](USER_WORKFLOW_TESTING.md). Includes scheduled-vs-emergency routing, wallet refund, zero range, unread badge, plate formatting, service flows, notification conversation, theme, map back, vehicle validation, and bottom navigation. |
+| Focused workflows and regressions | 20/20 groups passed | See [USER_WORKFLOW_TESTING.md](USER_WORKFLOW_TESTING.md). Includes scheduled-vs-emergency routing, wallet refund, zero range, unread badge, plate formatting, service flows, notification conversation, theme, map back, vehicle validation, bottom navigation, and the final status-bar change. |
 | Responsive/accessibility smoke checks | 330 combinations passed | No horizontal overflow, unnamed active buttons, or active targets below 44 CSS px in tested combinations. See [RESPONSIVE_TESTING.md](RESPONSIVE_TESTING.md). |
 | Theme rendering | 198 combinations passed | Nine presets rendered without detected rendering/overflow failures. |
 | Browser console | No app JavaScript errors observed in exercised flows | Tailwind CDN production warning was observed. |
@@ -48,6 +48,7 @@ The executed count is 19 scenario-based workflow groups + 330 responsive screen/
 - `22BH1234AB` was accepted and saved as `22 BH 1234 AB`.
 - Car Wash, Towing, Fuel, Jump Start, station search/reservation, notification chat/reply/view-update, theme selection, map expand/back, and Add Vehicle validation passed in browser checks.
 - Account navigation was verified at 390x844 with pointer hit testing; the browser was restored to Home after validation.
+- The Dynamic Island/camera pill is absent at 390x844; time and system indicators remain, and Home/Account navigation still works.
 
 ## Final assessment
 

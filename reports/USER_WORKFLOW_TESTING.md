@@ -25,6 +25,7 @@ Browser-based checks were performed against the local prototype. "Pass" means th
 | WF-17 | Home > expand map > Back | Map-only state hides the other Home cards; Back restores Home. | Expand/back restored the expected state. | Pass |
 | WF-18 | My Vehicles > Add Vehicle > submit invalid/valid values | Validation rejects invalid values and accepts supported registration input. | Add-vehicle validation and supported plate normalization worked. | Pass |
 | WF-19 | Home > Account tab > Home tab | Bottom navigation changes the active screen. | Pointer hit-test and navigation passed at 390x844; browser returned to Home. | Pass |
+| WF-20 | Load Home at 390x844 > inspect status bar | No decorative Dynamic Island/camera pill; time and system indicators remain. | Pill/dots were absent; Account and Home navigation still worked. | Pass |
 
 ## Journeys not implemented or not verifiable
 

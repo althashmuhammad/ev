@@ -2,7 +2,7 @@
 
 ## Executive summary
 
-The VoltIndia prototype was audited across its 13 primary screen routes, major service flows, themes, and responsive states. Six reproducible frontend defects were corrected and retested. The exercised browser checks passed, with no application JavaScript errors observed.
+The VoltIndia prototype was audited across its 13 primary screen routes, major service flows, themes, and responsive states. Six reproducible frontend defects were corrected and retested. The requested decorative Dynamic Island/camera pill was also removed from the status bar. The exercised browser checks passed, with no application JavaScript errors observed.
 
 This is a standalone UI prototype, not a production-ready EV service. It has no authentication, backend, database, API client, real payment processing, live GPS/telemetry, or automated build/test setup. Orders, wallet actions, reservations, chat, tracking, and receipts are simulated. Production readiness is therefore **blocked** until real service contracts, security controls, persistence, and deployment validation exist.
 
@@ -10,8 +10,8 @@ This is a standalone UI prototype, not a production-ready EV service. It has no 
 
 | Area | Finding |
 |---|---|
-| Frontend | One standalone HTML application: [`app1.1.html`](../app1.1.html). CSS and JavaScript are inline. No framework or framework version is declared. |
-| Screens and routing | Thirteen renderer routes (`01`-`13`) with in-memory navigation/history. Source inventory: [`SCREENS`](../app1.1.html#L1546) and [`RENDERERS`](../app1.1.html#L5044). |
+| Frontend | One standalone HTML application: [`index.html`](../index.html). CSS and JavaScript are inline. No framework or framework version is declared. |
+| Screens and routing | Thirteen renderer routes (`01`-`13`) with in-memory navigation/history. Source inventory: [`SCREENS`](../index.html#L1546) and [`RENDERERS`](../index.html#L5044). |
 | Screens | Home, Quick Charge, Live Tracking, Stations, Station Details, Jump Start, Towing, Activity, My Vehicles, Add Vehicle, Account, Fuel & Gas, and Carwash. Wallet and Appearance are Account subviews; map-only mode is a Home state. |
 | Styling/assets | Inline CSS, utility classes from the Tailwind CDN, Google Fonts, and local image assets. Browser output includes Tailwind's production-CDN warning. |
 | State/persistence | Service, vehicle, profile, order, and wallet state is mock/in-memory. Theme and custom-theme preferences use `localStorage`; no account or service data is persisted to a server. |
@@ -30,13 +30,14 @@ Authentication screens and flows (registration, login, reset, logout, and sessio
 
 - The existing teal design and nine theme presets remain present: Existing Light, Existing Dark, Pure Black + White, Pure White + Black, Neon, Ocean Blue, Forest Green, Graphite, and Custom. The Appearance menu remains under Account.
 - The screen set has consistent navigation, card, and theme behavior in the exercised flows. The map can expand to a map-only state and return to Home.
+- The mock Dynamic Island/camera pill was removed; the status bar retains the time and system indicators.
 - Most UI is backed by fixed demo values. Labels such as current GPS, driver, charging status, and station availability must not be presented as live service data in production.
 
 ### Functional and business logic
 
 Six defects were fixed: scheduled charging routing, wallet refund method capture, zero-battery range, unread notification badge, Bharat-series plate normalization, and theme-menu focus/error handling. The focused fixes are listed in the [issue register](ISSUE_REGISTER.md).
 
-Charging price, ETA, service slots, order status, station availability, and wallet transactions are locally calculated or hard-coded. The charging quote code applies a minimum energy charge and call-out fee in [`chargeQuote`](../app1.1.html#L3283); there is no authoritative backend contract against which to validate those rules. The labels in `SLOTS` are static, so service hours, timezone rules, and availability need product/API confirmation before live booking.
+Charging price, ETA, service slots, order status, station availability, and wallet transactions are locally calculated or hard-coded. The charging quote code applies a minimum energy charge and call-out fee in [`chargeQuote`](../index.html#L3283); there is no authoritative backend contract against which to validate those rules. The labels in `SLOTS` are static, so service hours, timezone rules, and availability need product/API confirmation before live booking.
 
 ### API and integration
 
@@ -55,7 +56,7 @@ Browser viewport simulation covered 15 sizes from 320x640 through 1920x1080. The
 ### Security and reliability
 
 - No credentials, API secrets, authentication state, or server endpoints were found in this prototype.
-- User-entered text is escaped by the shared `esc` helper before HTML rendering ([source](../app1.1.html#L1350)). The app also uses inline event handlers and `innerHTML`, so a strict production Content Security Policy would require additional work.
+- User-entered text is escaped by the shared `esc` helper before HTML rendering ([source](../index.html#L1350)). The app also uses inline event handlers and `innerHTML`, so a strict production Content Security Policy would require additional work.
 - There is no server-side authentication/authorization, input validation, rate limiting, payment protection, or network retry behavior to inspect. No penetration test or automated security scan was run.
 - Theme storage failures now log an explicit error and show user feedback. Service-operation failures cannot be tested without real services.
 
@@ -71,6 +72,7 @@ No Lighthouse, bundle-size, network timing, or device profiling was available. T
 4. The unread notification badge reflects the current unread count and disappears at zero.
 5. Valid Bharat-series registration values are normalized on save (for example, `22BH1234AB` to `22 BH 1234 AB`).
 6. Appearance navigation restores focus, and theme/fullscreen storage or browser failures are surfaced through logging/feedback.
+7. Removed the decorative Dynamic Island/camera pill while retaining the time and signal/Wi-Fi/battery indicators.
 
 ## Remaining release blockers
 
@@ -90,4 +92,5 @@ The screenshot collection contains 247 PNG files at report generation. Represent
 - Scheduled-routing regression: [before](screenshots/before/Charge-Schedule-routing-390x844.png) and [after](screenshots/after/Charge-Schedule-Activity-390x844.png).
 - Emergency charging tracking: [after](screenshots/after/Charge-Emergency-Tracking-390x844.png).
 - Home baseline and zero-range state: [Home](screenshots/after/Audit-Home-390x844.png), [zero range](screenshots/after/Audit-Battery-Zero-390x844.png).
+- Final status bar without Dynamic Island: [Home, 390x844](screenshots/after/Audit-Home-No-Dynamic-Island-390x844.png).
 - Theme menu: [Account](screenshots/after/Audit-Account-390x844.png), [Appearance](screenshots/after/Audit-Appearance-390x844.png).

@@ -17,13 +17,13 @@ Therefore API success, empty/null payload, validation error, unauthorized/forbid
 
 ### Charging quote
 
-[`chargeQuote`](../app1.1.html#L3283) selects a supported kWh option (defaulting to 25), obtains a rate from the local speed table (fallback 20), applies a minimum energy charge, adds a call-out fee (zero for Pro, otherwise 129 for prepayment or 149 for postpayment), and estimates duration/ETA from selected speed/payment mode.
+[`chargeQuote`](../index.html#L3283) selects a supported kWh option (defaulting to 25), obtains a rate from the local speed table (fallback 20), applies a minimum energy charge, adds a call-out fee (zero for Pro, otherwise 129 for prepayment or 149 for postpayment), and estimates duration/ETA from selected speed/payment mode.
 
 The code path was reviewed and the charge confirmation/route flows were exercised. The source does not establish whether the price floor, fees, ETA, speed/rate table, or rounding match approved business policy. No real tariff, dispatch estimate, taxes, or server quote exists. These values require product/backend confirmation before they can be treated as financial rules.
 
 ### Orders, payment, and cancellation
 
-[`placeOrder`](../app1.1.html#L2177) stores scheduled or active orders in client state. For wallet prepayment it checks and debits the local balance before creating the order. The order now captures its payment method, and [`cancelActiveOrder`](../app1.1.html#L2201) uses that method and a cancellation guard for a local refund. Regression checks passed after changing the global payment selection.
+[`placeOrder`](../index.html#L2177) stores scheduled or active orders in client state. For wallet prepayment it checks and debits the local balance before creating the order. The order now captures its payment method, and [`cancelActiveOrder`](../index.html#L2201) uses that method and a cancellation guard for a local refund. Regression checks passed after changing the global payment selection.
 
 This is not a transactional payment/refund implementation: there is no provider authorization/capture, ledger, durable transaction, concurrency protection, server idempotency key, or reconciliation. UI messages such as "refund initiated" are not proof of an issued refund.
 
