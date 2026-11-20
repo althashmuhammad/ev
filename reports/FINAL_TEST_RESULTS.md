@@ -5,7 +5,7 @@
 | Metric | Result |
 |---|---:|
 | Original regression matrix | 553 passed |
-| Follow-up checks for More/shop, guest entry, Kochi test location, completed-only Activity, and low-battery alert | Passed; targeted checks are not added to the historical matrix count |
+| Follow-up checks for More/shop, guest entry, Kochi map screens, completed-only Activity, and low-battery alert | Passed; targeted checks are not added to the historical matrix count |
 | Failed product checks | 0 |
 | Blocked | See blocked categories below; no live integration tests could start |
 | Not run | Formal build, automated suites, and production security/performance/accessibility tooling |
@@ -16,8 +16,8 @@ The original 553-check count is 23 scenario-based workflow groups + 332 responsi
 
 | Category | Result | Evidence/notes |
 |---|---|---|
-| Focused workflows and regressions | Original 23 groups passed; WF-23–WF-30 follow-ups passed | See [USER_WORKFLOW_TESTING.md](USER_WORKFLOW_TESTING.md). Follow-ups cover the local shop/cart/demo order, simplified guest vehicle and Kochi location steps, no-mock charge flow, completed-only Activity history, local scheduling/cancellation, weekly-day validation, demo isolation, and the staged low-battery alert. |
-| Responsive/accessibility smoke checks | 332 original combinations passed; guest Home, More, charge steps, Kochi location, and emergency card spot-checked at 320x640 | No horizontal overflow after transitions settled. See [RESPONSIVE_TESTING.md](RESPONSIVE_TESTING.md). |
+| Focused workflows and regressions | Original 23 groups passed; WF-23–WF-31 follow-ups passed | See [USER_WORKFLOW_TESTING.md](USER_WORKFLOW_TESTING.md). Follow-ups cover the local shop/cart/demo order, guest vehicle and Kochi map screens, charging flow and copy, completed-only Activity history, local scheduling/cancellation, weekly-day validation, demo isolation, and the staged low-battery alert. |
+| Responsive/accessibility smoke checks | 332 original combinations passed; guest Home, map screens, charge footer, and emergency card spot-checked at 320x640 | No horizontal overflow after transitions settled. See [RESPONSIVE_TESTING.md](RESPONSIVE_TESTING.md). |
 | Theme rendering | 198 combinations passed | Nine presets rendered without detected rendering/overflow failures. |
 | Home map/theme regression | 9/9 presets passed | Map background and route remained rendered for every theme; supplied Car Wash image loaded and its action opened screen 13. |
 | Browser console and script syntax | No app JavaScript errors observed; all four inline scripts parsed successfully | Tailwind CDN production warning was observed. |
@@ -59,6 +59,8 @@ The original 553-check count is 23 scenario-based workflow groups + 332 responsi
 - Guest onboarding now continues from the fixed Tata Nexon EV selection to an illustrative Kochi test-area screen. Continuing applies the broad Kochi test label to Home and the editable local charge address; no GPS fix, station availability, or provider service is implied.
 - A fresh guest request was created and completed in the browser. Activity showed no upcoming request and listed only that completed local test in Past History; no sample history or station entries appeared.
 - Demo Home now stages a five-second low-battery story: the readout animates from 24% to 15%, then the charge card becomes an emergency red gradient with a one-time subtle pop/shake and updated ~49 km range. The guest test remains without battery telemetry.
+- Guest location, Home, charge-address, request-details, and M Charging map areas share an original illustrative Kochi vector background; it does not display live routes or charging stations. The charge action is labeled “Request charging,” and the footer was checked at 320px.
+- Guest Home shortcuts use the existing 3D charger, car-wash, and towing icons; the charging shortcut is labeled “M Charging.”
 - Guest Home, More, and Address/Setup/Arrival steps were checked at 320x640 after transitions settled with no horizontal overflow.
 
 ## Final assessment

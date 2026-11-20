@@ -2,13 +2,13 @@
 
 ## Method and scope
 
-The original viewport simulation covered the 13 primary screens and major workflow/map states. The 16 viewport sizes below were used in the browser. Across 332 screen/step-by-viewport combinations, checks found no horizontal overflow, unnamed active buttons, or active targets below 44 CSS px. After adding routes 14–20, the welcome, guest vehicle setup, Kochi test-location, More, catalog, cart, and confirmation pages were spot-checked at 320x640 with no horizontal overflow after transitions settled. The clean customer-test Home, More, charging Address/Setup/Arrival steps, and the demo emergency battery card were also checked at 320x640 after transitions settled; no horizontal overflow was detected. This is browser emulation only; no physical phones/tablets or operating-system accessibility services were used.
+The original viewport simulation covered the 13 primary screens and major workflow/map states. The 16 viewport sizes below were used in the browser. Across 332 screen/step-by-viewport combinations, checks found no horizontal overflow, unnamed active buttons, or active targets below 44 CSS px. After adding routes 14–20, the welcome, guest vehicle setup, Kochi test-location, More, catalog, cart, and confirmation pages were spot-checked at 320x640 with no horizontal overflow after transitions settled. The clean customer-test Home, More, charging Address/Setup/Arrival steps, and the demo emergency battery card were also checked at 320x640 after transitions settled; no horizontal overflow was detected. The guest Kochi map screens and charge-request footer were rechecked at 320x640; “Request charging” remained fully visible with no horizontal overflow. This is browser emulation only; no physical phones/tablets or operating-system accessibility services were used.
 
 ## Viewport matrix
 
 | Viewport | Target | Screen/step coverage | Overflow | Layout/touch result | Representative screenshot |
 |---|---|---|---|---|---|
-| 320x640 | Small mobile | Original primary routes and sampled steps; routes 14–19 and guest charging flow spot-checked after the matrix | None detected after transitions settled | Pass; content scrolls within viewport; More and shop pages scroll vertically; active targets >=44px in original sweep | [Home](screenshots/after/Home-320x640.png) |
+| 320x640 | Small mobile | Original primary routes and sampled steps; routes 14–19, guest map screens, and charge-request footer spot-checked after the matrix | None detected after transitions settled | Pass; content scrolls within viewport; More and shop pages scroll vertically; “Request charging” fits the footer | [Home](screenshots/after/Home-320x640.png) |
 | 320x700 | Small mobile | Charging setup step | None detected | Pass; stepper targets 48px, radio targets >=51px, price/payment reachable by scrolling | — |
 | 360x800 | Mobile | Same | None detected | Pass | [Home](screenshots/after/Home-360x800.png) |
 | 375x812 | Mobile | Same | None detected | Pass | [Home](screenshots/after/Home-375x812.png) |

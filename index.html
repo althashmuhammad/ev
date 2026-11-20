@@ -2913,7 +2913,7 @@
                 <span class="w-11 h-11 rounded-[14px] bg-white/15 flex items-center justify-center shrink-0">${I('bolt', 'w-5 h-5', 2)}</span>
                 <div>
                   <div class="flex items-center gap-2">
-                    <span class="font-display text-[14px] font-bold">${customerTest ? 'Create charge request' : 'Charge now'}</span>
+                    <span class="font-display text-[14px] font-bold">${customerTest ? 'Request charging' : 'Charge now'}</span>
                     ${customerTest ? '<span class="text-[9.5px] font-bold px-2 py-0.5 rounded-full bg-white/20">Local only</span>' : '<span class="text-[9.5px] font-bold px-2 py-0.5 rounded-full bg-white/20">Van in ~12 min</span>'}
                   </div>
                   <div class="text-[11px] text-white/80 mt-0.5">${customerTest ? 'No provider contacted or dispatched' : 'Mobile van comes to your car'}</div>
@@ -3744,7 +3744,7 @@
     function flowShell({ title, badge, step, labels, body, footerLeft, footerBtn, extraHeader = '', rightAction = '' }) {
       return `
       <div class="screen pt-[54px] justify-between">
-        <div class="px-4 space-y-2.5">
+        <div class="px-4 space-y-2.5 ${state.entryMode === 'customer' ? 'pb-28' : ''}">
           <div class="flex items-center justify-between gap-2">
             <button onclick="flowBack()" class="navbtn min-h-[42px] pr-2 flex items-center gap-1 font-bold text-[17px] text-label" aria-label="Back">${I('chevL', 'w-5 h-5', 2.2)}${title}</button>
             <div class="flex items-center gap-2">
@@ -3838,8 +3838,8 @@
       const emergencyBattery = hasBatteryEstimate && c.soc <= 15;
       const batteryFillWidth = hasBatteryEstimate ? ((14 * c.soc) / 100).toFixed(2) : '0';
       const services = [
-        { l: customerTest ? 'Mobile Charging' : 'Stations', svg: customerTest ? null : SERVICE_3D_SVGS.stations, i: 'bolt', fn: "go('04')" },
-        { l: 'Car Wash', image: customerTest ? null : 'service-carwash-home-icon.png', i: 'drop', fn: customerTest ? "showCustomerUnavailable('Car wash')" : 'startWash()' },
+        { l: customerTest ? 'M Charging' : 'Stations', svg: SERVICE_3D_SVGS.stations, fn: "go('04')" },
+        { l: 'Car Wash', image: 'service-carwash-home-icon.png', i: 'drop', fn: customerTest ? "showCustomerUnavailable('Car wash')" : 'startWash()' },
         { l: 'Towing', svg: SERVICE_3D_SVGS.towing, fn: customerTest ? "showCustomerUnavailable('Towing')" : 'startTow()' },
         { l: 'More', i: 'grid', color: 'text-teal', fn: "go('14')" }
       ];
@@ -4956,14 +4956,14 @@ function screen02() {
           <div class="screen pt-[58px] px-4 pb-6 space-y-4">
             <button onclick="back()" class="navbtn min-h-[44px] pr-2 flex items-center gap-1.5 text-label font-bold press">${I('chevL', 'w-5 h-5', 2)}<span>Back</span></button>
             <div>
-              <div class="eyebrow text-teal">Mobile charging</div>
-              <h1 class="font-display text-[21px] font-bold text-label">Mobile charge request</h1>
+              <div class="eyebrow text-teal">M Charging</div>
+              <h1 class="font-display text-[21px] font-bold text-label">M Charging request</h1>
             </div>
             <div class="customer-map-frame h-[180px] rounded-[20px] border border-line shadow-sm">
               ${customerMapBackdrop()}
             </div>
             <div class="card p-4 space-y-2">
-              <p class="text-[12px] leading-relaxed text-label2">Review a mobile charging request using your selected Kochi test area. This prototype does not check live unit availability or contact a provider.</p>
+              <p class="text-[12px] leading-relaxed text-label2">Review an M Charging request using your selected Kochi test area. This prototype does not check live unit availability or contact a provider.</p>
             </div>
             <button onclick="startCharge('Emergency')" class="btn min-h-[48px]">Request charging</button>
           </div>`;
