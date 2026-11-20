@@ -1288,6 +1288,9 @@
       greenEnergy: true,
       lowClearance: false,
       societyBay: { basement: 'Open Parking', pillar: 'Gate B', height: 'Open Air', myGateCode: '4821', myGateActive: true },
+      shopCategory: 'accessories',
+      shopCart: {},
+      lastShopOrder: null,
       chargerFilter: 'fits',
       hubIdx: 0,
       stationQuery: '',
@@ -1376,17 +1379,245 @@
       { id: '10', shortTitle: 'Add Vehicle Form', tag: 'Setup', tabBar: false, t: '10 Add Vehicle — Custom EV Registration', d: 'Register a new EV with custom green HSRP plate, Indian connector type, and battery capacity.' },
       { id: '11', shortTitle: 'Account & Wallet', tag: 'Tabs', tabBar: true, tabName: 'Account', t: '11 Account — Wallet, Pro Pass & Theme', d: 'Coral-gradient VoltIndia Pro pass, wallet top-up, Light/Dark theme switch, and UPI payment methods.' },
       { id: '12', shortTitle: 'Mobile Fuel & Gas', tag: 'Service', tabBar: false, t: '12 Mobile Fuel & Gas Station — Petrol, Diesel & CNG', d: 'Doorstep mobile fuel bowser delivery for Petrol, Diesel, and Gas/CNG with live tracking.' },
-      { id: '13', shortTitle: 'Mobile Carwash', tag: 'Service', tabBar: false, t: '13 Mobile Carwash — Doorstep EV Spa', d: 'Waterless eco-foam wash and pressure detailing safe for EV high-voltage ports.' }
+      { id: '13', shortTitle: 'Mobile Carwash', tag: 'Service', tabBar: false, t: '13 Mobile Carwash — Doorstep EV Spa', d: 'Waterless eco-foam wash and pressure detailing safe for EV high-voltage ports.' },
+      { id: '14', shortTitle: 'More Services', tag: 'Services', tabBar: false, t: '14 More Services — Roadside & Vehicle Care', d: 'Directory for roadside, doorstep, interior accessories, and car care.' },
+      { id: '15', shortTitle: 'Vehicle Shop', tag: 'Shop', tabBar: false, t: '15 Vehicle Shop — Accessories & Care', d: 'Browse car accessories and car-care products with realistic visual previews.' },
+      { id: '16', shortTitle: 'Shopping Cart', tag: 'Shop', tabBar: false, t: '16 Shopping Cart — Review Items', d: 'Review quantities and subtotal before placing a demo order.' },
+      { id: '17', shortTitle: 'Order Confirmation', tag: 'Shop', tabBar: false, t: '17 Order Confirmation — Demo Checkout', d: 'Confirmation for a local demo order; no payment or delivery request is sent.' }
     ];
     const MAP_SCREENS = ['01', '02', '03', '04'];
 
+    
+    const SHOP_PRODUCTS = [
+      // === CAR INTERIOR & CABIN ACCESSORIES ===
+      {
+        id: 'cabin-air-purifier',
+        category: 'accessories',
+        name: 'EV Cabin HEPA Air Purifier & Ionizer',
+        badge: 'HEPA H13 • Fits Cup Holder',
+        description: 'Anodized aluminum body with air quality LED indicator. Filters PM2.5, allergens, odors & VOCs.',
+        price: 1899,
+        image: 'assets/products/cabin-air-purifier.svg',
+        icon: 'sparkle'
+      },
+      {
+        id: 'cordless-vacuum',
+        category: 'accessories',
+        name: 'High-Power Cordless Handheld Car Vacuum',
+        badge: '8500 Pa • USB-C Fast Charge',
+        description: 'Cyclonic suction with dual crevice brush nozzle & washable stainless steel HEPA filter for cabin cleaning.',
+        price: 1499,
+        image: 'assets/products/cordless-vacuum.svg',
+        icon: 'sparkle'
+      },
+      {
+        id: 'floor-mats-3d',
+        category: 'accessories',
+        name: 'All-Weather 3D TPE Floor Mats (Nexon EV)',
+        badge: 'Nexon EV Fit • 3D Waterproof',
+        description: 'Tailored laser-scanned deep dish floor liners with raised perimeter spill-guard & non-skid retention clips.',
+        price: 2899,
+        image: 'assets/products/floor-mats-3d.svg',
+        icon: 'car'
+      },
+      {
+        id: 'magsafe-car-mount',
+        category: 'accessories',
+        name: 'MagSafe 15W Qi Fast Wireless Dash Mount',
+        badge: '15W Qi Fast Charge • MagSafe',
+        description: 'Neodymium magnetic ring with 360° articulated ball joint & silicone-padded cockpit air-vent clamp.',
+        price: 1199,
+        image: 'assets/products/magsafe-car-mount.svg',
+        icon: 'phone'
+      },
+      {
+        id: 'memory-foam-neck-pillow',
+        category: 'accessories',
+        name: 'Ergonomic Memory Foam Neck Pillows (Pair)',
+        badge: 'Cabin Comfort • Ergonomic Pair',
+        description: 'Slow-rebound high-density orthopedic memory foam with breathable sport mesh & adjustable elastic harness.',
+        price: 1299,
+        image: 'assets/products/memory-foam-neck-pillow.svg',
+        icon: 'shield'
+      },
+      {
+        id: 'solar-aroma-diffuser',
+        category: 'accessories',
+        name: 'Smart Solar-Powered Alloy Aromatherapy Diffuser',
+        badge: 'Solar Driven • Natural Essential Oils',
+        description: 'Dual-ring levitating gyroscope in aerospace alloy. Activates rotation in sunlight to disperse fresh botanical fragrance.',
+        price: 699,
+        image: 'assets/products/solar-aroma-diffuser.svg',
+        icon: 'sparkle'
+      },
+      {
+        id: 'ev-cable-case',
+        category: 'accessories',
+        name: 'Padded EV Cable & Adapter Organizer Case',
+        badge: 'CCS2 & Type 2 • Shockproof Oxford',
+        description: 'Heavy-duty circular carry bag with shock-absorbing foam lining, water-repellent shell & elastic cable loops.',
+        price: 849,
+        image: 'assets/products/ev-cable-case.svg',
+        icon: 'plug'
+      },
+      {
+        id: 'trunk-organizer',
+        category: 'accessories',
+        name: 'Collapsible Multi-Pocket Trunk & Boot Caddy',
+        badge: '60L Capacity • Thermal Insulated',
+        description: 'Heavy-duty 1680D Oxford fabric with 3 compartments, leak-proof cooler zone, side mesh pockets & alloy handles.',
+        price: 1399,
+        image: 'assets/products/trunk-organizer.svg',
+        icon: 'car'
+      },
+      {
+        id: 'windshield-sunshade',
+        category: 'accessories',
+        name: 'Titanium Foldable Windshield UV Sunshade',
+        badge: '99% UV Block • Umbrella Fold',
+        description: 'Reflective titanium silver thermal shield with umbrella-style opening. Lowers cabin temperature by up to 15°C.',
+        price: 749,
+        image: 'assets/products/windshield-sunshade.svg',
+        icon: 'sun'
+      },
+      {
+        id: 'screen-protector',
+        category: 'accessories',
+        name: '10.25" Infotainment 9H Tempered Glass Guard',
+        badge: '9H Hardness • Oleophobic Coating',
+        description: 'Ultra-clear 2.5D curved-edge tempered glass for Tata Nexon EV touchscreen. Anti-fingerprint and scratch-resistant.',
+        price: 499,
+        image: 'assets/products/screen-protector.svg',
+        icon: 'phone'
+      },
+
+      // === CAR CARE & INTERIOR DETAILING ===
+      {
+        id: 'interior-detailer-spray',
+        category: 'cleaning',
+        name: 'Interior Dashboard & Leather Matte UV Detailer (500ml)',
+        badge: 'UV50+ Shield • Non-Greasy Satin Finish',
+        description: 'Anti-static cleaner and UV protectant for dashboard, touchscreens, door cards and faux leather trims.',
+        price: 479,
+        image: 'assets/products/interior-detailer-spray.svg',
+        icon: 'sparkle'
+      },
+      {
+        id: 'microfiber-cloths',
+        category: 'cleaning',
+        name: 'Plush 800 GSM Dual-Pile Detailing Towels (Pack of 4)',
+        badge: '800 GSM • Scratch-Free Edgeless',
+        description: 'Ultra-thick dual-sided microfiber cloths. Perfect for scratchless interior dusting, glass clarity & streak-free wipe-down.',
+        price: 399,
+        image: 'assets/products/microfiber-cloths.svg',
+        icon: 'sparkle'
+      },
+      {
+        id: 'detailing-brushes',
+        category: 'cleaning',
+        name: 'Interior Vent & Crevice Detailing Brush Set (5 Sizes)',
+        badge: 'Ultra-Soft • 5 Crevice Sizes',
+        description: 'Scratch-safe synthetic boars-hair bristles designed to reach AC louvers, gear console seams, and steering buttons.',
+        price: 349,
+        image: 'assets/products/detailing-brushes.svg',
+        icon: 'sparkle'
+      },
+      {
+        id: 'glass-cleaner-spray',
+        category: 'cleaning',
+        name: 'Anti-Fog Windshield & Glass Cleaner (400ml)',
+        badge: 'Anti-Mist • Streak-Free Optical Clarity',
+        description: 'Ammonia-free spray that prevents interior fogging and misting while cutting through haze, fingerprints & dust.',
+        price: 389,
+        image: 'assets/products/glass-cleaner-spray.svg',
+        icon: 'drop'
+      },
+      {
+        id: 'ac-vent-cleaner',
+        category: 'cleaning',
+        name: 'AC Evaporator Vent Sanitizer & Deep Foam Can',
+        badge: 'Deep Foam • Bacteria & Odor Zero',
+        description: 'Long probe hose reaches deep inside ventilation ducts. Disinfects evaporator coils and leaves crisp eucalyptus aroma.',
+        price: 429,
+        image: 'assets/products/ac-vent-cleaner.svg',
+        icon: 'sparkle'
+      },
+      {
+        id: 'car-shampoo',
+        category: 'cleaning',
+        name: 'pH-Neutral Foam Wash & Ceramic Booster Shampoo (1L)',
+        badge: 'Ceramic Safe • High Lubricity Foam',
+        description: 'High-foaming concentrate safe for ceramic coating and paint protection films. Leaves a hydrophobic gloss finish.',
+        price: 499,
+        image: 'assets/products/car-shampoo.svg',
+        icon: 'drop'
+      }
+    ];
+
+    function formatShopMoney(amount) {
+      return new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR', maximumFractionDigits: 0 }).format(amount);
+    }
+    function openShop(category) {
+      if (!['accessories', 'cleaning'].includes(category)) category = 'accessories';
+      state.shopCategory = category;
+      go('15');
+    }
+    function setShopCategory(category) {
+      if (!['accessories', 'cleaning'].includes(category)) category = 'accessories';
+      state.shopCategory = category;
+      render();
+    }
+    function shopCartLines() {
+      return SHOP_PRODUCTS.filter(product => state.shopCart[product.id] > 0)
+        .map(product => ({ ...product, quantity: state.shopCart[product.id] }));
+    }
+    function shopCartCount() {
+      return shopCartLines().reduce((count, item) => count + item.quantity, 0);
+    }
+    function shopCartTotal() {
+      return shopCartLines().reduce((total, item) => total + item.price * item.quantity, 0);
+    }
+    function addShopProduct(id) {
+      const product = SHOP_PRODUCTS.find(item => item.id === id);
+      if (!product) return;
+      state.shopCart[id] = (state.shopCart[id] || 0) + 1;
+      render();
+      showBanner(`${product.name} added to cart`);
+    }
+    function changeShopQuantity(id, delta) {
+      const product = SHOP_PRODUCTS.find(item => item.id === id);
+      if (!product) return;
+      const quantity = Math.max(0, (state.shopCart[id] || 0) + delta);
+      if (quantity) state.shopCart[id] = quantity;
+      else delete state.shopCart[id];
+      render();
+    }
+    function placeShopOrder() {
+      const items = shopCartLines();
+      if (!items.length) return;
+      state.lastShopOrder = {
+        id: 'EV-SHP-' + Math.floor(100000 + Math.random() * 900000),
+        items,
+        total: shopCartTotal(),
+        placedAt: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+      };
+      state.shopCart = {};
+      go('17', 'push', { reset: true });
+    }
+    function continueShopFromOrder() {
+      go('15', 'pop', { history: ['01', '14'] });
+    }
+    function returnToMoreFromOrder() {
+      go('14', 'pop', { history: ['01'] });
+    }
+  
     const car = () => state.cars[state.carIdx];
     const hub = () => HUBS[state.hubIdx];
     const set = (k, v) => { state[k] = v; render(); };
 
     const SCREEN_DEPTH = {
       '01': 0, '08': 0, '09': 0, '11': 0,
-      '02': 1, '04': 1, '06': 1, '07': 1, '10': 1, '12': 1, '13': 1,
+      '02': 1, '04': 1, '06': 1, '07': 1, '10': 1, '12': 1, '13': 1, '14': 1, '15': 1, '16': 2, '17': 2,
       '03': 2, '05': 2
     };
 
@@ -1727,28 +1958,22 @@
               ${I('chevR', 'w-4 h-4 text-white')}
             </button>
 
-            <button onclick="go('06')" class="w-full p-3 rounded-2xl bg-fill hover:bg-fill2 flex items-center justify-between text-left press">
-              <div class="flex items-center gap-3">
-                <span class="w-10 h-10 rounded-xl bg-teal-soft text-teal flex items-center justify-center shrink-0">${I('battery12v', 'w-5 h-5')}</span>
-                <div>
-                  <div class="font-display text-[13.5px] font-bold">12V Dead Battery Jump Start</div>
-                  <div class="text-[11px] text-label2">Technician in ~25 min • ₹799 fixed</div>
-                </div>
-              </div>
-              ${I('chevR', 'w-4 h-4 text-label3')}
-            </button>
-
-            <button onclick="startTow()" class="w-full p-3 rounded-2xl bg-fill hover:bg-fill2 flex items-center justify-between text-left press">
-              <div class="flex items-center gap-3">
-                <span class="w-10 h-10 rounded-xl bg-teal-soft text-teal flex items-center justify-center shrink-0">${I('truck', 'w-5 h-5')}</span>
-                <div>
-                  <div class="font-display text-[13.5px] font-bold">Zero-Drag Flatbed Towing</div>
-                  <div class="text-[11px] text-label2">Hydraulic EV flatbed to service center</div>
-                </div>
-              </div>
-              ${I('chevR', 'w-4 h-4 text-label3')}
-            </button>
-          </div>
+            <button onclick="go('06')" class="w-full p-3 rounded-2xl hover:bg-fill flex items-center gap-3 text-left press">
+            <span class="w-10 h-10 rounded-xl bg-teal-soft text-teal flex items-center justify-center shrink-0">${I('battery12v', 'w-5 h-5')}</span>
+            <div class="flex-1"><div class="text-[13px] font-semibold">12V Jump Start</div><div class="text-[11px] text-label2">Dead 12V battery • ₹799 fixed</div></div>
+            ${I('chevR', 'w-4 h-4 text-label3')}
+          </button>
+          <button onclick="closeSheet(); openShop('accessories')" class="w-full p-3 rounded-2xl hover:bg-fill flex items-center gap-3 text-left press">
+            <span class="w-10 h-10 rounded-xl bg-teal-soft text-teal flex items-center justify-center shrink-0">${I('car', 'w-5 h-5')}</span>
+            <div class="flex-1"><div class="text-[13px] font-semibold">Car Accessories &amp; Interior</div><div class="text-[11px] text-label2">Cabin air purifier, 3D mats, vacuum &amp; mounts</div></div>
+            ${I('chevR', 'w-4 h-4 text-label3')}
+          </button>
+          <button onclick="closeSheet(); openShop('cleaning')" class="w-full p-3 rounded-2xl hover:bg-fill flex items-center gap-3 text-left press">
+            <span class="w-10 h-10 rounded-xl bg-teal-soft text-teal flex items-center justify-center shrink-0">${I('sparkle', 'w-5 h-5')}</span>
+            <div class="flex-1"><div class="text-[13px] font-semibold">Car Care &amp; Interior Spa</div><div class="text-[11px] text-label2">Dashboard UV detailer, microfiber towels &amp; AC hygiene</div></div>
+            ${I('chevR', 'w-4 h-4 text-label3')}
+          </button>
+        </div>
 
           <button onclick="closeSheet(); openVoiceCall('control')" class="w-full py-3 rounded-2xl border border-coral/35 text-coral text-[12.5px] font-bold flex items-center justify-center gap-2 press">
             ${I('phone', 'w-4 h-4')} Call 24×7 Kochi Control Room
@@ -4154,11 +4379,229 @@
       { label: 'Wallet', id: '11', icon: 'wallet' },
       { label: 'Account', id: '11', icon: 'user' }
     ];
+    
+    function screen14() {
+      return `
+        <div class="screen pt-[54px] px-4 pb-5 space-y-3">
+          <div class="flex items-center justify-between">
+            <button onclick="back()" aria-label="Back" class="navbtn min-h-[44px] pr-2 flex items-center gap-1.5 text-label font-bold text-[17px] press">
+              ${I('chevL', 'w-5 h-5', 2.2)}
+              <span>Back</span>
+            </button>
+          </div>
+          <div class="px-1 space-y-1">
+            <div class="eyebrow text-teal">Services &amp; Shop</div>
+            <h1 class="font-display text-[21px] font-bold tracking-tight text-label">More services</h1>
+            <p class="text-[12px] text-label2">Roadside, doorstep &amp; vehicle interior care</p>
+          </div>
+          <div class="space-y-2">
+            <button onclick="startCharge('Emergency')" class="w-full card min-h-[72px] p-3.5 flex items-center gap-3 text-left press border-teal/20 bg-teal-soft/30">
+              <span class="w-10 h-10 rounded-xl bg-teal text-white flex items-center justify-center shrink-0">${I('bolt', 'w-5 h-5')}</span>
+              <span class="flex-1 min-w-0"><span class="block text-[13px] font-bold text-teal">Emergency Mobile EV</span><span class="block text-[11px] text-label2">DC van boost anywhere in Kochi</span></span>
+              ${I('chevR', 'w-4 h-4 text-teal')}
+            </button>
+            <button onclick="startFuel()" class="w-full card min-h-[72px] p-3.5 flex items-center gap-3 text-left press">
+              <span class="w-10 h-10 rounded-xl bg-teal-soft text-teal flex items-center justify-center shrink-0">${I('fuel', 'w-5 h-5')}</span>
+              <span class="flex-1 min-w-0"><span class="block text-[13px] font-semibold">Mobile Fuel &amp; Gas Station</span><span class="block text-[11px] text-label2">Petrol, Diesel &amp; CNG to your door</span></span>
+              ${I('chevR', 'w-4 h-4 text-label3')}
+            </button>
+            <button onclick="startWash()" class="w-full card min-h-[72px] p-3.5 flex items-center gap-3 text-left press">
+              <span class="w-10 h-10 rounded-xl bg-teal-soft text-teal flex items-center justify-center shrink-0">${I('drop', 'w-5 h-5')}</span>
+              <span class="flex-1 min-w-0"><span class="block text-[13px] font-semibold">Mobile Carwash</span><span class="block text-[11px] text-label2">Waterless eco-foam &amp; detailing</span></span>
+              ${I('chevR', 'w-4 h-4 text-label3')}
+            </button>
+            <button onclick="startTow()" class="w-full card min-h-[72px] p-3.5 flex items-center gap-3 text-left press">
+              <span class="w-10 h-10 rounded-xl bg-teal-soft text-teal flex items-center justify-center shrink-0">${I('truck', 'w-5 h-5')}</span>
+              <span class="flex-1 min-w-0"><span class="block text-[13px] font-semibold">Flatbed Towing</span><span class="block text-[11px] text-label2">Zero-drag hydraulic EV recovery</span></span>
+              ${I('chevR', 'w-4 h-4 text-label3')}
+            </button>
+            <button onclick="go('06')" class="w-full card min-h-[72px] p-3.5 flex items-center gap-3 text-left press">
+              <span class="w-10 h-10 rounded-xl bg-teal-soft text-teal flex items-center justify-center shrink-0">${I('battery12v', 'w-5 h-5')}</span>
+              <span class="flex-1 min-w-0"><span class="block text-[13px] font-semibold">12V Jump Start</span><span class="block text-[11px] text-label2">Dead 12V battery • ₹799 fixed</span></span>
+              ${I('chevR', 'w-4 h-4 text-label3')}
+            </button>
+            <button onclick="openShop('accessories')" class="w-full card min-h-[72px] p-3.5 flex items-center gap-3 text-left press">
+              <span class="w-10 h-10 rounded-xl bg-teal-soft text-teal flex items-center justify-center shrink-0">${I('car', 'w-5 h-5')}</span>
+              <span class="flex-1 min-w-0"><span class="block text-[13px] font-semibold">Car Accessories &amp; Interior</span><span class="block text-[11px] text-label2">Cabin air purifier, 3D mats, vacuum, mounts &amp; gear</span></span>
+              ${I('chevR', 'w-4 h-4 text-label3')}
+            </button>
+            <button onclick="openShop('cleaning')" class="w-full card min-h-[72px] p-3.5 flex items-center gap-3 text-left press">
+              <span class="w-10 h-10 rounded-xl bg-teal-soft text-teal flex items-center justify-center shrink-0">${I('sparkle', 'w-5 h-5')}</span>
+              <span class="flex-1 min-w-0"><span class="block text-[13px] font-semibold">Car Care &amp; Interior Spa</span><span class="block text-[11px] text-label2">Dashboard UV detailer, microfiber towels &amp; AC hygiene</span></span>
+              ${I('chevR', 'w-4 h-4 text-label3')}
+            </button>
+          </div>
+        </div>
+      `;
+    }
+    function screen15() {
+      const category = state.shopCategory === 'cleaning' ? 'cleaning' : 'accessories';
+      const products = SHOP_PRODUCTS.filter(product => product.category === category);
+      const accCount = SHOP_PRODUCTS.filter(p => p.category === 'accessories').length;
+      const cleanCount = SHOP_PRODUCTS.filter(p => p.category === 'cleaning').length;
+      return `
+        <div class="screen pt-[54px] px-4 pb-8 space-y-4">
+          <div class="flex items-center justify-between">
+            <button onclick="back()" aria-label="Back to services" class="navbtn min-h-[44px] pr-2 flex items-center gap-1.5 text-label font-bold text-[17px] press">
+              ${I('chevL', 'w-5 h-5', 2.2)}<span>Back</span>
+            </button>
+            <button onclick="go('16')" aria-label="Shopping cart, ${shopCartCount()} items" class="navbtn relative w-11 h-11 flex items-center justify-center text-label press">
+              ${I('shoppingBag', 'w-5 h-5')}
+              ${shopCartCount() ? `<span class="absolute top-0 right-0 min-w-[18px] h-[18px] px-1 rounded-full bg-teal text-white text-[10px] font-bold flex items-center justify-center animate-pulse">${shopCartCount()}</span>` : ''}
+            </button>
+          </div>
+          <div class="px-1 space-y-1">
+            <div class="eyebrow text-teal flex items-center gap-1.5">${I('car', 'w-3.5 h-3.5 text-teal')} Vehicle Shop • Genuine Accessories</div>
+            <h1 class="font-display text-[21px] font-bold tracking-tight text-label">${category === 'accessories' ? 'Car Interior &amp; Accessories' : 'Car Care &amp; Detailing'}</h1>
+            <p class="text-[12px] text-label2">${category === 'accessories' ? 'Cabin essentials, air purifiers, 3D mats &amp; interior gear for your Nexon EV' : 'Interior detailing sprays, plush microfibers &amp; AC hygiene products'}</p>
+          </div>
+          <div class="grid grid-cols-2 gap-2 p-1 rounded-[18px] bg-fill" role="tablist" aria-label="Shop categories">
+            <button onclick="setShopCategory('accessories')" role="tab" aria-selected="${category === 'accessories'}" class="min-h-[44px] rounded-[14px] px-2 text-[12px] font-semibold flex items-center justify-center gap-1.5 ${category === 'accessories' ? 'bg-surface text-teal shadow-sm' : 'text-label2'}">
+              <span>Interior Accessories</span>
+              <span class="text-[10px] font-bold px-1.5 py-0.5 rounded-full ${category === 'accessories' ? 'bg-teal-soft text-teal' : 'bg-fill2 text-label3'}">${accCount}</span>
+            </button>
+            <button onclick="setShopCategory('cleaning')" role="tab" aria-selected="${category === 'cleaning'}" class="min-h-[44px] rounded-[14px] px-2 text-[12px] font-semibold flex items-center justify-center gap-1.5 ${category === 'cleaning' ? 'bg-surface text-teal shadow-sm' : 'text-label2'}">
+              <span>Car Care</span>
+              <span class="text-[10px] font-bold px-1.5 py-0.5 rounded-full ${category === 'cleaning' ? 'bg-teal-soft text-teal' : 'bg-fill2 text-label3'}">${cleanCount}</span>
+            </button>
+          </div>
+          <div class="space-y-3">
+            ${products.map(product => `
+              <article class="card p-3 flex items-start gap-3 hover:border-teal/30 transition-all group">
+                <div class="w-20 h-20 sm:w-22 sm:h-22 rounded-2xl bg-gradient-to-b from-slate-50 to-slate-100/90 border border-slate-200/60 p-1.5 flex items-center justify-center shrink-0 shadow-xs overflow-hidden relative">
+                  <img src="${product.image}" alt="${product.name}" class="w-full h-full object-contain group-hover:scale-105 transition-transform" loading="lazy" />
+                </div>
+                <div class="min-w-0 flex-1">
+                  <div class="mb-1">
+                    <span class="inline-flex items-center gap-1 text-[10px] font-bold text-teal bg-teal-soft/90 px-2 py-0.5 rounded-md">${product.badge}</span>
+                  </div>
+                  <h2 class="text-[13px] leading-tight font-bold text-label">${product.name}</h2>
+                  <p class="mt-1 text-[11px] leading-relaxed text-label2 line-clamp-2">${product.description}</p>
+                  <div class="mt-2.5 flex items-center justify-between gap-2">
+                    <div class="flex items-baseline gap-1">
+                      <span class="text-[14px] font-extrabold text-label num">${formatShopMoney(product.price)}</span>
+                      <span class="text-[10px] text-label3">incl. GST</span>
+                    </div>
+                    <button onclick="addShopProduct('${product.id}')" aria-label="Add ${product.name} to cart" class="min-h-[36px] px-3.5 rounded-xl bg-teal hover:bg-teal-dark active:scale-95 text-white text-[12px] font-bold shadow-xs flex items-center gap-1.5 press">
+                      ${I('plus', 'w-3.5 h-3.5')}
+                      <span>Add</span>
+                    </button>
+                  </div>
+                </div>
+              </article>
+            `).join('')}
+          </div>
+          <p class="px-1 text-[10px] leading-relaxed text-label3">Demo accessories catalog with illustrative prices. Tap Add to bundle items into your cart.</p>
+          ${shopCartCount() ? `<button onclick="go('16')" class="btn w-full min-h-[48px] shadow-lg sticky bottom-4 z-20">${I('shoppingBag', 'w-4 h-4')} Review cart · ${shopCartCount()} ${shopCartCount() === 1 ? 'item' : 'items'} · ${formatShopMoney(shopCartTotal())}</button>` : ''}
+        </div>
+      `;
+    }
+
+    
+    function screen16() {
+      const items = shopCartLines();
+      return `
+        <div class="screen pt-[54px] px-4 pb-8 space-y-4">
+          <div class="flex items-center justify-between">
+            <button onclick="back()" aria-label="Back to shop" class="navbtn min-h-[44px] pr-2 flex items-center gap-1.5 text-label font-bold text-[17px] press">
+              ${I('chevL', 'w-5 h-5', 2.2)}<span>Back</span>
+            </button>
+            <span class="text-[12px] font-semibold text-label2">${shopCartCount()} ${shopCartCount() === 1 ? 'item' : 'items'}</span>
+          </div>
+          <div class="px-1 space-y-1">
+            <div class="eyebrow text-teal">Your selection</div>
+            <h1 class="font-display text-[21px] font-bold tracking-tight text-label">Shopping cart</h1>
+          </div>
+          ${items.length ? `
+            <div class="space-y-2.5">
+              ${items.map(item => `
+                <article class="card p-3 flex items-center gap-3">
+                  <div class="w-14 h-14 rounded-xl bg-slate-50 border border-slate-200/60 p-1 flex items-center justify-center shrink-0 overflow-hidden">
+                    <img src="${item.image}" alt="${item.name}" class="w-full h-full object-contain" />
+                  </div>
+                  <div class="min-w-0 flex-1">
+                    <h2 class="text-[13px] font-bold text-label leading-tight">${item.name}</h2>
+                    <p class="mt-0.5 text-[11px] text-label2">${formatShopMoney(item.price)} each</p>
+                  </div>
+                  <div class="flex items-center gap-2">
+                    <button onclick="changeShopQuantity('${item.id}', -1)" aria-label="Remove one ${item.name}" class="w-9 h-9 rounded-full bg-fill text-label font-bold text-[17px] press">−</button>
+                    <span class="w-5 text-center text-[13px] font-semibold num" aria-label="Quantity">${item.quantity}</span>
+                    <button onclick="changeShopQuantity('${item.id}', 1)" aria-label="Add one ${item.name}" class="w-9 h-9 rounded-full bg-fill text-label font-bold text-[17px] press">+</button>
+                  </div>
+                </article>
+              `).join('')}
+            </div>
+            <div class="card p-4 space-y-3">
+              <div class="flex justify-between text-[13px]"><span class="text-label2">Demo subtotal</span><span class="font-bold text-label num">${formatShopMoney(shopCartTotal())}</span></div>
+              <p class="text-[11px] leading-relaxed text-label2">Sample prices only. This demo does not collect payment or arrange delivery.</p>
+            </div>
+            <button onclick="placeShopOrder()" class="btn w-full min-h-[48px]">Place demo order · ${formatShopMoney(shopCartTotal())}</button>
+          ` : `
+            <div class="card p-6 text-center space-y-3">
+              <span class="mx-auto w-12 h-12 rounded-2xl bg-teal-soft text-teal flex items-center justify-center">${I('shoppingBag', 'w-5 h-5')}</span>
+              <h2 class="text-[15px] font-bold text-label">Your cart is empty</h2>
+              <p class="text-[12px] text-label2">Browse accessories or car-care essentials to get started.</p>
+              <button onclick="go('15')" class="btn min-h-[44px]">Browse the shop</button>
+            </div>
+          `}
+        </div>
+      `;
+    }
+
+    
+    function screen17() {
+      const order = state.lastShopOrder;
+      return `
+        <div class="screen pt-[54px] px-4 pb-8 space-y-4">
+          <div class="flex items-center">
+            <button onclick="back()" aria-label="Back" class="navbtn min-h-[44px] pr-2 flex items-center gap-1.5 text-label font-bold text-[17px] press">
+              ${I('chevL', 'w-5 h-5', 2.2)}<span>Back</span>
+            </button>
+          </div>
+          ${order ? `
+            <div class="card p-5 text-center space-y-3">
+              <span class="mx-auto w-14 h-14 rounded-full bg-teal-soft text-teal flex items-center justify-center">${I('check', 'w-6 h-6', 2.2)}</span>
+              <div>
+                <div class="eyebrow text-teal">Demo order recorded</div>
+                <h1 class="mt-1 font-display text-[21px] font-bold tracking-tight text-label">Thanks for trying the shop</h1>
+                <p class="mt-1 text-[12px] text-label2">Reference ${order.id}</p>
+              </div>
+            </div>
+            <div class="card p-4 space-y-3">
+              <h2 class="text-[13px] font-bold text-label">Order summary</h2>
+              ${order.items.map(item => `<div class="flex items-center justify-between gap-3 text-[12px]">
+                <div class="flex items-center gap-2 min-w-0">
+                  <div class="w-7 h-7 rounded-lg bg-slate-50 border border-slate-200/60 p-0.5 shrink-0 flex items-center justify-center overflow-hidden">
+                    <img src="${item.image}" alt="${item.name}" class="w-full h-full object-contain" />
+                  </div>
+                  <span class="text-label2 truncate">${item.name} × ${item.quantity}</span>
+                </div>
+                <span class="font-bold text-label num shrink-0">${formatShopMoney(item.price * item.quantity)}</span>
+              </div>`).join('')}
+              <div class="hair"></div>
+              <div class="flex justify-between text-[14px]"><span class="font-bold text-label">Demo total</span><span class="font-bold text-teal num">${formatShopMoney(order.total)}</span></div>
+            </div>
+            <div class="rounded-2xl bg-teal-soft/60 p-3.5 text-[11px] leading-relaxed text-label2" role="status">This is a local demo only. No payment was taken and no order, delivery, or personal information was sent anywhere.</div>
+            <button onclick="continueShopFromOrder()" class="btn w-full min-h-[48px]">Continue shopping</button>
+            <button onclick="returnToMoreFromOrder()" class="w-full min-h-[44px] text-[12px] font-semibold text-teal">Back to services</button>
+          ` : `
+            <div class="card p-6 text-center space-y-3">
+              <h1 class="font-display text-[18px] font-bold text-label">No demo order to show</h1>
+              <p class="text-[12px] text-label2">Your order summary is not available in this session.</p>
+              <button onclick="go('15')" class="btn min-h-[44px]">Return to shop</button>
+            </div>
+          `}
+        </div>
+      `;
+    }
+
+    
+    
     const RENDERERS = {
       '01': screen01, '02': screen02, '03': screen03, '04': screen04,
       '05': screen05, '06': screen06, '07': screen07, '08': screen08,
       '09': screen09, '10': screen10, '11': screen11, '12': screen12,
-      '13': screen13
+      '13': screen13, '14': screen14, '15': screen15, '16': screen16, '17': screen17
     };
 
     function render(animate) {

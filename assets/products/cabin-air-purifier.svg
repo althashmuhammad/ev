@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" fill="none">
+  <defs>
+    <radialGradient id="ap-glow" cx="50%" cy="30%" r="50%">
+      <stop offset="0%" stop-color="#00E5FF" stop-opacity="0.8"/>
+      <stop offset="60%" stop-color="#008B8D" stop-opacity="0.2"/>
+      <stop offset="100%" stop-color="#008B8D" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="ap-body" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#2D3748"/>
+      <stop offset="35%" stop-color="#4A5568"/>
+      <stop offset="70%" stop-color="#2D3748"/>
+      <stop offset="100%" stop-color="#1A202C"/>
+    </linearGradient>
+    <linearGradient id="ap-top" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#4FD1C5"/>
+      <stop offset="100%" stop-color="#008B8D"/>
+    </linearGradient>
+    <filter id="ap-shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="10" stdDeviation="12" flood-color="#004D40" flood-opacity="0.25"/>
+    </filter>
+  </defs>
+  <!-- Base Shadow -->
+  <ellipse cx="100" cy="180" rx="42" ry="8" fill="#CBD5E0" opacity="0.6"/>
+  <!-- Ambient Air Aura -->
+  <circle cx="100" cy="65" r="55" fill="url(#ap-glow)"/>
+  <!-- Main Purifier Body -->
+  <g filter="url(#ap-shadow)">
+    <!-- Lower Body Cylinder -->
+    <path d="M68 62 L68 162 C68 172 132 172 132 162 L132 62 Z" fill="url(#ap-body)"/>
+    <!-- Bottom Rim -->
+    <ellipse cx="100" cy="162" rx="32" ry="7" fill="#1A202C"/>
+    <!-- Micro Intake Perforations Grid -->
+    <g fill="#718096" opacity="0.75">
+      <circle cx="82" cy="115" r="1.5"/><circle cx="91" cy="115" r="1.5"/><circle cx="100" cy="115" r="1.5"/><circle cx="109" cy="115" r="1.5"/><circle cx="118" cy="115" r="1.5"/>
+      <circle cx="78" cy="123" r="1.5"/><circle cx="86" cy="123" r="1.5"/><circle cx="95" cy="123" r="1.5"/><circle cx="105" cy="123" r="1.5"/><circle cx="114" cy="123" r="1.5"/><circle cx="122" cy="123" r="1.5"/>
+      <circle cx="82" cy="131" r="1.5"/><circle cx="91" cy="131" r="1.5"/><circle cx="100" cy="131" r="1.5"/><circle cx="109" cy="131" r="1.5"/><circle cx="118" cy="131" r="1.5"/>
+      <circle cx="78" cy="139" r="1.5"/><circle cx="86" cy="139" r="1.5"/><circle cx="95" cy="139" r="1.5"/><circle cx="105" cy="139" r="1.5"/><circle cx="114" cy="139" r="1.5"/><circle cx="122" cy="139" r="1.5"/>
+      <circle cx="82" cy="147" r="1.5"/><circle cx="91" cy="147" r="1.5"/><circle cx="100" cy="147" r="1.5"/><circle cx="109" cy="147" r="1.5"/><circle cx="118" cy="147" r="1.5"/>
+    </g>
+    <!-- Brand badge -->
+    <rect x="91" y="90" width="18" height="5" rx="2.5" fill="#008B8D"/>
+    <!-- Top Cap Angle -->
+    <ellipse cx="100" cy="62" rx="32" ry="10" fill="#2D3748"/>
+    <!-- Glowing Teal Air Quality Ring -->
+    <ellipse cx="100" cy="58" rx="28" ry="8" fill="#1A202C"/>
+    <ellipse cx="100" cy="58" rx="26" ry="7" fill="none" stroke="#00E5FF" stroke-width="2.5"/>
+    <ellipse cx="100" cy="58" rx="20" ry="5.5" fill="#2D3748"/>
+    <!-- Center Air Outlet Grill -->
+    <ellipse cx="100" cy="57" rx="14" ry="4" fill="#1A202C"/>
+    <circle cx="100" cy="57" r="3" fill="#00E5FF"/>
+  </g>
+  <!-- Purified Air Ions Particles -->
+  <g fill="#00E5FF" opacity="0.8">
+    <circle cx="78" cy="38" r="2.5"/>
+    <circle cx="122" cy="34" r="2"/>
+    <circle cx="100" cy="22" r="3"/>
+    <path d="M96 26 Q100 16 104 26" stroke="#4FD1C5" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+    <path d="M74 44 Q78 36 82 44" stroke="#4FD1C5" stroke-width="1.2" fill="none" stroke-linecap="round"/>
+    <path d="M118 42 Q122 34 126 42" stroke="#4FD1C5" stroke-width="1.2" fill="none" stroke-linecap="round"/>
+  </g>
+</svg>

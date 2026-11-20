@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" fill="none">
+  <defs>
+    <linearGradient id="vac-body" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#334155"/>
+      <stop offset="50%" stop-color="#1E293B"/>
+      <stop offset="100%" stop-color="#0F172A"/>
+    </linearGradient>
+    <linearGradient id="vac-teal" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#14B8A6"/>
+      <stop offset="100%" stop-color="#0F766E"/>
+    </linearGradient>
+    <linearGradient id="vac-cup" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#E2E8F0" stop-opacity="0.9"/>
+      <stop offset="50%" stop-color="#94A3B8" stop-opacity="0.6"/>
+      <stop offset="100%" stop-color="#64748B" stop-opacity="0.85"/>
+    </linearGradient>
+    <filter id="vac-shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="8" stdDeviation="10" flood-color="#0F172A" flood-opacity="0.2"/>
+    </filter>
+  </defs>
+  <!-- Floor shadow -->
+  <ellipse cx="100" cy="172" rx="60" ry="8" fill="#CBD5E0" opacity="0.6"/>
+  <g filter="url(#vac-shadow)" transform="rotate(-25 100 100)">
+    <!-- Vacuum Handle Loop -->
+    <path d="M40 85 C40 60 70 60 85 70 L95 80 L80 92 L60 85 C50 82 45 88 45 95 L45 115 C45 125 60 128 75 120 L88 110 L95 120 C75 138 40 132 40 105 Z" fill="url(#vac-body)"/>
+    <!-- Motor Housing -->
+    <rect x="75" y="78" width="55" height="44" rx="8" fill="url(#vac-body)"/>
+    <!-- Teal Accent Band -->
+    <rect x="126" y="77" width="6" height="46" rx="2" fill="url(#vac-teal)"/>
+    <!-- Power Button & Battery LEDs -->
+    <circle cx="95" cy="88" r="4.5" fill="#0F766E"/>
+    <circle cx="95" cy="88" r="3" fill="#2DD4BF"/>
+    <circle cx="106" cy="88" r="1.5" fill="#38BDF8"/>
+    <circle cx="111" cy="88" r="1.5" fill="#38BDF8"/>
+    <circle cx="116" cy="88" r="1.5" fill="#38BDF8"/>
+    <!-- Transparent Dust Collection Cup -->
+    <path d="M132 80 L168 88 L168 112 L132 120 Z" fill="url(#vac-cup)"/>
+    <!-- Internal HEPA Cyclone Core -->
+    <path d="M138 88 L155 93 L155 107 L138 112 Z" fill="#F8FAFC" stroke="#CBD5E0" stroke-width="1"/>
+    <!-- Slim Crevice Nozzle Tip with Bristles -->
+    <path d="M168 92 L192 97 L192 103 L168 108 Z" fill="#0F172A"/>
+    <!-- Brush Attachment -->
+    <rect x="186" y="94" width="7" height="12" rx="1.5" fill="#0F766E"/>
+    <line x1="193" y1="95" x2="197" y2="95" stroke="#334155" stroke-width="1.5"/>
+    <line x1="193" y1="98" x2="197" y2="98" stroke="#334155" stroke-width="1.5"/>
+    <line x1="193" y1="101" x2="197" y2="101" stroke="#334155" stroke-width="1.5"/>
+    <line x1="193" y1="104" x2="197" y2="104" stroke="#334155" stroke-width="1.5"/>
+  </g>
+  <!-- Suction Wind Streaks -->
+  <path d="M150 50 Q165 60 178 72" stroke="#06B6D4" stroke-width="2" stroke-linecap="round" fill="none" opacity="0.8"/>
+  <path d="M162 44 Q175 52 186 64" stroke="#22D3EE" stroke-width="1.5" stroke-linecap="round" fill="none" opacity="0.6"/>
+</svg>

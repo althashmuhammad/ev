@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" fill="none">
+  <defs>
+    <linearGradient id="ac-can" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#0F766E"/>
+      <stop offset="40%" stop-color="#14B8A6"/>
+      <stop offset="70%" stop-color="#0F766E"/>
+      <stop offset="100%" stop-color="#115E59"/>
+    </linearGradient>
+    <filter id="ac-shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="10" stdDeviation="10" flood-color="#0F766E" flood-opacity="0.3"/>
+    </filter>
+  </defs>
+  <ellipse cx="100" cy="180" rx="36" ry="7" fill="#CBD5E0" opacity="0.6"/>
+  <g filter="url(#ac-shadow)">
+    <!-- Aerosol Metal Can Body -->
+    <rect x="76" y="80" width="48" height="92" rx="6" fill="url(#ac-can)"/>
+    <ellipse cx="100" cy="80" rx="24" ry="6" fill="#14B8A6"/>
+    <!-- Dome Top & Actuator Button -->
+    <path d="M84 80 C84 66 116 66 116 80 Z" fill="#E2E8F0"/>
+    <rect x="94" y="58" width="12" height="12" rx="2" fill="#005B63"/>
+    <!-- Flexible Probe Tube Extension for Deep Vent Reach -->
+    <path d="M106 64 C120 64 140 70 148 90 C154 105 165 110 175 105" stroke="#E2E8F0" stroke-width="3" stroke-linecap="round" fill="none"/>
+    <circle cx="175" cy="105" r="3.5" fill="#008B8D"/>
+    <!-- Can Graphic Label -->
+    <rect x="80" y="98" width="40" height="58" rx="2" fill="#FFFFFF"/>
+    <text x="100" y="112" font-family="system-ui, sans-serif" font-size="5" font-weight="900" fill="#0F766E" text-anchor="middle">AC VENT</text>
+    <text x="100" y="121" font-family="system-ui, sans-serif" font-size="4.5" font-weight="700" fill="#1E293B" text-anchor="middle">FOAM PURIFY</text>
+    <circle cx="100" cy="133" r="7" fill="#CCFBF1"/>
+    <!-- Eucalyptus Leaf / Fresh Breeze Icon -->
+    <path d="M96 136 C96 128 104 128 104 136 Z" fill="#0D9488"/>
+    <text x="100" y="149" font-family="system-ui, sans-serif" font-size="3.5" font-weight="800" fill="#0F766E" text-anchor="middle">ODOR ZERO</text>
+  </g>
+  <!-- Active Cleaning Foam Bubbles -->
+  <circle cx="178" cy="95" r="4.5" fill="#F0FDFA" stroke="#99F6E4" stroke-width="1"/>
+  <circle cx="186" cy="102" r="3.5" fill="#F0FDFA" stroke="#99F6E4" stroke-width="1"/>
+  <circle cx="182" cy="110" r="5" fill="#F0FDFA" stroke="#99F6E4" stroke-width="1"/>
+</svg>

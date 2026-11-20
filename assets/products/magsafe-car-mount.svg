@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" fill="none">
+  <defs>
+    <radialGradient id="ms-ring" cx="50%" cy="50%" r="50%">
+      <stop offset="65%" stop-color="#008B8D"/>
+      <stop offset="85%" stop-color="#00E5FF"/>
+      <stop offset="100%" stop-color="#008B8D" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="ms-alum" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#64748B"/>
+      <stop offset="50%" stop-color="#334155"/>
+      <stop offset="100%" stop-color="#0F172A"/>
+    </linearGradient>
+    <filter id="ms-shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="8" stdDeviation="10" flood-color="#008B8D" flood-opacity="0.3"/>
+    </filter>
+  </defs>
+  <ellipse cx="100" cy="178" rx="45" ry="7" fill="#CBD5E0" opacity="0.6"/>
+  <!-- Cockpit Vent Mount Bracket Behind -->
+  <g fill="#1E293B">
+    <!-- Vent Clamp Prongs -->
+    <rect x="88" y="130" width="8" height="40" rx="3"/>
+    <rect x="104" y="130" width="8" height="40" rx="3"/>
+    <!-- Ball Joint Neck -->
+    <circle cx="100" cy="120" r="14" fill="#334155"/>
+    <path d="M92 110 L100 85 L108 110 Z" fill="#475569"/>
+  </g>
+  <!-- MagSafe Magnetic Charger Disc Head -->
+  <g filter="url(#ms-shadow)">
+    <!-- Outer Beveled Aluminum Armor Ring -->
+    <circle cx="100" cy="78" r="50" fill="url(#ms-alum)" stroke="#94A3B8" stroke-width="1.5"/>
+    <!-- Matte Non-Scratch Silicone Charging Face -->
+    <circle cx="100" cy="78" r="44" fill="#0F172A"/>
+    <!-- Glowing Cyan MagSafe Alignment Ring -->
+    <circle cx="100" cy="78" r="32" fill="none" stroke="#00E5FF" stroke-width="4.5" stroke-dasharray="14 4"/>
+    <!-- Lower Alignment Notch -->
+    <rect x="98" y="112" width="4" height="8" rx="2" fill="#00E5FF"/>
+    <!-- Center Wireless Qi Fast Charging Icon -->
+    <circle cx="100" cy="78" r="14" fill="#1E293B" stroke="#008B8D" stroke-width="1.5"/>
+    <!-- Lightning Bolt / Fast Charge Icon -->
+    <path d="M102 69 L95 78 L99 78 L97 87 L105 77 L101 77 Z" fill="#00E5FF"/>
+  </g>
+  <!-- Wireless Energy Wave Arcs -->
+  <path d="M58 52 C70 40 130 40 142 52" stroke="#22D3EE" stroke-width="2" stroke-linecap="round" stroke-dasharray="6 4" fill="none" opacity="0.8"/>
+  <path d="M68 40 C78 30 122 30 132 40" stroke="#38BDF8" stroke-width="1.5" stroke-linecap="round" fill="none" opacity="0.5"/>
+  <text x="100" y="24" font-family="system-ui, sans-serif" font-size="8" font-weight="800" fill="#008B8D" text-anchor="middle" letter-spacing="1">15W FAST QI</text>
+</svg>

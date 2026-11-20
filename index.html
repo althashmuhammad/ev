@@ -612,86 +612,147 @@
     .map:not(.home-screen)::after { display: none; }
     .aerial-map-road-mock { display: none; }
     .home-screen {
-      background-color: #EAF5F3;
+      justify-content: flex-start;
+      background-color: #DFF5EF;
       background-image:
-        radial-gradient(ellipse at 88% 21%, rgba(196, 238, 226, 0.72) 0 17%, transparent 17.5%),
-        radial-gradient(circle at 8% 67%, rgba(183, 234, 224, 0.72) 0 13%, transparent 13.5%),
-        linear-gradient(28deg, transparent 44%, rgba(255,255,255,.38) 44.5% 45.7%, transparent 46.2%),
-        linear-gradient(114deg, transparent 32%, rgba(255,255,255,.4) 32.5% 33.7%, transparent 34.2%),
-        linear-gradient(28deg, transparent 71%, rgba(255,255,255,.3) 71.4% 72.4%, transparent 72.9%),
-        linear-gradient(114deg, transparent 69%, rgba(255,255,255,.3) 69.4% 70.4%, transparent 70.9%),
-        linear-gradient(145deg, #EEF8F6, #E5F3F0);
+        radial-gradient(ellipse at 91% 18%, rgba(129, 219, 202, .42) 0 15%, transparent 42%),
+        radial-gradient(ellipse at 7% 76%, rgba(173, 233, 220, .48) 0 13%, transparent 39%),
+        radial-gradient(ellipse at 47% 47%, rgba(255,255,255,.5), transparent 58%),
+        linear-gradient(145deg, #E9FAF6 0%, #DDF4EE 58%, #E8F7F1 100%);
     }
-    .home-screen.home-customer-test { background-color: var(--page); background-image: none; }
-    .home-screen::after { display: none; }
+    .home-screen.home-customer-test { background-color: #DFF5EF; }
     .home-header {
       position: relative; z-index: 2; flex: none;
-      padding: max(20px, env(safe-area-inset-top, 0px)) 16px 0; display: flex; flex-direction: column; gap: 8px;
+      padding: max(40px, env(safe-area-inset-top, 0px)) 16px 0;
+      display: flex; flex-direction: column; gap: 9px;
     }
-    .home-location-button { min-height: 52px; background: var(--surface); border-color: var(--line); box-shadow: var(--shadow-floating); }
-    .home-notification-button { width: 48px; height: 48px; border-radius: 50%; background: var(--surface); box-shadow: var(--shadow-floating); }
+    .home-location-button {
+      min-height: 52px; background: color-mix(in srgb, var(--surface) 76%, transparent);
+      border-color: color-mix(in srgb, var(--label) 10%, transparent);
+      box-shadow: 0 8px 24px rgba(0, 74, 82, .10), inset 0 1px 0 rgba(255,255,255,.88);
+      backdrop-filter: blur(22px) saturate(180%); -webkit-backdrop-filter: blur(22px) saturate(180%);
+    }
+    .home-status-row { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+    .home-notification-button {
+      width: 48px; height: 48px; border-radius: 50%;
+      background: color-mix(in srgb, var(--surface) 72%, transparent);
+      border-color: color-mix(in srgb, var(--label) 10%, transparent);
+      box-shadow: 0 8px 24px rgba(0, 74, 82, .10), inset 0 1px 0 rgba(255,255,255,.88);
+      backdrop-filter: blur(22px) saturate(180%); -webkit-backdrop-filter: blur(22px) saturate(180%);
+    }
+    .home-ev-online {
+      min-height: 36px; display: inline-flex; align-items: center; justify-content: center; gap: 7px;
+      padding: 0 12px; border-radius: 999px; border: 1px solid rgba(255,255,255,.82);
+      background: color-mix(in srgb, var(--surface) 70%, transparent);
+      box-shadow: 0 5px 16px rgba(0, 74, 82, .08), inset 0 1px 0 rgba(255,255,255,.86);
+      color: #176E60; font-size: 10.5px; font-weight: 750; white-space: nowrap;
+      backdrop-filter: blur(18px) saturate(170%); -webkit-backdrop-filter: blur(18px) saturate(170%);
+    }
+    .home-ev-online-dot { width: 7px; height: 7px; border-radius: 50%; background: #20B77A; box-shadow: 0 0 0 3px rgba(32,183,122,.13); }
     .home-location-icon { background: #E2F7F4; color: #005C68; }
     .home-location-label, .home-location-arrow { color: #94A3B8; }
     .home-location-title { color: #0F172A; }
     .home-notification-icon { color: #334155; }
-    .home-battery-button { background: rgba(255,255,255,.95); border-color: rgba(0,0,0,.05); }
+    .home-battery-button {
+      background: color-mix(in srgb, var(--surface) 76%, transparent);
+      border-color: color-mix(in srgb, var(--label) 10%, transparent);
+      box-shadow: 0 5px 18px rgba(0, 74, 82, .08), inset 0 1px 0 rgba(255,255,255,.88);
+    }
     .home-battery-normal, .home-battery-percent { color: #005C68; }
     .home-battery-low, .home-battery-percent.text-coral { color: #E04F26; }
     .home-battery-range { color: #64748B; }
     .home-battery-divider { background: #E5E7EB; }
-    .home-vehicle-button {
-      width: fit-content; max-width: 100%; min-height: 48px; padding: 5px 8px;
-      background: linear-gradient(120deg, var(--slatecard), color-mix(in srgb, var(--slatecard) 72%, #000000));
-      border: 1px solid color-mix(in srgb, var(--label) 18%, transparent);
-      border-radius: 999px; color: var(--home-vehicle-text, #FFFFFF); box-shadow: 0 7px 18px rgba(0, 25, 30, .22);
-      display: flex; align-items: center; gap: 8px; text-align: left;
+    .home-battery-button { min-height: 36px; padding: 5px 11px; }
+    .home-vehicle-feature {
+      position: relative; isolation: isolate; flex: none; height: clamp(190px, 25vh, 220px);
+      margin: 12px 16px; overflow: hidden; border-radius: 30px;
+      border: 1px solid rgba(80,255,235,.55);
+      background: linear-gradient(120deg, #014a4a, #00807f, #00a99f, #006b6a, #013f40);
+      background-size: 300% 300%; animation: homeVehicleFlow 14s ease-in-out infinite;
+      box-shadow: 0 24px 44px -20px rgba(0,120,115,.55), 0 0 30px rgba(0,230,215,.32), inset 0 1px 0 rgba(255,255,255,.24);
     }
-    .home-vehicle-icon { width: 32px; height: 28px; display: flex; align-items: center; justify-content: center; flex: none; }
-    .home-vehicle-car-image { width: 34px; height: 24px; object-fit: contain; filter: drop-shadow(0 1px 1px rgba(0, 0, 0, .28)); }
-    .home-vehicle-name { font: 700 14px/1 'Plus Jakarta Sans', 'Inter', sans-serif; letter-spacing: -.025em; white-space: nowrap; }
-    .home-vehicle-divider { width: 1px; height: 24px; background: rgba(255,255,255,.35); flex: none; }
+    .home-vehicle-feature::before {
+      content: ''; position: absolute; z-index: 0; inset: -18%; pointer-events: none;
+      border-radius: 50%; filter: blur(40px); opacity: .7;
+      background: radial-gradient(ellipse at 76% 34%, rgba(0,235,220,.62), transparent 58%);
+      animation: homeVehicleGlow 11s ease-in-out infinite;
+    }
+    .home-vehicle-feature::after {
+      content: ''; position: absolute; z-index: 3; inset: 0; pointer-events: none;
+      background: linear-gradient(105deg, transparent 38%, rgba(255,255,255,.2) 50%, transparent 62%);
+      transform: translateX(-120%); animation: homeVehicleShine 6s 2.2s ease-in-out infinite;
+    }
+    .home-vehicle-select {
+      position: absolute; z-index: 1; inset: 0; width: 100%; height: 100%; overflow: hidden;
+      color: #FFFFFF; text-align: left;
+    }
+    .home-vehicle-lines { position: absolute; z-index: 1; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+    .home-vehicle-neon {
+      fill: none; stroke: #2cf5e1; stroke-width: 2.2; stroke-linejoin: round; stroke-linecap: round;
+      filter: drop-shadow(0 0 5px rgba(44,245,225,.9));
+      stroke-dasharray: 1400; stroke-dashoffset: 1400;
+      animation: homeVehicleDraw 2.4s .9s ease-out forwards, homeVehiclePulse 4s 3.3s ease-in-out infinite;
+    }
+    .home-vehicle-copy {
+      position: absolute; z-index: 2; inset: 0; pointer-events: none;
+    }
+    .home-vehicle-kicker {
+      position: absolute; top: 15%; left: 10.5%; color: rgba(255,255,255,.8);
+      font-size: 11px; font-weight: 500; letter-spacing: .32em; text-transform: uppercase;
+    }
+    .home-vehicle-title {
+      position: absolute; top: 44%; left: 10%; max-width: 55%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+      color: #FFFFFF; font: 750 clamp(22px, 6.4vw, 40px)/1.12 'Plus Jakarta Sans', 'Inter', sans-serif;
+      letter-spacing: -.035em; text-shadow: 0 1px 10px rgba(0,45,46,.2);
+    }
+    .home-vehicle-spec {
+      position: absolute; top: 57%; left: 10.5%; max-width: 54%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+      color: rgba(255,255,255,.76); font-size: clamp(12px, 3.4vw, 18px); font-weight: 400; letter-spacing: .04em;
+    }
+    .home-vehicle-rule {
+      position: absolute; top: 70%; left: 6%; width: 31%; height: 2px;
+      background: linear-gradient(90deg, transparent, #2cf5e1, transparent); box-shadow: 0 0 10px #2cf5e1;
+    }
     .home-plate-pill {
-      min-height: 34px; padding: 0 9px; border-radius: 999px;
-      background: linear-gradient(135deg, #00897B, #10BFAF);
-      border: 1px solid color-mix(in srgb, var(--invtext) 42%, transparent);
-      color: var(--invtext); display: inline-flex; align-items: center; justify-content: center; gap: 6px;
-      font-size: 11.5px; font-weight: 800; white-space: nowrap;
-      box-shadow: inset 0 1px 1px rgba(255,255,255,.18), 0 2px 9px color-mix(in srgb, var(--teal) 35%, transparent);
+      position: absolute; top: 80%; left: 10.5%; color: #FFFFFF;
+      font-size: clamp(12px, 3vw, 19px); font-weight: 600; letter-spacing: .2em; white-space: nowrap;
     }
-    .home-plate-icon { width: 15px; height: 15px; flex: none; }
-    .home-battery-button { min-height: 44px; }
-    .home-map-center { flex: 1 1 0%; min-height: 150px; position: relative; }
-    .home-map-center .home-map-open {
-      position: absolute; inset: 0; z-index: 0; min-width: 0; min-height: 0;
-      padding: 0; border: 0; background: transparent; cursor: zoom-in;
+    @keyframes homeVehicleFlow { 0%,100% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } }
+    @keyframes homeVehicleGlow { 0%,100% { transform: translate(0,0); } 50% { transform: translate(-10%,8%); } }
+    @keyframes homeVehicleShine { 0% { transform: translateX(-120%); } 35%,100% { transform: translateX(120%); } }
+    @keyframes homeVehicleDraw { to { stroke-dashoffset: 0; } }
+    @keyframes homeVehiclePulse { 0%,100% { opacity: 1; } 50% { opacity: .6; } }
+    @media (prefers-reduced-motion: reduce) {
+      .home-vehicle-feature, .home-vehicle-feature::before, .home-vehicle-feature::after,
+      .home-vehicle-neon { animation: none !important; }
+      .home-vehicle-neon { stroke-dashoffset: 0; }
     }
-    .home-map-center > button:not(.home-map-open) { z-index: 2; }
-    .home-map-location, .home-map-route { pointer-events: none; }
-    .home-map-expanded .home-header, .home-map-expanded .home-service-sheet { display: none; }
-    .home-map-expanded .home-map-center {
-      position: absolute; inset: 0; z-index: 1; width: 100%; min-height: 100%;
-      animation: iosMapExpand var(--motion-complex) var(--motion-ease-out) both;
+    .home-profile-sos {
+      position: absolute; z-index: 4; top: 12px; right: 12px; min-width: 44px; min-height: 30px;
+      padding: 0 9px; border: 1px solid rgba(255,255,255,.34); border-radius: 999px;
+      background: rgba(224,79,38,.96); color: #FFFFFF; font-size: 10px; font-weight: 850;
+      box-shadow: 0 4px 12px rgba(0,0,0,.18);
     }
-    .home-map-expanded .home-map-location { margin-top: 0; }
-    .home-map-expanded .home-map-open, .home-map-expanded .home-map-center .btn-fab { display: none; }
-    .home-map-back {
-      position: absolute; top: 56px; left: 16px; z-index: 4; width: 48px; height: 48px;
-      display: flex; align-items: center; justify-content: center; border: 1px solid var(--line);
-      border-radius: 50%; background: var(--glass); color: var(--label);
-      box-shadow: var(--shadow-floating); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+    .home-screen .home-service-sheet {
+      display: flex; flex-direction: column;
+      flex: 1 1 auto; min-height: 0; z-index: 3; margin-top: 0; padding: 14px 12px 48px;
+      background: color-mix(in srgb, var(--surface) 38%, transparent);
+      -webkit-backdrop-filter: blur(26px) saturate(180%); backdrop-filter: blur(26px) saturate(180%);
+      border-radius: 25px 25px 0 0;
+      border-top: 1px solid rgba(255,255,255,.82);
+      box-shadow: 0 -10px 30px rgba(0, 62, 70, .12), inset 0 1px 0 rgba(255,255,255,.76);
+      overflow-y: auto;
     }
-    .home-service-sheet {
-      flex: none; z-index: 3; padding: 9px 12px 10px;
-      background: linear-gradient(180deg, #FFFFFF 0%, #F7FBFA 100%);
-      border-radius: 28px 28px 0 0;
-      border-top: 1px solid rgba(255,255,255,.95);
-      box-shadow: 0 -8px 26px rgba(0, 62, 70, .10);
-    }
+    .home-service-sheet > .grab { display: none; }
+    .home-service-sheet > .flex.items-center.justify-between { margin-bottom: 12px; }
+    .home-service-sheet .home-shortcuts { margin-top: auto; }
     .home-service-card {
       position: relative; isolation: isolate; overflow: hidden; width: 100%;
-      min-height: 78px; padding: 10px 11px; margin-bottom: 9px;
-      border-radius: 20px; border: 1px solid rgba(0, 92, 104, .10);
-      background: #FFFFFF; box-shadow: 0 4px 12px rgba(0, 65, 72, .09);
+      min-height: 86px; padding: 10px 11px; margin-bottom: 12px;
+      border-radius: 20px; border: 1px solid rgba(255,255,255,.78);
+      background: color-mix(in srgb, var(--surface) 70%, transparent);
+      -webkit-backdrop-filter: blur(18px) saturate(170%); backdrop-filter: blur(18px) saturate(170%);
+      box-shadow: 0 7px 20px rgba(0, 65, 72, .09), inset 0 1px 0 rgba(255,255,255,.78);
       display: flex; align-items: center; justify-content: space-between;
       text-align: left;
     }
@@ -729,10 +790,12 @@
     }
     .home-shortcuts { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; }
     .home-shortcut {
-      min-width: 0; min-height: 78px; padding: 7px 3px 5px;
+      min-width: 0; min-height: 82px; padding: 7px 3px 5px;
       display: flex; flex-direction: column; align-items: center; justify-content: space-between;
-      border-radius: 19px; background: #FFFFFF; border: 1px solid rgba(0, 92, 104, .08);
-      box-shadow: 0 3px 10px rgba(0, 65, 72, .08);
+      border-radius: 19px; background: color-mix(in srgb, var(--surface) 66%, transparent);
+      border: 1px solid rgba(255,255,255,.76);
+      -webkit-backdrop-filter: blur(18px) saturate(170%); backdrop-filter: blur(18px) saturate(170%);
+      box-shadow: 0 5px 16px rgba(0, 65, 72, .08), inset 0 1px 0 rgba(255,255,255,.8);
     }
     .home-shortcut-icon {
       width: 42px; height: 42px; border-radius: 15px; display: flex;
@@ -775,9 +838,9 @@
     }
     .flow-stepper .flow-step-separator.is-complete { background: var(--teal); }
     .flow-step-item:focus-visible { outline: 2px solid var(--teal); outline-offset: 3px; border-radius: 4px; }
-    :root[data-theme]:not([data-theme="light"]):not([data-theme="dark"]) .home-service-sheet { background: var(--surface); border-color: var(--line); }
+    :root[data-theme]:not([data-theme="light"]):not([data-theme="dark"]) .home-service-sheet { background: color-mix(in srgb, var(--surface) 50%, transparent); border-color: var(--line); }
     :root[data-theme]:not([data-theme="light"]):not([data-theme="dark"]) .home-service-card,
-    :root[data-theme]:not([data-theme="light"]):not([data-theme="dark"]) .home-shortcut { background: var(--surface); border-color: var(--line); }
+    :root[data-theme]:not([data-theme="light"]):not([data-theme="dark"]) .home-shortcut { background: color-mix(in srgb, var(--surface) 82%, transparent); border-color: var(--line); }
     :root[data-theme]:not([data-theme="light"]):not([data-theme="dark"]) .home-service-title,
     :root[data-theme]:not([data-theme="light"]):not([data-theme="dark"]) .home-shortcut-label { color: var(--label); }
     :root[data-theme]:not([data-theme="light"]):not([data-theme="dark"]) .home-service-status,
@@ -792,13 +855,6 @@
     :root[data-theme]:not([data-theme="light"]):not([data-theme="dark"]) .home-shortcut-icon {
       background: var(--teal-soft); color: var(--teal); border-color: var(--line);
     }
-    :root[data-theme]:not([data-theme="light"]):not([data-theme="dark"]) .home-vehicle-button {
-      background: linear-gradient(120deg, var(--slatecard), var(--page));
-      border-color: var(--line);
-    }
-    :root[data-theme]:not([data-theme="light"]):not([data-theme="dark"]) .home-plate-pill {
-      background: linear-gradient(135deg, var(--teal-dark), var(--teal));
-    }
     :root[data-theme]:not([data-theme="light"]):not([data-theme="dark"]) .home-service-card::after { background: var(--teal-soft); opacity: .7; }
     :root[data-theme]:not([data-theme="light"]):not([data-theme="dark"]) .home-location-icon { background: var(--teal-soft); color: var(--teal); }
     :root[data-theme]:not([data-theme="light"]):not([data-theme="dark"]) .home-location-label,
@@ -806,7 +862,7 @@
     :root[data-theme]:not([data-theme="light"]):not([data-theme="dark"]) .home-battery-range { color: var(--label2); }
     :root[data-theme]:not([data-theme="light"]):not([data-theme="dark"]) .home-location-title { color: var(--label); }
     :root[data-theme]:not([data-theme="light"]):not([data-theme="dark"]) .home-notification-icon { color: var(--label); }
-    :root[data-theme]:not([data-theme="light"]):not([data-theme="dark"]) .home-battery-button { background: var(--surface); border-color: var(--line); }
+    :root[data-theme]:not([data-theme="light"]):not([data-theme="dark"]) .home-battery-button { background: color-mix(in srgb, var(--surface) 82%, transparent); border-color: var(--line); }
     :root[data-theme]:not([data-theme="light"]):not([data-theme="dark"]) .home-battery-normal,
     :root[data-theme]:not([data-theme="light"]):not([data-theme="dark"]) .home-battery-percent { color: var(--teal); }
     :root[data-theme]:not([data-theme="light"]):not([data-theme="dark"]) .home-battery-low,
@@ -857,15 +913,6 @@
     }
     .custom-theme-color input { width: 38px; height: 38px; padding: 0; border: 0; background: transparent; }
     @media (max-width: 380px) {
-      .home-vehicle-button { min-height: 44px; padding: 4px 7px; gap: 6px; }
-      .home-vehicle-icon { width: 28px; height: 24px; }
-      .home-vehicle-car-image { width: 30px; height: 21px; }
-      .home-vehicle-name { font-size: 12.5px; }
-      .home-vehicle-divider { height: 20px; }
-      .home-plate-pill { min-height: 32px; padding: 0 7px; gap: 4px; font-size: 10px; }
-      .home-plate-icon { width: 13px; height: 13px; }
-    }
-    @media (max-width: 380px) {
       .flow-stepper { gap: 4px; padding-right: 4px; padding-left: 4px; }
       .flow-stepper .flow-step-item { gap: 4px; }
       .flow-step-number {
@@ -890,12 +937,18 @@
     }
     .map-station-pin { width: 44px; height: 44px; display: flex; align-items: flex-end; justify-content: center; }
     @media (max-width: 380px) { .weekday-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
-    :root[data-theme="dark"] .home-screen { background-color: #101C1E; background-image: radial-gradient(ellipse at 88% 21%, rgba(10, 89, 80, .35) 0 17%, transparent 17.5%), linear-gradient(145deg, #152326, #101A1C); }
-    :root[data-theme="dark"] .home-service-card { background: #172528; border-color: rgba(255,255,255,.10); }
+    :root[data-theme="dark"] .home-screen { background-color: #101C1E; background-image: radial-gradient(ellipse at 88% 21%, rgba(10, 89, 80, .35) 0 17%, transparent 42%), radial-gradient(ellipse at 12% 78%, rgba(10, 89, 80, .2), transparent 42%), linear-gradient(145deg, #152326, #101A1C); }
+    :root[data-theme="dark"] .home-service-card { background: color-mix(in srgb, #172528 84%, transparent); border-color: rgba(255,255,255,.12); }
     :root[data-theme="dark"] .home-service-title { color: #F2F7F7; }
     :root[data-theme="dark"] .home-service-status, :root[data-theme="dark"] .home-service-detail { color: #A9BCBF; }
-    :root[data-theme="dark"] .home-service-sheet { background: linear-gradient(180deg, #172326, #121C1F); }
-    :root[data-theme="dark"] .home-shortcut { background: #172528; }
+    :root[data-theme="dark"] .home-service-sheet { background: linear-gradient(180deg, rgba(23,35,38,.9), rgba(18,28,31,.92)); }
+    :root[data-theme="dark"] .home-shortcut { background: color-mix(in srgb, #172528 84%, transparent); }
+    :root[data-theme="dark"] .home-location-title,
+    :root[data-theme="dark"] .home-notification-icon,
+    :root[data-theme="dark"] .home-battery-range { color: var(--label); }
+    :root[data-theme="dark"] .home-location-label,
+    :root[data-theme="dark"] .home-location-arrow { color: var(--label2); }
+    :root[data-theme="dark"] .home-ev-online { color: #8FE2D0; }
     :root .home-service-card.home-service-card--emergency,
     :root[data-theme="dark"] .home-service-card.home-service-card--emergency,
     :root[data-theme]:not([data-theme="light"]):not([data-theme="dark"]) .home-service-card.home-service-card--emergency {
@@ -947,14 +1000,43 @@
     }
     .home-service-card.home-emergency-arrival { animation: homeEmergencyAttention 680ms var(--motion-ease-out) both; }
     @media (max-height: 760px) {
-      .home-header { padding-top: max(20px, env(safe-area-inset-top, 0px)); }
-      .home-map-center { min-height: 118px; }
-      .home-vehicle-button { min-height: 44px; }
+      .home-vehicle-feature { height: 180px; }
       .home-service-sheet { padding-top: 7px; padding-bottom: 8px; }
       .home-service-card { min-height: 70px; padding: 8px 9px; margin-bottom: 7px; }
       .home-service-icon { width: 44px; height: 44px; }
       .home-shortcut { min-height: 70px; }
       .home-shortcut-icon { width: 38px; height: 38px; }
+    }
+    @media (max-height: 600px) {
+      .home-header { gap: 6px; padding-top: max(8px, env(safe-area-inset-top, 0px)); }
+      .home-location-button { min-height: 42px; }
+      .home-location-icon { width: 30px; height: 30px; }
+      .home-notification-button { width: 40px; height: 40px; }
+      .home-status-row { gap: 6px; }
+      .home-battery-button { min-height: 34px; padding: 4px 9px; }
+      .home-ev-online { min-height: 34px; padding: 0 9px; font-size: 9.5px; }
+      .home-vehicle-feature { height: 124px; min-height: 124px; margin: 6px 12px; border-radius: 20px; }
+      .home-vehicle-kicker { top: 10%; font-size: 8px; }
+      .home-vehicle-title { top: 31%; font-size: clamp(18px, 5.5vw, 24px); }
+      .home-vehicle-spec { top: 53%; font-size: 9.5px; }
+      .home-vehicle-rule { top: 70%; }
+      .home-plate-pill { top: 80%; font-size: 12px; }
+      .home-profile-sos { top: 8px; right: 8px; min-width: 40px; min-height: 26px; padding: 0 7px; font-size: 9px; }
+      .home-screen .home-service-sheet { padding: 6px 10px 10px; }
+      .home-service-sheet > .flex.items-center.justify-between { margin-bottom: 8px; }
+      .home-service-sheet h2 { font-size: 14px !important; }
+      .home-service-sheet .home-service-card { min-height: 58px; padding: 6px 8px; margin-bottom: 5px; }
+      .home-service-icon, .home-service-icon.icon-container { width: 38px; height: 38px; border-radius: 13px; }
+      .home-service-copy { margin-left: 7px; }
+      .home-service-title { font-size: 13px; }
+      .home-service-status { margin-top: 2px; font-size: 10px; }
+      .home-service-detail { margin-top: 2px; font-size: 10px; }
+      .home-track-button { min-height: 34px; padding: 0 8px; font-size: 10px; }
+      .home-charge-chevron { width: 32px; height: 32px; margin-left: 5px; }
+      .home-shortcuts { gap: 6px; }
+      .home-shortcut { min-height: 56px; padding: 5px 2px 4px; border-radius: 15px; }
+      .home-shortcut-icon { width: 30px; height: 30px; border-radius: 11px; }
+      .home-shortcut-label { font-size: 9px; }
     }
     .bar {
       position: sticky; bottom: 0; z-index: 10;
@@ -1031,12 +1113,12 @@
       min-width: var(--control-height); min-height: var(--control-height);
       transition-duration: var(--motion-fast);
     }
-    .ios-screen button:not(.home-map-open):not([disabled]) {
+    .ios-screen button:not([disabled]) {
       transition-property: transform, color, background-color, border-color, box-shadow, opacity, filter;
       transition-duration: var(--motion-button);
       transition-timing-function: var(--motion-ease-out);
     }
-    .ios-screen button:not(.home-map-open):not([disabled]):active { transform: scale(0.975); filter: brightness(0.985); }
+    .ios-screen button:not([disabled]):active { transform: scale(0.975); filter: brightness(0.985); }
     .ios-screen input:not([type="color"]), .ios-screen select, .ios-screen textarea {
       min-height: var(--control-height);
       transition: color var(--motion-small) var(--motion-ease-out), background-color var(--motion-small) var(--motion-ease-out), border-color var(--motion-small) var(--motion-ease-out), box-shadow var(--motion-small) var(--motion-ease-out);
@@ -1358,12 +1440,25 @@
     #ios-tab-bar button { border-radius: 14px; transition: color var(--motion-small) var(--motion-ease-out), background-color var(--motion-small) var(--motion-ease-out), transform var(--motion-button) var(--motion-ease-out); }
     #ios-tab-bar button[aria-current="page"] { background: color-mix(in srgb, var(--accent-primary) 10%, transparent); }
     #ios-tab-bar button svg { transition: transform var(--motion-icon) var(--motion-ease-out); }
-    .icon-btn svg, .home-map-back svg { transition: transform var(--motion-icon) var(--motion-ease-out); }
-    .icon-btn:active svg, .home-map-back:active svg { transform: scale(0.9); }
+    #ios-tab-bar.home-liquid-tabs {
+      margin: 0 10px 8px; padding: 5px 6px max(5px, env(safe-area-inset-bottom, 0px)) !important;
+      border: 1px solid rgba(255,255,255,.82) !important; border-radius: 25px;
+      background: color-mix(in srgb, var(--surface) 72%, transparent);
+      box-shadow: 0 10px 26px rgba(0, 68, 78, .12), inset 0 1px 0 rgba(255,255,255,.86);
+      backdrop-filter: blur(26px) saturate(180%); -webkit-backdrop-filter: blur(26px) saturate(180%);
+    }
+    #ios-tab-bar.home-liquid-tabs button { min-width: 0; border-radius: 18px; }
+    #ios-tab-bar.home-liquid-tabs button[aria-current="page"] {
+      background: radial-gradient(ellipse at 50% 35%, rgba(52,211,193,.22), rgba(17,148,136,.08));
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.72), 0 4px 12px rgba(0,105,108,.08);
+    }
+    #ios-tab-bar.home-liquid-tabs button span { white-space: nowrap; font-size: 9.5px; }
+    .icon-btn svg { transition: transform var(--motion-icon) var(--motion-ease-out); }
+    .icon-btn:active svg { transform: scale(0.9); }
     .seg button, .sw, .sw::before, .sw i, .opt { transition-duration: var(--motion-small); transition-timing-function: var(--motion-ease-out); }
     .field-error { animation: iosTabFade var(--motion-small) var(--motion-ease-out) both; }
     @media (prefers-reduced-transparency: reduce) {
-      .glass, #ios-sheet-backdrop, .home-map-back { backdrop-filter: none !important; -webkit-backdrop-filter: none !important; }
+      .glass, #ios-sheet-backdrop { backdrop-filter: none !important; -webkit-backdrop-filter: none !important; }
     }
 
     /* =====================================================================
@@ -1605,7 +1700,6 @@
     const state = {
       screen: '18',
       entryMode: null,
-      homeMapExpanded: false,
       demoBatteryAlertAnimating: false,
       navDirection: 'tab',
       theme: document.documentElement.getAttribute('data-theme') || 'light',
@@ -1832,14 +1926,169 @@
     };
 
     const SHOP_PRODUCTS = [
-      { id: 'cable-bag', category: 'accessories', name: 'EV Cable Organizer', description: 'Protective carry bag for charging cables', price: 799, icon: 'plug' },
-      { id: 'boot-organizer', category: 'accessories', name: 'Foldable Boot Organizer', description: 'Compact storage for everyday essentials', price: 1299, icon: 'car' },
-      { id: 'floor-mats', category: 'accessories', name: 'All-Weather Floor Mats', description: 'Easy-clean set for cabin protection', price: 2499, icon: 'car' },
-      { id: 'phone-mount', category: 'accessories', name: 'Dashboard Phone Mount', description: 'Adjustable holder for hands-free navigation', price: 899, icon: 'phone' },
-      { id: 'car-shampoo', category: 'cleaning', name: 'pH-Neutral Car Shampoo', description: 'Gentle concentrate for exterior washing', price: 499, icon: 'drop' },
-      { id: 'microfiber-cloths', category: 'cleaning', name: 'Microfiber Detailing Cloths', description: 'Soft 3-pack for glass, paint and interior', price: 399, icon: 'sparkle' },
-      { id: 'interior-cleaner', category: 'cleaning', name: 'Interior Surface Cleaner', description: 'For dashboards, door trims and touchpoints', price: 449, icon: 'sparkle' },
-      { id: 'tyre-dressing', category: 'cleaning', name: 'Tyre & Trim Care', description: 'Water-based finish for exterior detailing', price: 549, icon: 'tyre' }
+      // === CAR INTERIOR & CABIN ACCESSORIES ===
+      {
+        id: 'cabin-air-purifier',
+        category: 'accessories',
+        name: 'EV Cabin HEPA Air Purifier & Ionizer',
+        badge: 'HEPA H13 • Fits Cup Holder',
+        description: 'Anodized aluminum body with air quality LED indicator. Filters PM2.5, allergens, odors & VOCs.',
+        price: 1899,
+        image: 'assets/products/cabin-air-purifier.svg',
+        icon: 'sparkle'
+      },
+      {
+        id: 'cordless-vacuum',
+        category: 'accessories',
+        name: 'High-Power Cordless Handheld Car Vacuum',
+        badge: '8500 Pa • USB-C Fast Charge',
+        description: 'Cyclonic suction with dual crevice brush nozzle & washable stainless steel HEPA filter for cabin cleaning.',
+        price: 1499,
+        image: 'assets/products/cordless-vacuum.svg',
+        icon: 'sparkle'
+      },
+      {
+        id: 'floor-mats-3d',
+        category: 'accessories',
+        name: 'All-Weather 3D TPE Floor Mats (Nexon EV)',
+        badge: 'Nexon EV Fit • 3D Waterproof',
+        description: 'Tailored laser-scanned deep dish floor liners with raised perimeter spill-guard & non-skid retention clips.',
+        price: 2899,
+        image: 'assets/products/floor-mats-3d.svg',
+        icon: 'car'
+      },
+      {
+        id: 'magsafe-car-mount',
+        category: 'accessories',
+        name: 'MagSafe 15W Qi Fast Wireless Dash Mount',
+        badge: '15W Qi Fast Charge • MagSafe',
+        description: 'Neodymium magnetic ring with 360° articulated ball joint & silicone-padded cockpit air-vent clamp.',
+        price: 1199,
+        image: 'assets/products/magsafe-car-mount.svg',
+        icon: 'phone'
+      },
+      {
+        id: 'memory-foam-neck-pillow',
+        category: 'accessories',
+        name: 'Ergonomic Memory Foam Neck Pillows (Pair)',
+        badge: 'Cabin Comfort • Ergonomic Pair',
+        description: 'Slow-rebound high-density orthopedic memory foam with breathable sport mesh & adjustable elastic harness.',
+        price: 1299,
+        image: 'assets/products/memory-foam-neck-pillow.svg',
+        icon: 'shield'
+      },
+      {
+        id: 'solar-aroma-diffuser',
+        category: 'accessories',
+        name: 'Smart Solar-Powered Alloy Aromatherapy Diffuser',
+        badge: 'Solar Driven • Natural Essential Oils',
+        description: 'Dual-ring levitating gyroscope in aerospace alloy. Activates rotation in sunlight to disperse fresh botanical fragrance.',
+        price: 699,
+        image: 'assets/products/solar-aroma-diffuser.svg',
+        icon: 'sparkle'
+      },
+      {
+        id: 'ev-cable-case',
+        category: 'accessories',
+        name: 'Padded EV Cable & Adapter Organizer Case',
+        badge: 'CCS2 & Type 2 • Shockproof Oxford',
+        description: 'Heavy-duty circular carry bag with shock-absorbing foam lining, water-repellent shell & elastic cable loops.',
+        price: 849,
+        image: 'assets/products/ev-cable-case.svg',
+        icon: 'plug'
+      },
+      {
+        id: 'trunk-organizer',
+        category: 'accessories',
+        name: 'Collapsible Multi-Pocket Trunk & Boot Caddy',
+        badge: '60L Capacity • Thermal Insulated',
+        description: 'Heavy-duty 1680D Oxford fabric with 3 compartments, leak-proof cooler zone, side mesh pockets & alloy handles.',
+        price: 1399,
+        image: 'assets/products/trunk-organizer.svg',
+        icon: 'car'
+      },
+      {
+        id: 'windshield-sunshade',
+        category: 'accessories',
+        name: 'Titanium Foldable Windshield UV Sunshade',
+        badge: '99% UV Block • Umbrella Fold',
+        description: 'Reflective titanium silver thermal shield with umbrella-style opening. Lowers cabin temperature by up to 15°C.',
+        price: 749,
+        image: 'assets/products/windshield-sunshade.svg',
+        icon: 'sun'
+      },
+      {
+        id: 'screen-protector',
+        category: 'accessories',
+        name: '10.25" Infotainment 9H Tempered Glass Guard',
+        badge: '9H Hardness • Oleophobic Coating',
+        description: 'Ultra-clear 2.5D curved-edge tempered glass for Tata Nexon EV touchscreen. Anti-fingerprint and scratch-resistant.',
+        price: 499,
+        image: 'assets/products/screen-protector.svg',
+        icon: 'phone'
+      },
+
+      // === CAR CARE & INTERIOR DETAILING ===
+      {
+        id: 'interior-detailer-spray',
+        category: 'cleaning',
+        name: 'Interior Dashboard & Leather Matte UV Detailer (500ml)',
+        badge: 'UV50+ Shield • Non-Greasy Satin Finish',
+        description: 'Anti-static cleaner and UV protectant for dashboard, touchscreens, door cards and faux leather trims.',
+        price: 479,
+        image: 'assets/products/interior-detailer-spray.svg',
+        icon: 'sparkle'
+      },
+      {
+        id: 'microfiber-cloths',
+        category: 'cleaning',
+        name: 'Plush 800 GSM Dual-Pile Detailing Towels (Pack of 4)',
+        badge: '800 GSM • Scratch-Free Edgeless',
+        description: 'Ultra-thick dual-sided microfiber cloths. Perfect for scratchless interior dusting, glass clarity & streak-free wipe-down.',
+        price: 399,
+        image: 'assets/products/microfiber-cloths.svg',
+        icon: 'sparkle'
+      },
+      {
+        id: 'detailing-brushes',
+        category: 'cleaning',
+        name: 'Interior Vent & Crevice Detailing Brush Set (5 Sizes)',
+        badge: 'Ultra-Soft • 5 Crevice Sizes',
+        description: 'Scratch-safe synthetic boars-hair bristles designed to reach AC louvers, gear console seams, and steering buttons.',
+        price: 349,
+        image: 'assets/products/detailing-brushes.svg',
+        icon: 'sparkle'
+      },
+      {
+        id: 'glass-cleaner-spray',
+        category: 'cleaning',
+        name: 'Anti-Fog Windshield & Glass Cleaner (400ml)',
+        badge: 'Anti-Mist • Streak-Free Optical Clarity',
+        description: 'Ammonia-free spray that prevents interior fogging and misting while cutting through haze, fingerprints & dust.',
+        price: 389,
+        image: 'assets/products/glass-cleaner-spray.svg',
+        icon: 'drop'
+      },
+      {
+        id: 'ac-vent-cleaner',
+        category: 'cleaning',
+        name: 'AC Evaporator Vent Sanitizer & Deep Foam Can',
+        badge: 'Deep Foam • Bacteria & Odor Zero',
+        description: 'Long probe hose reaches deep inside ventilation ducts. Disinfects evaporator coils and leaves crisp eucalyptus aroma.',
+        price: 429,
+        image: 'assets/products/ac-vent-cleaner.svg',
+        icon: 'sparkle'
+      },
+      {
+        id: 'car-shampoo',
+        category: 'cleaning',
+        name: 'pH-Neutral Foam Wash & Ceramic Booster Shampoo (1L)',
+        badge: 'Ceramic Safe • High Lubricity Foam',
+        description: 'High-foaming concentrate safe for ceramic coating and paint protection films. Leaves a hydrophobic gloss finish.',
+        price: 499,
+        image: 'assets/products/car-shampoo.svg',
+        icon: 'drop'
+      }
     ];
 
     // go(id)              → push a screen (remembers where we came from)
@@ -1878,7 +2127,6 @@
       } else if (explicitDir !== 'pop' && state.screen !== id) {
         state.history.push(state.screen);
       }
-      if (id !== '01') state.homeMapExpanded = false;
       state.screen = id;
       if (id === '10') { state.addSuccessVehicle = null; state.addErrors = {}; }
       closeSheet();
@@ -1887,20 +2135,6 @@
       if (vp) vp.scrollTop = 0;
       if (id === '01') scheduleDemoBatteryCue();
     }
-    function openHomeMap() {
-      if (state.screen !== '01' || state.homeMapExpanded) return;
-      state.homeMapExpanded = true;
-      render();
-      const backButton = document.getElementById('home-map-back');
-      if (backButton) backButton.focus({ preventScroll: true });
-    }
-    function closeHomeMap() {
-      if (!state.homeMapExpanded) return;
-      state.homeMapExpanded = false;
-      render();
-      const mapButton = document.getElementById('home-map-open');
-      if (mapButton) mapButton.focus({ preventScroll: true });
-    }
     function back() {
       const prev = state.history.pop() || '01';
       go(prev, 'pop');
@@ -1908,8 +2142,7 @@
     function goTab(id, label) {
       if (id === '11') {
         state.tabLabel = label || 'Account';
-        state.accountView = null;
-        state.homeMapExpanded = false;
+        state.accountView = state.tabLabel === 'Wallet' ? 'wallet' : null;
       }
       go(id, 'tab');
     }
@@ -2250,7 +2483,6 @@
       state.shopOrderCount = 0;
       state.lastShopOrder = null;
       state.accountView = null;
-      state.homeMapExpanded = false;
       state.callActive = false;
       state.callSeconds = 0;
       state.pay = 'gpay';
@@ -3363,12 +3595,12 @@
             </button>
             ${customerTest ? `<div class="card p-3.5 text-[11px] leading-relaxed text-label2">Shop catalog and inventory are not connected in customer test mode.</div>` : `<button onclick="openShop('accessories')" class="w-full card min-h-[72px] p-3.5 flex items-center gap-3 text-left press">
               <span class="w-10 h-10 rounded-xl bg-teal-soft text-teal flex items-center justify-center shrink-0">${I('car', 'w-5 h-5')}</span>
-              <span class="flex-1 min-w-0"><span class="block text-[13px] font-semibold">Car Accessories</span><span class="block text-[11px] text-label2">Interior, charging &amp; travel essentials</span></span>
+              <span class="flex-1 min-w-0"><span class="block text-[13px] font-semibold">Car Accessories &amp; Interior</span><span class="block text-[11px] text-label2">Cabin air purifier, 3D mats, vacuum, mounts &amp; gear</span></span>
               ${I('chevR', 'w-4 h-4 text-label3')}
             </button>
             <button onclick="openShop('cleaning')" class="w-full card min-h-[72px] p-3.5 flex items-center gap-3 text-left press">
               <span class="w-10 h-10 rounded-xl bg-teal-soft text-teal flex items-center justify-center shrink-0">${I('sparkle', 'w-5 h-5')}</span>
-              <span class="flex-1 min-w-0"><span class="block text-[13px] font-semibold">Car Care &amp; Cleaning Supplies</span><span class="block text-[11px] text-label2">Wash, interior care &amp; detailing essentials</span></span>
+              <span class="flex-1 min-w-0"><span class="block text-[13px] font-semibold">Car Care &amp; Interior Spa</span><span class="block text-[11px] text-label2">Dashboard UV detailer, microfiber towels &amp; AC hygiene</span></span>
               ${I('chevR', 'w-4 h-4 text-label3')}
             </button>`}
           </div>
@@ -3454,6 +3686,8 @@
     function screen15() {
       const category = state.shopCategory === 'cleaning' ? 'cleaning' : 'accessories';
       const products = SHOP_PRODUCTS.filter(product => product.category === category);
+      const accCount = SHOP_PRODUCTS.filter(p => p.category === 'accessories').length;
+      const cleanCount = SHOP_PRODUCTS.filter(p => p.category === 'cleaning').length;
       return `
         <div class="screen pt-[54px] px-4 pb-8 space-y-4">
           <div class="flex items-center justify-between">
@@ -3462,35 +3696,52 @@
             </button>
             <button onclick="go('16')" aria-label="Shopping cart, ${shopCartCount()} items" class="navbtn relative w-11 h-11 flex items-center justify-center text-label press">
               ${I('shoppingBag', 'w-5 h-5')}
-              ${shopCartCount() ? `<span class="absolute top-0 right-0 min-w-[18px] h-[18px] px-1 rounded-full bg-teal text-white text-[10px] font-bold flex items-center justify-center">${shopCartCount()}</span>` : ''}
+              ${shopCartCount() ? `<span class="absolute top-0 right-0 min-w-[18px] h-[18px] px-1 rounded-full bg-teal text-white text-[10px] font-bold flex items-center justify-center animate-pulse">${shopCartCount()}</span>` : ''}
             </button>
           </div>
           <div class="px-1 space-y-1">
-            <div class="eyebrow text-teal">Vehicle shop · Demo</div>
-            <h1 class="font-display text-[21px] font-bold tracking-tight text-label">${category === 'accessories' ? 'Car accessories' : 'Car care & cleaning'}</h1>
-            <p class="text-[12px] text-label2">Useful picks for your vehicle, ready to browse.</p>
+            <div class="eyebrow text-teal flex items-center gap-1.5">${I('car', 'w-3.5 h-3.5 text-teal')} Vehicle Shop • Genuine Accessories</div>
+            <h1 class="font-display text-[21px] font-bold tracking-tight text-label">${category === 'accessories' ? 'Car Interior &amp; Accessories' : 'Car Care &amp; Detailing'}</h1>
+            <p class="text-[12px] text-label2">${category === 'accessories' ? 'Cabin essentials, air purifiers, 3D mats &amp; interior gear for your Nexon EV' : 'Interior detailing sprays, plush microfibers &amp; AC hygiene products'}</p>
           </div>
           <div class="grid grid-cols-2 gap-2 p-1 rounded-[18px] bg-fill" role="tablist" aria-label="Shop categories">
-            <button onclick="setShopCategory('accessories')" role="tab" aria-selected="${category === 'accessories'}" class="min-h-[44px] rounded-[14px] px-2 text-[12px] font-semibold ${category === 'accessories' ? 'bg-surface text-teal shadow-sm' : 'text-label2'}">Accessories</button>
-            <button onclick="setShopCategory('cleaning')" role="tab" aria-selected="${category === 'cleaning'}" class="min-h-[44px] rounded-[14px] px-2 text-[12px] font-semibold ${category === 'cleaning' ? 'bg-surface text-teal shadow-sm' : 'text-label2'}">Car care</button>
+            <button onclick="setShopCategory('accessories')" role="tab" aria-selected="${category === 'accessories'}" class="min-h-[44px] rounded-[14px] px-2 text-[12px] font-semibold flex items-center justify-center gap-1.5 ${category === 'accessories' ? 'bg-surface text-teal shadow-sm' : 'text-label2'}">
+              <span>Interior Accessories</span>
+              <span class="text-[10px] font-bold px-1.5 py-0.5 rounded-full ${category === 'accessories' ? 'bg-teal-soft text-teal' : 'bg-fill2 text-label3'}">${accCount}</span>
+            </button>
+            <button onclick="setShopCategory('cleaning')" role="tab" aria-selected="${category === 'cleaning'}" class="min-h-[44px] rounded-[14px] px-2 text-[12px] font-semibold flex items-center justify-center gap-1.5 ${category === 'cleaning' ? 'bg-surface text-teal shadow-sm' : 'text-label2'}">
+              <span>Car Care</span>
+              <span class="text-[10px] font-bold px-1.5 py-0.5 rounded-full ${category === 'cleaning' ? 'bg-teal-soft text-teal' : 'bg-fill2 text-label3'}">${cleanCount}</span>
+            </button>
           </div>
-          <div class="space-y-2.5">
+          <div class="space-y-3">
             ${products.map(product => `
-              <article class="card p-3.5 flex items-center gap-3">
-                <span class="w-12 h-12 rounded-2xl bg-teal-soft text-teal flex items-center justify-center shrink-0">${I(product.icon, 'w-5 h-5')}</span>
+              <article class="card p-3 flex items-start gap-3 hover:border-teal/30 transition-all group">
+                <div class="w-20 h-20 sm:w-22 sm:h-22 rounded-2xl bg-gradient-to-b from-slate-50 to-slate-100/90 border border-slate-200/60 p-1.5 flex items-center justify-center shrink-0 shadow-xs overflow-hidden relative">
+                  <img src="${product.image}" alt="${product.name}" class="w-full h-full object-contain group-hover:scale-105 transition-transform" loading="lazy" />
+                </div>
                 <div class="min-w-0 flex-1">
-                  <h2 class="text-[13px] leading-snug font-semibold text-label">${product.name}</h2>
-                  <p class="mt-1 text-[11px] leading-snug text-label2">${product.description}</p>
-                  <div class="mt-2 flex items-center justify-between gap-2">
-                    <span class="text-[13px] font-bold text-label num">${formatShopMoney(product.price)}</span>
-                    <button onclick="addShopProduct('${product.id}')" class="min-h-[40px] min-w-[76px] px-3 rounded-xl bg-teal text-white text-[12px] font-bold press">Add</button>
+                  <div class="mb-1">
+                    <span class="inline-flex items-center gap-1 text-[10px] font-bold text-teal bg-teal-soft/90 px-2 py-0.5 rounded-md">${product.badge}</span>
+                  </div>
+                  <h2 class="text-[13px] leading-tight font-bold text-label">${product.name}</h2>
+                  <p class="mt-1 text-[11px] leading-relaxed text-label2 line-clamp-2">${product.description}</p>
+                  <div class="mt-2.5 flex items-center justify-between gap-2">
+                    <div class="flex items-baseline gap-1">
+                      <span class="text-[14px] font-extrabold text-label num">${formatShopMoney(product.price)}</span>
+                      <span class="text-[10px] text-label3">incl. GST</span>
+                    </div>
+                    <button onclick="addShopProduct('${product.id}')" aria-label="Add ${product.name} to cart" class="min-h-[36px] px-3.5 rounded-xl bg-teal hover:bg-teal-dark active:scale-95 text-white text-[12px] font-bold shadow-xs flex items-center gap-1.5 press">
+                      ${I('plus', 'w-3.5 h-3.5')}
+                      <span>Add</span>
+                    </button>
                   </div>
                 </div>
               </article>
             `).join('')}
           </div>
-          <p class="px-1 text-[10px] leading-relaxed text-label3">Demo catalog with sample prices. No payment or delivery request is sent.</p>
-          ${shopCartCount() ? `<button onclick="go('16')" class="btn w-full min-h-[48px]">${I('shoppingBag', 'w-4 h-4')} Review cart · ${shopCartCount()} ${shopCartCount() === 1 ? 'item' : 'items'} · ${formatShopMoney(shopCartTotal())}</button>` : ''}
+          <p class="px-1 text-[10px] leading-relaxed text-label3">Demo accessories catalog with illustrative prices. Tap Add to bundle items into your cart.</p>
+          ${shopCartCount() ? `<button onclick="go('16')" class="btn w-full min-h-[48px] shadow-lg sticky bottom-4 z-20">${I('shoppingBag', 'w-4 h-4')} Review cart · ${shopCartCount()} ${shopCartCount() === 1 ? 'item' : 'items'} · ${formatShopMoney(shopCartTotal())}</button>` : ''}
         </div>
       `;
     }
@@ -3512,11 +3763,13 @@
           ${items.length ? `
             <div class="space-y-2.5">
               ${items.map(item => `
-                <article class="card p-3.5 flex items-center gap-3">
-                  <span class="w-11 h-11 rounded-xl bg-teal-soft text-teal flex items-center justify-center shrink-0">${I(item.icon, 'w-5 h-5')}</span>
+                <article class="card p-3 flex items-center gap-3">
+                  <div class="w-14 h-14 rounded-xl bg-slate-50 border border-slate-200/60 p-1 flex items-center justify-center shrink-0 overflow-hidden">
+                    <img src="${item.image}" alt="${item.name}" class="w-full h-full object-contain" />
+                  </div>
                   <div class="min-w-0 flex-1">
-                    <h2 class="text-[13px] font-semibold text-label">${item.name}</h2>
-                    <p class="mt-1 text-[11px] text-label2">${formatShopMoney(item.price)} each</p>
+                    <h2 class="text-[13px] font-bold text-label leading-tight">${item.name}</h2>
+                    <p class="mt-0.5 text-[11px] text-label2">${formatShopMoney(item.price)} each</p>
                   </div>
                   <div class="flex items-center gap-2">
                     <button onclick="changeShopQuantity('${item.id}', -1)" aria-label="Remove one ${item.name}" class="w-9 h-9 rounded-full bg-fill text-label font-bold text-[17px] press">−</button>
@@ -3563,7 +3816,15 @@
             </div>
             <div class="card p-4 space-y-3">
               <h2 class="text-[13px] font-bold text-label">Order summary</h2>
-              ${order.items.map(item => `<div class="flex justify-between gap-3 text-[12px]"><span class="text-label2">${item.name} × ${item.quantity}</span><span class="font-semibold text-label num">${formatShopMoney(item.price * item.quantity)}</span></div>`).join('')}
+              ${order.items.map(item => `<div class="flex items-center justify-between gap-3 text-[12px]">
+                <div class="flex items-center gap-2 min-w-0">
+                  <div class="w-7 h-7 rounded-lg bg-slate-50 border border-slate-200/60 p-0.5 shrink-0 flex items-center justify-center overflow-hidden">
+                    <img src="${item.image}" alt="${item.name}" class="w-full h-full object-contain" />
+                  </div>
+                  <span class="text-label2 truncate">${item.name} × ${item.quantity}</span>
+                </div>
+                <span class="font-bold text-label num shrink-0">${formatShopMoney(item.price * item.quantity)}</span>
+              </div>`).join('')}
               <div class="hair"></div>
               <div class="flex justify-between text-[14px]"><span class="font-bold text-label">Demo total</span><span class="font-bold text-teal num">${formatShopMoney(order.total)}</span></div>
             </div>
@@ -3890,10 +4151,8 @@
         { l: 'More', i: 'grid', color: 'text-teal', fn: "go('14')" }
       ];
       return `
-      <div class="screen map home-screen relative overflow-hidden justify-between ${customerTest ? 'home-customer-test' : ''} ${state.homeMapExpanded ? 'home-map-expanded' : ''}">
-        <!-- Top Floating Header (Exact Design from Reference) -->
+      <div class="screen home-screen relative overflow-hidden ${customerTest ? 'home-customer-test' : ''}">
         <div class="home-header select-none">
-          <!-- Row 1: Location Pill + Notification Squircle -->
           <div class="flex items-center gap-2.5">
             <button onclick="openLocationSheet()" aria-label="Change location, currently ${state.locationTitle}" class="home-location-button flex-1 backdrop-blur-sm rounded-full px-3 py-1.5 border flex items-center justify-between text-left press group">
               <div class="flex items-center gap-3 min-w-0">
@@ -3923,23 +4182,8 @@
             </button>
           </div>
 
-          <!-- Row 2: Vehicle Pill (Using Real Background-Removed Car Image) -->
-          <div class="flex items-center">
-            <button onclick="go('09')" aria-label="Active vehicle ${esc(c.name)}, switch vehicle" class="home-vehicle-button press">
-              <span class="home-vehicle-icon" aria-hidden="true">${customerTest ? I('car', 'w-5 h-5 text-teal') : `<img src="${NEXON_FRONT_IMG}" alt="" class="home-vehicle-car-image" decoding="async">`}</span>
-              <span class="home-vehicle-name">${esc(c.short || 'Nexon EV')}</span>
-              <span class="home-vehicle-divider" aria-hidden="true"></span>
-              <span class="home-plate-pill">
-                ${I('car', 'home-plate-icon', 2)}
-                <span>${esc(c.plate || (customerTest ? 'Test vehicle' : 'KL 07 CD 1234'))}</span>
-              </span>
-            </button>
-          </div>
-
-          <!-- Row 3: Battery & Range Pill -->
-          <div class="flex items-center">
+          <div class="home-status-row">
             <button id="home-battery-button" onclick="go('09')" aria-label="${emergencyBattery ? `Emergency: charge your vehicle now. Battery ${c.soc} percent, estimated ${estRangeKm} kilometres range` : hasBatteryEstimate ? `Battery ${c.soc} percent, estimated ${estRangeKm} kilometres range` : 'Battery and range are not connected'}" class="home-battery-button backdrop-blur-sm shadow-sm border rounded-full py-1.5 px-3.5 inline-flex items-center gap-2 press">
-              <!-- Outlined Battery Icon in Coral/Orange -->
               <svg class="w-5 h-3.5 ${lowBattery ? 'home-battery-low' : 'home-battery-normal'}" viewBox="0 0 24 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <rect x="1" y="1" width="18" height="14" rx="3"/>
                 <line x1="21" y1="5.5" x2="21" y2="10.5"/>
@@ -3948,59 +4192,37 @@
               <span id="home-battery-percent" class="home-battery-percent font-display text-[13.5px] font-extrabold ${lowBattery ? 'text-coral' : ''} num">${hasBatteryEstimate ? `${c.soc}%` : '—'}</span>
               <span class="home-battery-divider w-[1px] h-3.5 mx-0.5"></span>
               <span id="home-battery-range" class="home-battery-range text-[12.5px] font-medium num">${hasBatteryEstimate ? `~${estRangeKm} km est.` : 'No range data'}</span>
+              ${I('chevR', 'w-3.5 h-3.5 text-label3', 2)}
             </button>
+            <span class="home-ev-online" role="status">
+              <span class="home-ev-online-dot"></span>
+              ${customerTest ? 'Test Vehicle' : state.telematicsSynced ? 'EV Online' : 'EV Offline'}
+            </span>
           </div>
         </div>
 
-        <!-- Expanded Center Map Area (Shows Live Van Route on Home Map when Active) -->
-        <div class="home-map-center flex flex-col items-center justify-center relative">
-          ${customerTest ? customerMapBackdrop() : ''}
-          ${customerTest ? '' : state.homeMapExpanded ? `
-            <button id="home-map-back" type="button" onclick="closeHomeMap()" aria-label="Back to Home" class="home-map-back press">
-              ${I('chevL', 'w-5 h-5', 2)}
-            </button>
-          ` : `
-            <button id="home-map-open" type="button" onclick="openHomeMap()" aria-label="Expand map" class="home-map-open"></button>
-          `}
-          ${live && !customerTest ? `
-            <!-- Live Route Polyline & Moving Fleet Van directly on Home Map -->
-            <svg class="home-map-route w-56 h-32 overflow-visible absolute" viewBox="0 0 220 120">
-              <path d="M 155 26 L 94 18 L 86 78" fill="none" stroke="#005C68" stroke-width="3" stroke-dasharray="5 4" stroke-linecap="round" stroke-linejoin="round"/>
+        <div class="home-vehicle-feature">
+          <button onclick="go('09')" aria-label="Active vehicle ${esc(c.name)}, switch vehicle" class="home-vehicle-select press">
+            <svg class="home-vehicle-lines" viewBox="0 0 1130 680" preserveAspectRatio="none" aria-hidden="true">
+              <path class="home-vehicle-neon" d="M862 30 L720 360 L810 288 L1055 286 Q1072 288 1070 306 L948 632"/>
             </svg>
-            <button onclick="go('03')" aria-label="Track ${state.activeOrder.serviceType}" class="absolute right-12 top-7 flex flex-col items-end press">
-              <span class="bg-slatecard text-white px-2.5 py-1 rounded-full text-[10px] font-bold shadow-md mb-1 flex items-center gap-1.5">
-                <span class="w-1.5 h-1.5 rounded-full bg-[#64FFDA] animate-ping"></span> ${state.activeOrder.serviceType} • ${state.activeOrder.etaMins}m
-              </span>
-              <div class="w-9 h-9 rounded-full bg-teal text-white border-2 border-white shadow-lg flex items-center justify-center">
-                ${I('truck', 'w-4 h-4')}
-              </div>
-            </button>
-          ` : ''}
-
-          ${customerTest ? '' : `<div class="home-map-location flex flex-col items-center mt-4">
-            <div class="teal-pin-pulse">
-              <div class="w-8 h-8 rounded-full bg-teal text-white shadow-lg flex items-center justify-center border-2 border-white">
-                ${I('pin', 'w-4 h-4', 2.2)}
-              </div>
-            </div>
-            <div class="text-center mt-1 leading-tight bg-surface/85 backdrop-blur-xs px-2.5 py-0.5 rounded-full">
-              <div class="text-[10.5px] font-bold text-teal">${state.locationShort}</div>
-            </div>
-          </div>`}
-
-          <!-- Floating Coral Red SOS Button -->
-          <button onclick="openSosSheet()" aria-label="SOS emergency help" class="btn-fab absolute right-4 bottom-3 w-[52px] h-[52px] rounded-full bg-coral text-white font-display font-extrabold text-[12px] tracking-wide flex items-center justify-center shadow-lg press" style="box-shadow: 0 0 0 5px rgba(224, 79, 38, 0.18), 0 8px 20px rgba(224, 79, 38, 0.35);">
-            SOS
+            <span class="home-vehicle-copy">
+              <span class="home-vehicle-kicker">${esc(c.short || 'Electric vehicle')}</span>
+              <span class="home-vehicle-title">${esc(c.trim || c.name)}</span>
+              <span class="home-vehicle-spec">${esc(c.connector)} • ${c.batteryKwh} kWh battery</span>
+              <span class="home-vehicle-rule"></span>
+              <span class="home-plate-pill">${esc(c.plate || (customerTest ? 'Test vehicle' : 'KL 07 CD 1234'))}</span>
+            </span>
           </button>
+          <button onclick="openSosSheet()" aria-label="SOS emergency help" class="home-profile-sos press">SOS</button>
         </div>
 
-        <!-- Bottom Action Sheet -->
         <div class="sheet home-service-sheet">
           <div class="grab !mb-2"></div>
 
           <div class="flex items-center justify-between mb-2 px-0.5">
             <h2 class="font-display text-[17px] font-bold tracking-tight text-label">What does your EV need?</h2>
-            <button onclick="go('14')" class="text-[12px] font-bold text-teal min-h-[44px] px-1">All services</button>
+            <button onclick="go('14')" class="text-[12px] font-bold text-teal min-h-[44px] px-1 inline-flex items-center gap-0.5">All services ${I('chevR', 'w-3.5 h-3.5', 2)}</button>
           </div>
 
           ${state.reservation ? `
@@ -6077,6 +6299,7 @@ function screen02() {
       { label: 'Home', id: '01', icon: 'home' },
       { label: 'Activity', id: '08', icon: 'activity' },
       { label: 'My Vehicles', id: '09', icon: 'car' },
+      { label: 'Wallet', id: '11', icon: 'wallet' },
       { label: 'Account', id: '11', icon: 'user' }
     ];
     const RENDERERS = {
@@ -6114,11 +6337,14 @@ function screen02() {
       }
 
       const tabBar = document.getElementById('ios-tab-bar');
-      if (meta.tabBar && !(state.screen === '01' && state.homeMapExpanded)) {
+      if (meta.tabBar) {
         tabBar.style.display = 'grid';
         tabBar.setAttribute('aria-label', 'Main');
+        tabBar.classList.toggle('home-liquid-tabs', state.screen === '01');
         const activeLabel = state.screen === '11' ? state.tabLabel : meta.tabName;
-        tabBar.innerHTML = TABS.map(t => {
+        const visibleTabs = state.entryMode === 'customer' ? TABS.filter(t => t.label !== 'Wallet') : TABS;
+        tabBar.style.gridTemplateColumns = `repeat(${visibleTabs.length}, minmax(0, 1fr))`;
+        tabBar.innerHTML = visibleTabs.map(t => {
           const a = t.label === activeLabel;
           return `
           <button onclick="goTab('${t.id}','${t.label}')" ${a ? 'aria-current="page"' : ''} class="min-h-[48px] flex flex-col items-center justify-center gap-0.5 py-1 transition-all duration-200 press ${a ? 'text-teal scale-105' : 'text-label2'}">
