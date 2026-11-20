@@ -46,7 +46,7 @@ Transitions favor transform and opacity. Persistent `will-change` hints were rem
 
 Browser checks at 390 × 844 verified:
 
-- Car Wash Home shortcut image and Nexon front image loaded; Car Wash still opened its existing flow.
+- Flat SVG Car Wash Home shortcut icon and Nexon front image loaded; Car Wash still opened its existing flow.
 - Stations navigation retained its push transition.
 - Sheet entrance, close animation, drag dismissal, and reduced-motion immediate dismissal.
 - Chat and call overlays opened and closed through their existing actions.

@@ -30,7 +30,7 @@ Credential-based authentication screens and flows (registration, email/password 
 
 - The existing teal design and nine theme presets remain present: Existing Light, Existing Dark, Pure Black + White, Pure White + Black, Neon, Ocean Blue, Forest Green, Graphite, and Custom. The Appearance menu remains under Account.
 - The screen set has consistent navigation, card, and theme behavior in the exercised flows. The map can expand to a map-only state and return to Home; its map layers remain visible after selecting any of the nine themes.
-- The mock Dynamic Island/camera pill was removed; the status bar retains the time and system indicators. The supplied transparent Car Wash image is used only by the Home shortcut, and its original action remains intact.
+- Simulated status and home-indicator bars are removed so real-device indicators are not duplicated. Home service shortcuts use flat SVG icons in both Guest and Demo modes.
 - Most UI is backed by fixed demo values. Labels such as current GPS, driver, charging status, and station availability must not be presented as live service data in production.
 
 ### Functional and business logic
@@ -47,7 +47,7 @@ No HTTP API calls or API client were found. There are no request/response DTOs, 
 
 Browser viewport simulation covered 16 sizes from 320x640 through 1920x1080. The recorded 332 screen/step-by-viewport combinations showed no horizontal overflow, unnamed active buttons, or active touch targets below 44 CSS px. This is viewport simulation, not physical-device testing. Details and screenshot references are in [RESPONSIVE_TESTING.md](RESPONSIVE_TESTING.md).
 
-An additional theme regression check confirmed the Home map background, map area, and route remain rendered in all nine presets. The supplied Car Wash image loaded and its Home shortcut continued to open the Carwash flow.
+An additional theme regression check confirmed the Home map background, map area, and route remain rendered in all nine presets. The flat Car Wash icon displayed and its Home shortcut continued to open the Carwash flow.
 
 ### Accessibility
 
@@ -74,8 +74,8 @@ No Lighthouse, bundle-size, network timing, or device profiling was available. T
 4. The unread notification badge reflects the current unread count and disappears at zero.
 5. Valid Bharat-series registration values are normalized on save (for example, `22BH1234AB` to `22 BH 1234 AB`).
 6. Appearance navigation restores focus, and theme/fullscreen storage or browser failures are surfaced through logging/feedback.
-7. Removed the decorative Dynamic Island/camera pill while retaining the time and signal/Wi-Fi/battery indicators.
-8. Replaced only the Home Car Wash shortcut artwork with the supplied transparent image; the shortcut still opens Carwash.
+7. Removed the simulated status bar and home indicator; native device indicators are left to the operating system.
+8. Home service shortcuts use flat SVG icons in both Guest and Demo modes; existing actions remain intact.
 9. Removed the non-default-theme rule that suppressed the Home map background image. The map now uses the selected theme's map palette without disappearing.
 
 ## Remaining release blockers
@@ -96,6 +96,5 @@ The screenshot collection contains 251 PNG files at report generation. Represent
 - Scheduled-routing regression: [before](screenshots/before/Charge-Schedule-routing-390x844.png) and [after](screenshots/after/Charge-Schedule-Activity-390x844.png).
 - Emergency charging tracking: [after](screenshots/after/Charge-Emergency-Tracking-390x844.png).
 - Home baseline and zero-range state: [Home](screenshots/after/Audit-Home-390x844.png), [zero range](screenshots/after/Audit-Battery-Zero-390x844.png).
-- Final status bar without Dynamic Island: [Home, 390x844](screenshots/after/Audit-Home-No-Dynamic-Island-390x844.png).
 - Updated Home map and supplied Car Wash artwork: [Home](screenshots/after/Audit-Home-Carwash-Map-390x844.png), [Car Wash shortcut](screenshots/after/Audit-Car-Wash-Shortcut-390x844.png), [Pure Black map](screenshots/after/Audit-Home-Map-PureBlack-390x844.png).
 - Theme menu: [Account](screenshots/after/Audit-Account-390x844.png), [Appearance](screenshots/after/Audit-Appearance-390x844.png).

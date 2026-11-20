@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, maximum-scale=1.0, user-scalable=no" />
   <title>VoltIndia — Deep Teal EV Charging Prototype</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -62,6 +62,10 @@
        DESIGN TOKENS — Deep Teal (#005C68), Soft Mint & Coral Accents
        ===================================================================== */
     :root {
+      --sat: env(safe-area-inset-top, 0px);
+      --sab: env(safe-area-inset-bottom, 0px);
+      --sal: env(safe-area-inset-left, 0px);
+      --sar: env(safe-area-inset-right, 0px);
       color-scheme: light;
       --page: #F6F8F7;
       --surface: #FFFFFF;
@@ -317,7 +321,7 @@
       border-radius: 0 !important;
     }
 
-    #ios-status-bar {
+    #ios-status-bar { display: none !important; 
       transition: background 0.2s ease;
     }
 
@@ -980,42 +984,13 @@
     <div class="iphone">
       <div class="ios-screen">
 
-        <!-- Status Bar -->
-        <div id="ios-status-bar"
-          class="absolute top-0 inset-x-0 h-[44px] sm:h-[50px] px-6 sm:px-7 pt-2 sm:pt-2.5 flex items-center justify-between text-[13px] font-display font-bold select-none z-30 text-label sb-glass">
-          <span class="w-12">9:41</span>
-          <div class="hidden sm:flex w-[112px] h-[30px] bg-black rounded-full items-center justify-between px-3">
-            <span class="w-1.5 h-1.5 rounded-full bg-teal animate-pulse"></span>
-            <div class="w-2.5 h-2.5 rounded-full bg-[#1a1a22] border border-[#2c2c36]"></div>
-          </div>
-          <div class="flex items-center gap-1.5">
-            <svg class="w-3.5 h-3" viewBox="0 0 18 12" fill="currentColor">
-              <rect x="0" y="8" width="3" height="4" rx="1" />
-              <rect x="4.5" y="5.5" width="3" height="6.5" rx="1" />
-              <rect x="9" y="3" width="3" height="9" rx="1" />
-              <rect x="13.5" y="0.5" width="3" height="11.5" rx="1" />
-            </svg>
-            <svg class="w-3.5 h-3" viewBox="0 0 16 12" fill="currentColor">
-              <path
-                d="M8 9.5a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3zm-3.6-2.1a5.2 5.2 0 0 1 7.2 0l1.1-1.2a6.8 6.8 0 0 0-9.4 0l1.1 1.2zm-2.5-2.6a8.8 8.8 0 0 1 12.2 0l1.1-1.2a10.4 10.4 0 0 0-14.4 0l1.1 1.2z" />
-            </svg>
-            <div class="w-[22px] h-[11px] rounded-[3.5px] border border-current p-[1.5px] flex items-center">
-              <div class="h-full w-[82%] bg-current rounded-[1.5px]"></div>
-            </div>
-          </div>
-        </div>
-
         <!-- Viewport -->
         <div id="ios-viewport" class="flex-1 overflow-y-auto ios-scroll relative flex flex-col"></div>
 
         <!-- Tab Bar -->
         <nav id="ios-tab-bar"
-          class="glass !border-x-0 !border-b-0 px-2 pt-1.5 pb-0.5 grid grid-cols-5 items-center z-20 shrink-0"></nav>
-
-        <!-- Home Indicator -->
-        <div class="glass !border-0 pt-1 pb-2 flex justify-center shrink-0">
-          <div class="w-[134px] h-[5px] bg-label rounded-full opacity-90"></div>
-        </div>
+          class="glass !border-x-0 !border-b-0 px-2 pt-2 grid grid-cols-4 items-center z-20 shrink-0"
+          style="padding-bottom: max(10px, env(safe-area-inset-bottom));"></nav>
 
         <!-- Dynamic Island Notification Banner -->
         <div id="ios-banner"
@@ -4190,8 +4165,10 @@
       const meta = SCREENS.find(s => s.id === state.screen) || SCREENS[0];
 
       const sb = document.getElementById('ios-status-bar');
-      sb.classList.toggle('sb-clear', MAP_SCREENS.includes(state.screen));
-      sb.classList.toggle('sb-glass', !MAP_SCREENS.includes(state.screen));
+      if (sb) {
+        sb.classList.toggle('sb-clear', MAP_SCREENS.includes(state.screen));
+        sb.classList.toggle('sb-glass', !MAP_SCREENS.includes(state.screen));
+      }
 
       const vp = document.getElementById('ios-viewport');
       // Remember which input had focus so typing isn't interrupted by a re-render

@@ -19,7 +19,7 @@ The original 553-check count is 23 scenario-based workflow groups + 332 responsi
 | Focused workflows and regressions | Original 23 groups passed; WF-23–WF-31 follow-ups passed | See [USER_WORKFLOW_TESTING.md](USER_WORKFLOW_TESTING.md). Follow-ups cover the local shop/cart/demo order, guest vehicle and Kochi map screens, charging flow and copy, completed-only Activity history, local scheduling/cancellation, weekly-day validation, demo isolation, and the staged low-battery alert. |
 | Responsive/accessibility smoke checks | 332 original combinations passed; guest Home, map screens, charge footer, and emergency card spot-checked at 320x640 | No horizontal overflow after transitions settled. See [RESPONSIVE_TESTING.md](RESPONSIVE_TESTING.md). |
 | Theme rendering | 198 combinations passed | Nine presets rendered without detected rendering/overflow failures. |
-| Home map/theme regression | 9/9 presets passed | Map background and route remained rendered for every theme; supplied Car Wash image loaded and its action opened screen 13. |
+| Home map/theme regression | 9/9 presets passed | Map background and route remained rendered for every theme; the flat Car Wash icon's action opened screen 13. |
 | Browser console and script syntax | No app JavaScript errors observed; all four inline scripts parsed successfully | Tailwind CDN production warning was observed. |
 | Screenshot evidence | Present | 251 PNGs in `reports/screenshots/` at report generation, including before/after route captures and responsive/theme sets. |
 
@@ -49,8 +49,8 @@ The original 553-check count is 23 scenario-based workflow groups + 332 responsi
 - `22BH1234AB` was accepted and saved as `22 BH 1234 AB`.
 - Car Wash, Towing, Fuel, Jump Start, station search/reservation, notification chat/reply/view-update, theme selection, map expand/back, and Add Vehicle validation passed in browser checks.
 - Account navigation was verified at 390x844 with pointer hit testing; the browser was restored to Home after validation.
-- The Dynamic Island/camera pill is absent at 390x844; time and system indicators remain, and Home/Account navigation still works.
-- All nine themes retain the Home map layers; the supplied Car Wash artwork loads only in the Home shortcut, which still opens the Carwash flow.
+- Simulated status and home-indicator bars are absent at 390x844; Home/Account navigation still works.
+- All nine themes retain the Home map layers; Home shortcuts use flat SVG icons and still open their existing flows.
 - Charging now follows Address > Setup (plug, charging power, energy/price, and payment) > Arrival. Now reached tracking; Schedule and Weekly appeared in Activity; Weekly submission without a selected day was blocked.
 - Demo More exposes Car Accessories and Car Care & Cleaning Supplies through the local shop flow; Customer Test gates the catalog because live inventory is not connected. Roadside Breakdown Assistance reuses the existing towing/recovery flow.
 - Customer test starts without a seeded request, location, notification, wallet, saved profile, vehicle telemetry, or preselected weekly days. Only Tata Nexon EV can be configured.
