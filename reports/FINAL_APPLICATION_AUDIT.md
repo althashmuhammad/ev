@@ -51,7 +51,7 @@ Browser viewport simulation covered 15 sizes from 320x640 through 1920x1080. The
 
 - In the checked combinations, active buttons had accessible names and measured targets were at least 44 CSS px.
 - Focus restoration for the Appearance submenu and shared sheet was improved.
-- A reduced-motion override exists for smooth scrolling, but global animation behavior, full keyboard coverage, contrast ratios for every theme/state, and screen-reader output have not been formally certified. No WCAG 2.2 AA claim is made.
+- Global reduced-motion rules shorten animation/transition durations, and sheet/modal handlers bypass exit animations. Full keyboard coverage, contrast ratios for every theme/state, and screen-reader output have not been formally certified. No WCAG 2.2 AA claim is made.
 
 ### Security and reliability
 
@@ -87,7 +87,7 @@ The prototype's exercised regression and viewport checks pass. No P0 functional 
 
 ## Evidence
 
-The screenshot collection contains 247 PNG files at report generation. Representative evidence includes:
+The screenshot collection contains 248 PNG files at report generation. Representative evidence includes:
 
 - Scheduled-routing regression: [before](screenshots/before/Charge-Schedule-routing-390x844.png) and [after](screenshots/after/Charge-Schedule-Activity-390x844.png).
 - Emergency charging tracking: [after](screenshots/after/Charge-Emergency-Tracking-390x844.png).

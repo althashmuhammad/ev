@@ -20,7 +20,7 @@ The executed count is 20 scenario-based workflow groups + 330 responsive screen/
 | Responsive/accessibility smoke checks | 330 combinations passed | No horizontal overflow, unnamed active buttons, or active targets below 44 CSS px in tested combinations. See [RESPONSIVE_TESTING.md](RESPONSIVE_TESTING.md). |
 | Theme rendering | 198 combinations passed | Nine presets rendered without detected rendering/overflow failures. |
 | Browser console | No app JavaScript errors observed in exercised flows | Tailwind CDN production warning was observed. |
-| Screenshot evidence | Present | 247 PNGs in `reports/screenshots/` at report generation, including before/after route captures and responsive/theme sets. |
+| Screenshot evidence | Present | 248 PNGs in `reports/screenshots/` at report generation, including before/after route captures and responsive/theme sets. |
 
 ## Build and automated tests
 

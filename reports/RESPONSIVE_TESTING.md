@@ -36,7 +36,7 @@ Each screen below was included in the viewport sweep. The `390x844` capture is r
 | Stations | Pass | [Stations](screenshots/after/Stations-390x844.png) |
 | Station Details | Pass | [Station Details](screenshots/after/Station-Detail-390x844.png) |
 | Jump Start | Pass | [Jump Start](screenshots/after/Jump-Start-390x844.png) |
-| Towing | Pass | [Towing](screenshots/after/Towing-320x640.png) |
+| Towing | Pass | [Towing](screenshots/after/Validated-Towing-320x640.png) |
 | Activity | Pass | [Activity](screenshots/after/Activity-390x844.png) |
 | My Vehicles | Pass | [Vehicles](screenshots/after/Vehicles-390x844.png) |
 | Add Vehicle | Pass | [Add Vehicle](screenshots/after/Add-Vehicle-390x844.png) |
@@ -51,7 +51,7 @@ Each screen below was included in the viewport sweep. The `390x844` capture is r
 
 - The responsive sweep found no unnamed active buttons or active targets below 44 CSS px.
 - Account/Home navigation was verified with a pointer at 390x844.
-- Reduced-motion CSS was found for smooth scrolling, but the complete animation system was not verified under reduced-motion preference.
+- Global reduced-motion rules shorten animation/transition durations, but the complete animation system was not rechecked under reduced-motion preference in this audit.
 - Contrast ratios across every theme/state, keyboard-only coverage, screen-reader announcements, zoom/reflow, and physical safe-area behavior were not formally tested. No WCAG 2.2 AA compliance claim is made.
 - Viewport simulation cannot substitute for physical device, mobile keyboard, or assistive-technology testing.
 - The final status-bar-only change is captured at 390x844 above. Other viewport-specific screenshots predate that cosmetic change; it did not alter screen dimensions or layout geometry.

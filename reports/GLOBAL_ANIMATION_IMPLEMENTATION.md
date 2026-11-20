@@ -2,7 +2,7 @@
 
 ## Status
 
-Implemented in the existing standalone `app1.1.html`. The app uses inline CSS and JavaScript with no animation-library dependency. Existing transitions and feedback were audited and extended rather than replaced.
+Implemented in the existing standalone `index.html`. The app uses inline CSS and JavaScript with no animation-library dependency. Existing transitions and feedback were audited and extended rather than replaced.
 
 ## 1. Existing animation audit
 

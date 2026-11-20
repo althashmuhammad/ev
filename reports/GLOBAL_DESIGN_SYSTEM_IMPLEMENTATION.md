@@ -2,7 +2,7 @@
 
 ## Status
 
-Implemented in the existing application at `app1.1.html`; no demo screen or backend changes were added. The shared visual foundation is in place and has been validated across all 13 screen renderers and all nine themes. Some page-specific Tailwind utility classes remain; see section 12.
+Implemented in the existing application at `index.html`; no demo screen or backend changes were added. The shared visual foundation is in place and has been validated across all 13 screen renderers and all nine themes. Some page-specific Tailwind utility classes remain; see section 12.
 
 ## 1. Screens inspected
 
@@ -56,7 +56,7 @@ The existing SVG helper remains the single line-icon source. Its default stroke 
 
 ## 7. Screens updated
 
-Shared styling applies across all 13 renderers, including account/wallet, forms, service flows, maps, tracking, activity, vehicle management, and charging. The Home map can expand into a map-only view; Back restores the header, cards, and navigation. The Home cards remain “Van En Route” and “Charge my EV”; the Car Wash shortcut uses the supplied artwork, and the vehicle pill uses the Nexon front-view image. The bottom navigation is Home, Activity, My Vehicles, and Account.
+Shared styling applies across all 13 renderers, including account/wallet, forms, service flows, maps, tracking, activity, vehicle management, and charging. The Home map can expand into a map-only view; Back restores the header, cards, and navigation. The Home cards remain “Van En Route” and “Charge my EV”; the Car Wash shortcut uses the supplied artwork, and the vehicle pill uses the Nexon front-view image. The mock Dynamic Island/camera pill was removed from the status bar while retaining the time and system indicators. The bottom navigation is Home, Activity, My Vehicles, and Account.
 
 The shared checkout stepper and location picker were made theme-token driven. Existing notification selection continues into the support-chat overlay with message input, call action, and a “View update” control.
 
@@ -110,5 +110,7 @@ Keyboard-only and assistive-technology testing were not performed.
 Five baseline screenshots were available: [Home](./screenshots/before/Home-390x844.png), [Charge](./screenshots/before/Charge-320x640.png), [Stations](./screenshots/before/Stations-320x640.png), [Towing](./screenshots/before/Towing-320x640.png), and [Vehicle](./screenshots/before/Vehicle-320x640.png). The corresponding current captures are in the table above.
 
 The `Validated-` captures in `screenshots/after/` were generated with actual viewport emulation. Earlier unprefixed captures in that directory came from a fixed-size browser session and are excluded from the results above.
+
+The final status bar without the Dynamic Island is captured in [Audit-Home-No-Dynamic-Island-390x844.png](./screenshots/after/Audit-Home-No-Dynamic-Island-390x844.png); other earlier captures predate that cosmetic change.
 
 The project has no package manifest or automated test runner, so validation used the local browser. The existing Tailwind CDN emits its standard production-use warning. The app still contains page-specific utility classes; not every one-off control/card has been migrated to a named variant, to avoid broad markup changes that could disturb existing behavior.
