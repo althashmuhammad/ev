@@ -2,7 +2,7 @@
 <html lang="en" data-theme="light">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
   <title>VoltIndia — Deep Teal EV Charging Prototype</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -423,8 +423,8 @@
 
     @media (min-width: 640px) {
       .iphone {
-        width: 396px;
-        height: 844px;
+        width: min(396px, calc(100vw - 32px));
+        height: min(844px, calc(100dvh - 48px));
         padding: 12px;
         border-radius: 58px;
         background: var(--chassis);
@@ -476,6 +476,17 @@
     }
     body.is-fullscreen .ios-screen {
       border-radius: 0 !important;
+    }
+    .charge-address-dock {
+      position: absolute;
+      left: 12px;
+      right: 12px;
+      bottom: max(24px, env(safe-area-inset-bottom, 0px));
+      z-index: 60;
+    }
+    body.is-fullscreen .charge-address-dock {
+      position: fixed;
+      bottom: max(24px, calc(env(safe-area-inset-bottom, 0px) + 16px));
     }
 
     /* =====================================================================
@@ -4194,23 +4205,22 @@ function screen02() {
               <div class="w-2 h-2 rounded-full bg-teal-dark shadow-xs -mt-1"></div>
             </div>
 
-            <!-- Floating Bottom Dock Bar (Matching Image 2) -->
-            <div class="absolute bottom-4 left-4 right-4 z-20">
-              <div class="bg-surface/98 backdrop-blur-md rounded-[26px] p-3 shadow-xl border border-line flex items-center justify-between">
-                <div class="flex items-center gap-2.5 min-w-0">
-                  <span class="w-8 h-8 rounded-full border border-teal/30 bg-teal-soft/40 text-teal flex items-center justify-center shrink-0">
-                    ${I('pin', 'w-4 h-4 text-teal', 2)}
-                  </span>
-                  <div class="min-w-0">
-                    <div class="text-[10px] font-medium text-label2 leading-none">Step 1 of 3 • Address</div>
-                    <div class="font-display text-[13.5px] font-bold text-label truncate mt-1">${state.locationTitle}</div>
-                  </div>
+          </div>
+          <div class="charge-address-dock">
+            <div class="bg-surface/98 backdrop-blur-md rounded-[26px] p-2.5 shadow-xl border border-line flex items-center justify-between gap-2">
+              <div class="flex items-center gap-2 min-w-0">
+                <span class="w-8 h-8 rounded-full border border-teal/30 bg-teal-soft/40 text-teal flex items-center justify-center shrink-0">
+                  ${I('pin', 'w-4 h-4 text-teal', 2)}
+                </span>
+                <div class="min-w-0">
+                  <div class="text-[10px] font-medium text-label2 leading-tight">Step 1 of 3 · Address</div>
+                  <div class="font-display text-[13px] font-bold text-label truncate mt-0.5">${state.locationTitle}</div>
                 </div>
-                <button onclick="flowNext('chargeStep')" class="min-h-[44px] bg-teal hover:bg-teal-dark text-white font-bold text-[13px] px-6 py-2.5 rounded-full flex items-center gap-2 shadow-md shrink-0 press transition-transform">
-                  <span>Continue</span>
-                  ${I('arrowRight', 'w-4 h-4', 2.2)}
-                </button>
               </div>
+              <button onclick="flowNext('chargeStep')" class="min-h-[44px] bg-teal hover:bg-teal-dark text-white font-bold text-[13px] px-4 py-2.5 rounded-full flex items-center gap-2 shadow-md shrink-0 press transition-transform">
+                <span>Continue</span>
+                ${I('arrowRight', 'w-4 h-4', 2.2)}
+              </button>
             </div>
           </div>
         </div>`;
