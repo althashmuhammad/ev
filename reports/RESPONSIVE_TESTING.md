@@ -1,0 +1,56 @@
+# Responsive Testing
+
+## Method and scope
+
+Viewport simulation covered the 13 primary screens and major workflow/map states. The 15 viewport sizes below were used in the browser. Across 330 screen/step-by-viewport combinations, checks found no horizontal overflow, unnamed active buttons, or active targets below 44 CSS px. This is browser emulation only; no physical phones/tablets or operating-system accessibility services were used.
+
+## Viewport matrix
+
+| Viewport | Target | Screen/step coverage | Overflow | Layout/touch result | Representative screenshot |
+|---|---|---|---|---|---|
+| 320x640 | Small mobile | All primary routes and sampled steps | None detected | Pass; content scrolls within viewport; active targets >=44px | [Home](screenshots/after/Home-320x640.png) |
+| 360x800 | Mobile | Same | None detected | Pass | [Home](screenshots/after/Home-360x800.png) |
+| 375x812 | Mobile | Same | None detected | Pass | [Home](screenshots/after/Home-375x812.png) |
+| 390x844 | Mobile/reference | Same | None detected | Pass | [Home](screenshots/after/Home-390x844.png) |
+| 414x896 | Mobile | Same | None detected | Pass | [Home](screenshots/after/Home-414x896.png) |
+| 430x932 | Large mobile | Same | None detected | Pass | [Home](screenshots/after/Home-430x932.png) |
+| 480x900 | Large mobile | Same | None detected | Pass | [Home](screenshots/after/Home-480x900.png) |
+| 600x960 | Small tablet | Same | None detected | Pass | [Home](screenshots/after/Home-600x960.png) |
+| 768x1024 | Tablet | Same | None detected | Pass | [Home](screenshots/after/Home-768x1024.png) |
+| 900x600 | Short landscape/tablet | Same | None detected | Pass; scrollable content remains reachable | [Home](screenshots/after/Home-900x600.png) |
+| 1024x1366 | Tablet/portrait | Same | None detected | Pass | [Home](screenshots/after/Home-1024x1366.png) |
+| 1280x800 | Desktop | Same | None detected | Pass | [Home](screenshots/after/Home-1280x800.png) |
+| 1366x768 | Desktop | Same | None detected | Pass | [Home](screenshots/after/Home-1366x768.png) |
+| 1440x900 | Desktop | Same | None detected | Pass | [Home](screenshots/after/Home-1440x900.png) |
+| 1920x1080 | Large desktop | Same | None detected | Pass | [Home](screenshots/after/Home-1920x1080.png) |
+
+## Screen coverage
+
+Each screen below was included in the viewport sweep. The `390x844` capture is representative; the full viewport-specific captures are in `reports/screenshots/after/`.
+
+| Screen/state | Layout result | Screenshot |
+|---|---|---|
+| Home | Pass | [Home](screenshots/after/Home-390x844.png) |
+| Quick Charge | Pass | [Charge](screenshots/after/Charge-390x844.png) |
+| Live Tracking | Pass | [Tracking](screenshots/after/Tracking-390x844.png) |
+| Stations | Pass | [Stations](screenshots/after/Stations-390x844.png) |
+| Station Details | Pass | [Station Details](screenshots/after/Station-Detail-390x844.png) |
+| Jump Start | Pass | [Jump Start](screenshots/after/Jump-Start-390x844.png) |
+| Towing | Pass | [Towing](screenshots/after/Towing-390x844.png) |
+| Activity | Pass | [Activity](screenshots/after/Activity-390x844.png) |
+| My Vehicles | Pass | [Vehicles](screenshots/after/Vehicles-390x844.png) |
+| Add Vehicle | Pass | [Add Vehicle](screenshots/after/Add-Vehicle-390x844.png) |
+| Account | Pass | [Account](screenshots/after/Account-390x844.png) |
+| Fuel & Gas | Pass | [Fuel](screenshots/after/Fuel-Delivery-390x844.png) |
+| Carwash | Pass | [Carwash](screenshots/after/Carwash-390x844.png) |
+| Wallet subview | Pass | [Wallet](screenshots/after/Wallet-390x844.png) |
+| Home Setup subview | Pass | [Home Setup](screenshots/after/Home-Setup-390x844.png) |
+| Theme presets | Pass | [Appearance](screenshots/after/Validated-Theme-mono-dark-Home-390x844.png) and other `Validated-Theme-*` captures |
+
+## Accessibility checks and limitations
+
+- The responsive sweep found no unnamed active buttons or active targets below 44 CSS px.
+- Account/Home navigation was verified with a pointer at 390x844.
+- Reduced-motion CSS was found for smooth scrolling, but the complete animation system was not verified under reduced-motion preference.
+- Contrast ratios across every theme/state, keyboard-only coverage, screen-reader announcements, zoom/reflow, and physical safe-area behavior were not formally tested. No WCAG 2.2 AA compliance claim is made.
+- Viewport simulation cannot substitute for physical device, mobile keyboard, or assistive-technology testing.
