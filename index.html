@@ -544,6 +544,7 @@
     .screen {
       display: flex; flex-direction: column; flex: 1 0 auto; min-height: 100%; background: var(--page);
     }
+    [class*="pt-["] { padding-top: max(20px, env(safe-area-inset-top, 0px)) !important; }
     .screen.map { background-color: var(--map-bg); }
     .home-screen {
       background-color: #EAF5F3;
@@ -560,7 +561,7 @@
     .home-screen::after { display: none; }
     .home-header {
       position: relative; z-index: 2; flex: none;
-      padding: 54px 16px 0; display: flex; flex-direction: column; gap: 8px;
+      padding: max(20px, env(safe-area-inset-top, 0px)) 16px 0; display: flex; flex-direction: column; gap: 8px;
     }
     .home-location-button { min-height: 52px; background: var(--surface); border-color: var(--line); box-shadow: var(--shadow-floating); }
     .home-notification-button { width: 48px; height: 48px; border-radius: 50%; background: var(--surface); box-shadow: var(--shadow-floating); }
@@ -829,7 +830,7 @@
     }
     .home-service-card.home-emergency-arrival { animation: homeEmergencyAttention 680ms var(--motion-ease-out) both; }
     @media (max-height: 760px) {
-      .home-header { padding-top: 50px; }
+      .home-header { padding-top: max(20px, env(safe-area-inset-top, 0px)); }
       .home-map-center { min-height: 118px; }
       .home-vehicle-button { min-height: 44px; }
       .home-service-sheet { padding-top: 7px; padding-bottom: 8px; }
