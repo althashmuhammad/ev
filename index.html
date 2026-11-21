@@ -6299,7 +6299,6 @@ function screen02() {
       { label: 'Home', id: '01', icon: 'home' },
       { label: 'Activity', id: '08', icon: 'activity' },
       { label: 'My Vehicles', id: '09', icon: 'car' },
-      { label: 'Wallet', id: '11', icon: 'wallet' },
       { label: 'Account', id: '11', icon: 'user' }
     ];
     const RENDERERS = {
@@ -6342,7 +6341,7 @@ function screen02() {
         tabBar.setAttribute('aria-label', 'Main');
         tabBar.classList.toggle('home-liquid-tabs', state.screen === '01');
         const activeLabel = state.screen === '11' ? state.tabLabel : meta.tabName;
-        const visibleTabs = state.entryMode === 'customer' ? TABS.filter(t => t.label !== 'Wallet') : TABS;
+        const visibleTabs = TABS;
         tabBar.style.gridTemplateColumns = `repeat(${visibleTabs.length}, minmax(0, 1fr))`;
         tabBar.innerHTML = visibleTabs.map(t => {
           const a = t.label === activeLabel;
