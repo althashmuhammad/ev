@@ -2658,7 +2658,7 @@
       const lowBattery = c.soc <= 25;
       const services = [
         { l: 'Stations', svg: SERVICE_3D_SVGS.stations, fn: "go('04')" },
-        { l: 'Jump start', svg: SERVICE_3D_SVGS.jumpstart, fn: "go('06')" },
+        { l: 'Home Setup', svg: `<svg class="w-11 h-11" viewBox="0 0 48 48" fill="none" aria-hidden="true"><path d="M8 24.5 24 10l16 14.5" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><path d="M12.5 21.5V40h23V21.5M20 40V29h8v11" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><path d="m27 20-5 8h5l-2 8 7-10h-5l3-6z" fill="currentColor" stroke="none"/></svg>`, fn: "go('09')" },
         { l: 'Towing', svg: SERVICE_3D_SVGS.towing, fn: "startTow()" },
         { l: 'More', i: 'grid', color: 'text-teal', fn: "openMoreServicesSheet()" }
       ];
