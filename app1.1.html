@@ -2938,7 +2938,6 @@
 
       state.homeMoreExpanded = !state.homeMoreExpanded;
       const expanded = state.homeMoreExpanded;
-      panel.style.maxHeight = expanded ? `${panel.scrollHeight}px` : '0px';
       panel.classList.toggle('is-expanded', expanded);
       panel.setAttribute('aria-hidden', String(!expanded));
       panel.inert = !expanded;
