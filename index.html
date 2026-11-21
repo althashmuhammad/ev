@@ -771,15 +771,13 @@
       box-shadow: 0 8px 24px rgba(0, 74, 82, .10), inset 0 1px 0 rgba(255,255,255,.88);
       backdrop-filter: blur(22px) saturate(180%); -webkit-backdrop-filter: blur(22px) saturate(180%);
     }
-    .home-ev-online {
-      min-height: 36px; display: inline-flex; align-items: center; justify-content: center; gap: 7px;
-      padding: 0 12px; border-radius: 999px; border: 1px solid rgba(255,255,255,.82);
-      background: color-mix(in srgb, var(--surface) 70%, transparent);
-      box-shadow: 0 5px 16px rgba(0, 74, 82, .08), inset 0 1px 0 rgba(255,255,255,.86);
-      color: #176E60; font-size: 10.5px; font-weight: 750; white-space: nowrap;
+    .home-status-sos {
+      min-width: 48px; min-height: 36px; flex: none; padding: 0 12px;
+      border: 1px solid rgba(255,255,255,.84); border-radius: 999px;
+      background: rgba(224,79,38,.96); color: #FFFFFF; font-size: 10px; font-weight: 850;
+      box-shadow: 0 5px 16px rgba(134,35,20,.2), inset 0 1px 0 rgba(255,255,255,.25);
       backdrop-filter: blur(18px) saturate(170%); -webkit-backdrop-filter: blur(18px) saturate(170%);
     }
-    .home-ev-online-dot { width: 7px; height: 7px; border-radius: 50%; background: #20B77A; box-shadow: 0 0 0 3px rgba(32,183,122,.13); }
     .home-location-icon { background: #E2F7F4; color: #005C68; }
     .home-location-label, .home-location-arrow { color: #94A3B8; }
     .home-location-title { color: #0F172A; }
@@ -795,13 +793,83 @@
     .home-battery-divider { background: #E5E7EB; }
     .home-battery-button { min-height: 36px; padding: 5px 11px; }
     .home-vehicle-feature {
-      position: relative; isolation: isolate; flex: none; height: clamp(190px, 25vh, 220px);
+      position: relative; isolation: isolate; flex: none; height: clamp(190px, 25vh, 220px); container-type: inline-size;
       margin: 12px 16px; overflow: hidden; border-radius: 30px;
       border: 1px solid rgba(80,255,235,.55);
       background: linear-gradient(120deg, #014a4a, #00807f, #00a99f, #006b6a, #013f40);
       background-size: 300% 300%; animation: homeVehicleFlow 14s ease-in-out infinite;
       box-shadow: 0 24px 44px -20px rgba(0,120,115,.55), 0 0 30px rgba(0,230,215,.32), inset 0 1px 0 rgba(255,255,255,.24);
+      touch-action: pan-y; user-select: none; -webkit-user-select: none;
     }
+    .home-vehicle-track {
+      position: absolute; z-index: 1; inset: 0; display: flex; width: 600%; height: 100%;
+      transform: translateX(0); transition: transform 1200ms cubic-bezier(.22,.75,.22,1); will-change: transform;
+    }
+    .home-vehicle-slide { position: relative; flex: 0 0 16.666667%; min-width: 0; height: 100%; overflow: hidden; isolation: isolate; border-radius: inherit; }
+    .home-vehicle-slide--wash {
+      background: linear-gradient(125deg,#0057e0,#006cf3 30%,#1a8bff 52%,#0066ee 72%,#0049c9);
+      background-size: 300% 300%; animation: homeVehicleServiceFlow 12s ease-in-out infinite;
+    }
+    .home-vehicle-slide--wash::before {
+      content: ''; position: absolute; z-index: 0; inset: -18%; pointer-events: none;
+      background: radial-gradient(ellipse at 76% 18%,rgba(120,210,255,.65),transparent 48%),radial-gradient(ellipse at 5% 90%,rgba(0,35,135,.62),transparent 52%);
+      filter: blur(15px);
+    }
+    .home-vehicle-slide--tow { background: radial-gradient(120% 90% at 72% 55%,#ff6410 0%,#fe5a02 55%,#f25200 100%); }
+    .home-vehicle-slide--charge { background: linear-gradient(135deg,#0a161c 0%,#08141a 50%,#05171a 100%); }
+    .home-vehicle-slide--charge::before {
+      content: ''; position: absolute; z-index: 0; inset: -16%; pointer-events: none;
+      background: radial-gradient(ellipse at 78% 48%,rgba(31,229,210,.32),transparent 43%),radial-gradient(ellipse at 8% 95%,rgba(0,150,140,.55),transparent 48%);
+      filter: blur(16px);
+    }
+    .home-vehicle-slide--wash.is-active, .home-vehicle-slide--tow.is-active, .home-vehicle-slide--charge.is-active { z-index: 1; }
+    .home-vehicle-select {
+      position: absolute; z-index: 1; inset: 0; width: 100%; height: 100%; overflow: hidden;
+      color: #FFFFFF; text-align: left;
+    }
+    .home-vehicle-select:focus-visible { outline: 2px solid rgba(255,255,255,.9); outline-offset: -5px; border-radius: inherit; }
+    .home-feature-slide-image {
+      position: absolute; z-index: 2; right: 0; top: 20%; width: 65%; height: 76%;
+      object-fit: contain; pointer-events: none; filter: drop-shadow(0 10px 11px rgba(0,20,45,.28));
+    }
+    .home-vehicle-slide--tow .home-feature-slide-image { top: 22%; width: 62%; height: 74%; filter: drop-shadow(0 10px 12px rgba(95,22,0,.32)); }
+    .home-vehicle-slide--charge .home-feature-slide-image { top: 16%; width: 67%; height: 82%; filter: drop-shadow(0 10px 13px rgba(0,0,0,.55)); }
+    .home-feature-slide-icon {
+      position: absolute; z-index: 3; left: 7%; top: 7%; width: 8%; height: auto;
+      color: #FFFFFF; filter: drop-shadow(0 2px 6px rgba(0,0,0,.18));
+    }
+    .home-feature-slide-title {
+      position: absolute; z-index: 3; left: 7%; top: 34%; max-width: 48%;
+      color: #FFFFFF; font: 800 clamp(18px,7.2cqw,25px)/.92 'Plus Jakarta Sans','Inter',sans-serif;
+      letter-spacing: -.045em; text-shadow: 0 2px 10px rgba(0,20,45,.22);
+    }
+    .home-vehicle-slide--charge .home-feature-slide-title { top: 28%; font-size: clamp(14px,5.2cqw,18px); line-height: .94; }
+    .home-feature-slide-title em { color: #1fe5d2; font-style: italic; }
+    .home-feature-slide-rule {
+      position: absolute; z-index: 3; left: 7%; top: 69%; width: 9%; height: 2px;
+      border-radius: 9px; background: rgba(255,255,255,.96); transform-origin: left;
+      box-shadow: 0 0 10px rgba(255,255,255,.75);
+    }
+    .home-vehicle-slide--charge .home-feature-slide-rule { background: #1fe5d2; box-shadow: 0 0 10px rgba(31,229,210,.85); }
+    .home-feature-slide-cta {
+      position: absolute; z-index: 3; left: 6.5%; top: 76%; width: 34%; height: 17%;
+      display: flex; align-items: center; justify-content: center; gap: 5%;
+      border-radius: 999px; background: #FFFFFF; color: #006cf3;
+      font-size: clamp(10px,3.8cqw,13px); font-weight: 800; white-space: nowrap;
+      box-shadow: 0 7px 16px rgba(0,30,110,.3);
+    }
+    .home-vehicle-slide--tow .home-feature-slide-cta { color: #fe5a02; }
+    .home-vehicle-slide--charge .home-feature-slide-cta { color: #0a1418; }
+    .home-feature-slide-cta svg { width: 13px; height: 13px; flex: none; }
+    .home-vehicle-slide--wash.is-active .home-feature-slide-image,
+    .home-vehicle-slide--tow.is-active .home-feature-slide-image,
+    .home-vehicle-slide--charge.is-active .home-feature-slide-image { animation: homeServiceImageIn 850ms .2s cubic-bezier(.2,.8,.25,1) both; }
+    .home-vehicle-slide--wash.is-active .home-feature-slide-title,
+    .home-vehicle-slide--tow.is-active .home-feature-slide-title,
+    .home-vehicle-slide--charge.is-active .home-feature-slide-title { animation: homeServiceTextIn 650ms .12s ease-out both; }
+    .home-vehicle-slide--wash.is-active .home-feature-slide-cta,
+    .home-vehicle-slide--tow.is-active .home-feature-slide-cta,
+    .home-vehicle-slide--charge.is-active .home-feature-slide-cta { animation: homeServiceTextIn 650ms .3s ease-out both; }
     .home-vehicle-feature::before {
       content: ''; position: absolute; z-index: 0; inset: -18%; pointer-events: none;
       border-radius: 50%; filter: blur(40px); opacity: .7;
@@ -813,10 +881,6 @@
       background: linear-gradient(105deg, transparent 38%, rgba(255,255,255,.2) 50%, transparent 62%);
       transform: translateX(-120%); animation: homeVehicleShine 6s 2.2s ease-in-out infinite;
     }
-    .home-vehicle-select {
-      position: absolute; z-index: 1; inset: 0; width: 100%; height: 100%; overflow: hidden;
-      color: #FFFFFF; text-align: left;
-    }
     .home-vehicle-lines { position: absolute; z-index: 1; inset: 0; width: 100%; height: 100%; pointer-events: none; }
     .home-vehicle-neon {
       fill: none; stroke: #2cf5e1; stroke-width: 2.2; stroke-linejoin: round; stroke-linecap: round;
@@ -824,16 +888,27 @@
       stroke-dasharray: 1400; stroke-dashoffset: 1400;
       animation: homeVehicleDraw 2.4s .9s ease-out forwards, homeVehiclePulse 4s 3.3s ease-in-out infinite;
     }
+    .home-vehicle-car-glow {
+      position: absolute; z-index: 1; right: 3%; bottom: 11%; width: 56%; height: 16%; border-radius: 50%;
+      background: radial-gradient(closest-side, rgba(44,245,225,.65), rgba(44,245,225,0)); filter: blur(10px);
+      pointer-events: none;
+    }
+    .home-vehicle-car {
+      position: absolute; z-index: 2; top: 50%; right: 2.5%; width: 57%; max-height: 82%;
+      object-fit: contain; transform: translateY(-46%); pointer-events: none;
+      filter: drop-shadow(0 14px 14px rgba(0,30,30,.55)) drop-shadow(0 0 14px rgba(44,245,225,.35));
+      animation: homeVehicleCarIn 1.2s 1.1s cubic-bezier(.2,.9,.25,1) both;
+    }
     .home-vehicle-copy {
-      position: absolute; z-index: 2; inset: 0; pointer-events: none;
+      position: absolute; z-index: 3; inset: 0; pointer-events: none;
     }
     .home-vehicle-kicker {
       position: absolute; top: 15%; left: 10.5%; color: rgba(255,255,255,.8);
       font-size: 11px; font-weight: 500; letter-spacing: .32em; text-transform: uppercase;
     }
     .home-vehicle-title {
-      position: absolute; top: 44%; left: 10%; max-width: 55%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
-      color: #FFFFFF; font: 750 clamp(22px, 6.4vw, 40px)/1.12 'Plus Jakarta Sans', 'Inter', sans-serif;
+      position: absolute; top: 44%; left: 10%; max-width: 50%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+      color: #FFFFFF; font: 750 clamp(20px, 5.6vw, 34px)/1.12 'Plus Jakarta Sans', 'Inter', sans-serif;
       letter-spacing: -.035em; text-shadow: 0 1px 10px rgba(0,45,46,.2);
     }
     .home-vehicle-spec {
@@ -853,17 +928,18 @@
     @keyframes homeVehicleShine { 0% { transform: translateX(-120%); } 35%,100% { transform: translateX(120%); } }
     @keyframes homeVehicleDraw { to { stroke-dashoffset: 0; } }
     @keyframes homeVehiclePulse { 0%,100% { opacity: 1; } 50% { opacity: .6; } }
+    @keyframes homeVehicleCarIn { from { opacity: 0; transform: translate(40px,-46%) scale(.94); } to { opacity: 1; transform: translate(0,-46%) scale(1); } }
+    @keyframes homeVehicleServiceFlow { 0%,100% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } }
+    @keyframes homeServiceImageIn { from { opacity: 0; transform: scale(.96); } to { opacity: 1; transform: scale(1); } }
+    @keyframes homeServiceTextIn { from { opacity: 0; } to { opacity: 1; } }
     @media (prefers-reduced-motion: reduce) {
       .home-vehicle-feature, .home-vehicle-feature::before, .home-vehicle-feature::after,
-      .home-vehicle-neon { animation: none !important; }
+      .home-vehicle-track, .home-vehicle-slide--wash, .home-vehicle-neon, .home-vehicle-car,
+      .home-feature-slide-image, .home-feature-slide-title, .home-feature-slide-cta { animation: none !important; }
+      .home-vehicle-track { transition: none !important; }
       .home-vehicle-neon { stroke-dashoffset: 0; }
+      .home-vehicle-car { transform: translateY(-46%); }
       .home-more-shortcuts { transition: none !important; }
-    }
-    .home-profile-sos {
-      position: absolute; z-index: 4; top: 12px; right: 12px; min-width: 44px; min-height: 30px;
-      padding: 0 9px; border: 1px solid rgba(255,255,255,.34); border-radius: 999px;
-      background: rgba(224,79,38,.96); color: #FFFFFF; font-size: 10px; font-weight: 850;
-      box-shadow: 0 4px 12px rgba(0,0,0,.18);
     }
     .home-screen .home-service-sheet {
       display: flex; flex-direction: column;
@@ -1220,7 +1296,6 @@
     :root[data-theme="dark"] .home-battery-range { color: var(--label); }
     :root[data-theme="dark"] .home-location-label,
     :root[data-theme="dark"] .home-location-arrow { color: var(--label2); }
-    :root[data-theme="dark"] .home-ev-online { color: #8FE2D0; }
     :root .home-service-card.home-service-card--emergency,
     :root[data-theme="dark"] .home-service-card.home-service-card--emergency,
     :root[data-theme]:not([data-theme="light"]):not([data-theme="dark"]) .home-service-card.home-service-card--emergency {
@@ -1286,14 +1361,13 @@
       .home-notification-button { width: 40px; height: 40px; }
       .home-status-row { gap: 6px; }
       .home-battery-button { min-height: 34px; padding: 4px 9px; }
-      .home-ev-online { min-height: 34px; padding: 0 9px; font-size: 9.5px; }
+      .home-status-sos { min-height: 34px; padding: 0 12px; font-size: 10px; }
       .home-vehicle-feature { height: 124px; min-height: 124px; margin: 6px 12px; border-radius: 20px; }
       .home-vehicle-kicker { top: 10%; font-size: 8px; }
-      .home-vehicle-title { top: 31%; font-size: clamp(18px, 5.5vw, 24px); }
+      .home-vehicle-title { top: 31%; font-size: clamp(17px, 5vw, 22px); }
       .home-vehicle-spec { top: 53%; font-size: 9.5px; }
       .home-vehicle-rule { top: 70%; }
       .home-plate-pill { top: 80%; font-size: 12px; }
-      .home-profile-sos { top: 8px; right: 8px; min-width: 40px; min-height: 26px; padding: 0 7px; font-size: 9px; }
       .home-screen .home-service-sheet { padding: 6px 10px 10px; }
       .home-service-sheet > .flex.items-center.justify-between { margin-bottom: 8px; }
       .home-service-sheet h2 { font-size: 14px !important; }
@@ -4570,27 +4644,73 @@
               <span id="home-battery-range" class="home-battery-range text-[12.5px] font-medium num">${hasBatteryEstimate ? `~${estRangeKm} km est.` : 'No range data'}</span>
               ${I('chevR', 'w-3.5 h-3.5 text-label3', 2)}
             </button>
-            <span class="home-ev-online" role="status">
-              <span class="home-ev-online-dot"></span>
-              ${customerTest ? 'Test Vehicle' : state.telematicsSynced ? 'EV Online' : 'EV Offline'}
-            </span>
+            <button onclick="openSosSheet()" aria-label="SOS emergency help" class="home-status-sos press">SOS</button>
           </div>
         </div>
 
-        <div class="home-vehicle-feature">
-          <button onclick="go('09')" aria-label="Active vehicle ${esc(c.name)}, switch vehicle" class="home-vehicle-select press">
-            <svg class="home-vehicle-lines" viewBox="0 0 1130 680" preserveAspectRatio="none" aria-hidden="true">
-              <path class="home-vehicle-neon" d="M862 30 L720 360 L810 288 L1055 286 Q1072 288 1070 306 L948 632"/>
-            </svg>
-            <span class="home-vehicle-copy">
-              <span class="home-vehicle-kicker">${esc(c.short || 'Electric vehicle')}</span>
-              <span class="home-vehicle-title">${esc(c.trim || c.name)}</span>
-              <span class="home-vehicle-spec">${esc(c.connector)} • ${c.batteryKwh} kWh battery</span>
-              <span class="home-vehicle-rule"></span>
-              <span class="home-plate-pill">${esc(c.plate || (customerTest ? 'Test vehicle' : 'KL 07 CD 1234'))}</span>
-            </span>
-          </button>
-          <button onclick="openSosSheet()" aria-label="SOS emergency help" class="home-profile-sos press">SOS</button>
+        <div class="home-vehicle-feature" role="region" aria-label="Featured vehicle and service cards. Swipe left or right to change cards." aria-roledescription="carousel">
+          <div class="home-vehicle-track">
+            <div class="home-vehicle-slide home-vehicle-slide--nexon is-active" role="group" aria-roledescription="slide" aria-label="1 of 4: Your Nexon EV">
+              <button onclick="go('09')" aria-label="Active vehicle ${esc(c.name)}, switch vehicle" class="home-vehicle-select press">
+                <svg class="home-vehicle-lines" viewBox="0 0 1130 680" preserveAspectRatio="none" aria-hidden="true">
+                  <path class="home-vehicle-neon" d="M462 30 L346 360 L430 288 L755 286 Q772 288 770 306 L648 632"/>
+                </svg>
+                <span class="home-vehicle-car-glow"></span>
+                ${c.isNexon ? `<img src="${NEXON_ANGLE_IMG}" alt="" class="home-vehicle-car" decoding="async">` : ''}
+                <span class="home-vehicle-copy">
+                  <span class="home-vehicle-kicker">${esc(c.short || 'Electric vehicle')}</span>
+                  <span class="home-vehicle-title">Arjun Menon</span>
+                  <span class="home-vehicle-spec">+91 98470 •••21</span>
+                  <span class="home-vehicle-rule"></span>
+                  <span class="home-plate-pill">${esc(c.plate || (customerTest ? 'Test vehicle' : 'KL 07 CD 1234'))}</span>
+                </span>
+              </button>
+            </div>
+            <div class="home-vehicle-slide home-vehicle-slide--wash" role="group" aria-roledescription="slide" aria-label="2 of 4: Car Wash" aria-hidden="true" inert>
+              <button onclick="go('13')" aria-label="Book car wash service" class="home-vehicle-select press" tabindex="-1">
+                <svg class="home-feature-slide-icon" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M6 17 9 11.5a3 3 0 0 1 2.6-1.5h8.8a3 3 0 0 1 2.6 1.5L26 17v7H6z"/>
+                  <path d="M9 17h14M10 24v2m12-2v2M11 14h10"/>
+                  <path d="M7 4v2m9-4v3m9-1v2"/>
+                </svg>
+                <span class="home-feature-slide-title">Car<br>Wash</span>
+                <span class="home-feature-slide-rule"></span>
+                <span class="home-feature-slide-cta">Book Now
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12h17M13 5l7 7-7 7"/></svg>
+                </span>
+                <img src="assets/home-car-wash.webp" alt="" class="home-feature-slide-image" decoding="async">
+              </button>
+            </div>
+            <div class="home-vehicle-slide home-vehicle-slide--tow" role="group" aria-roledescription="slide" aria-label="3 of 4: Towing Service" aria-hidden="true" inert>
+              <button onclick="go('07')" aria-label="Book towing service" class="home-vehicle-select press" tabindex="-1">
+                <svg class="home-feature-slide-icon" viewBox="0 0 310 160" fill="none" stroke="currentColor" stroke-width="8" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true">
+                  <path d="M14 48h56v54H6V58q0-10 8-10Zm0 10v27h42V58zM70 95h48l28-68"/>
+                  <path d="M116 96h188v14H116zM155 83l18-20q6-7 15-7h42q11 0 20 9l18 13"/>
+                  <circle cx="44" cy="124" r="17"/><circle cx="246" cy="124" r="17"/>
+                </svg>
+                <span class="home-feature-slide-title">Towing<br>Service</span>
+                <span class="home-feature-slide-rule"></span>
+                <span class="home-feature-slide-cta">Book Now
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12h17M13 5l7 7-7 7"/></svg>
+                </span>
+                <img src="assets/home-towing.webp" alt="" class="home-feature-slide-image" decoding="async">
+              </button>
+            </div>
+            <div class="home-vehicle-slide home-vehicle-slide--charge" role="group" aria-roledescription="slide" aria-label="4 of 4: Mobile EV Charging" aria-hidden="true" inert>
+              <button onclick="go('02')" aria-label="Book mobile EV charging" class="home-vehicle-select press" tabindex="-1">
+                <svg class="home-feature-slide-icon" viewBox="0 0 36 32" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M3 8h20v16H3zM23 13h7l4 5v6H23zM8 28h.1M28 28h.1"/>
+                  <path d="m14 11-4 7h4l-1 5 5-8h-4z"/>
+                </svg>
+                <span class="home-feature-slide-title">Mobile<br><em>EV</em><br>Charging</span>
+                <span class="home-feature-slide-rule"></span>
+                <span class="home-feature-slide-cta">Book Now
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12h17M13 5l7 7-7 7"/></svg>
+                </span>
+                <img src="assets/home-mobile-charging.webp" alt="" class="home-feature-slide-image" decoding="async">
+              </button>
+            </div>
+          </div>
         </div>
 
         <div class="sheet home-service-sheet">
@@ -6731,6 +6851,189 @@ function screen02() {
       '17': screen17, '18': screen18, '19': screen19, '20': screen20, '21': screen21
     };
 
+    let homeCardCarouselIndex = 1;
+    let homeCardCarouselTimer = null;
+    let homeCardCarouselNextAt = 0;
+    let homeCardCarouselRemaining = 5000;
+    let homeCardCarouselRoot = null;
+    function setupHomeCardCarousel() {
+      const feature = document.querySelector('#ios-viewport .home-vehicle-feature');
+      if (!feature) {
+        if (homeCardCarouselTimer !== null) window.clearTimeout(homeCardCarouselTimer);
+        homeCardCarouselTimer = null;
+        homeCardCarouselNextAt = 0;
+        homeCardCarouselRemaining = 5000;
+        homeCardCarouselRoot = null;
+        return;
+      }
+      if (feature === homeCardCarouselRoot) return;
+      if (homeCardCarouselTimer !== null) {
+        homeCardCarouselRemaining = Math.max(0, homeCardCarouselNextAt - Date.now());
+        window.clearTimeout(homeCardCarouselTimer);
+      }
+      homeCardCarouselTimer = null;
+      homeCardCarouselRoot = feature;
+
+      const track = feature.querySelector('.home-vehicle-track');
+      const slides = Array.from(track.children);
+      if (!slides.length) return;
+      const slideCount = slides.length;
+      const makeLoopSlide = slide => {
+        const clone = slide.cloneNode(true);
+        clone.classList.remove('is-active');
+        clone.classList.add('home-vehicle-slide--clone');
+        clone.setAttribute('aria-hidden', 'true');
+        clone.inert = true;
+        const button = clone.querySelector('button');
+        if (button) button.tabIndex = -1;
+        return clone;
+      };
+      const previousClone = makeLoopSlide(slides[slideCount - 1]);
+      const nextClone = makeLoopSlide(slides[0]);
+      track.insertBefore(previousClone, slides[0]);
+      track.appendChild(nextClone);
+      if (homeCardCarouselIndex <= 0) homeCardCarouselIndex = slideCount;
+      else if (homeCardCarouselIndex >= slideCount + 1) homeCardCarouselIndex = 1;
+      const allSlides = Array.from(track.children);
+      const setPosition = () => {
+        allSlides.forEach((slide, index) => {
+          const isLoopSlide = index === 0 || index === slideCount + 1;
+          const active = index === homeCardCarouselIndex;
+          slide.classList.toggle('is-active', active);
+          if (!isLoopSlide) {
+            slide.setAttribute('aria-hidden', active ? 'false' : 'true');
+            slide.inert = !active;
+            const button = slide.querySelector('button');
+            if (button) button.tabIndex = active ? 0 : -1;
+          }
+        });
+        track.style.transform = `translateX(-${homeCardCarouselIndex * (100 / allSlides.length)}%)`;
+      };
+      const reducedMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const autoplayEnabled = !reducedMotion;
+      let focusAfterLoop = false;
+      const normalizeLoopPosition = () => {
+        if (homeCardCarouselIndex !== 0 && homeCardCarouselIndex !== slideCount + 1) return;
+        track.style.transition = 'none';
+        homeCardCarouselIndex = homeCardCarouselIndex === 0 ? slideCount : 1;
+        setPosition();
+        void track.offsetWidth;
+        track.style.transition = '';
+        if (focusAfterLoop) {
+          focusAfterLoop = false;
+          allSlides[homeCardCarouselIndex].querySelector('button')?.focus({ preventScroll: true });
+        }
+      };
+      track.style.transition = 'none';
+      setPosition();
+      void track.offsetWidth;
+      track.style.transition = '';
+
+      track.addEventListener('transitionend', event => {
+        if (event.target !== track || event.propertyName !== 'transform') return;
+        normalizeLoopPosition();
+      });
+
+      const move = direction => {
+        if (homeCardCarouselRoot !== feature || homeCardCarouselIndex === 0 || homeCardCarouselIndex === slideCount + 1) return;
+        homeCardCarouselIndex += direction;
+        setPosition();
+        if (reducedMotion) normalizeLoopPosition();
+      };
+      const moveWithFocus = direction => {
+        move(direction);
+        if (homeCardCarouselIndex === 0 || homeCardCarouselIndex === slideCount + 1) focusAfterLoop = true;
+        else allSlides[homeCardCarouselIndex].querySelector('button')?.focus({ preventScroll: true });
+      };
+      const scheduleAdvance = delay => {
+        if (!autoplayEnabled) return;
+        homeCardCarouselRemaining = delay;
+        homeCardCarouselNextAt = Date.now() + delay;
+        homeCardCarouselTimer = window.setTimeout(advance, delay);
+      };
+      const advance = () => {
+        homeCardCarouselTimer = null;
+        homeCardCarouselNextAt = 0;
+        if (homeCardCarouselRoot !== feature) return;
+        if (document.hidden) {
+          scheduleAdvance(5000);
+          return;
+        }
+        move(1);
+        scheduleAdvance(5000);
+      };
+      const pause = () => {
+        if (homeCardCarouselTimer !== null) {
+          homeCardCarouselRemaining = Math.max(0, homeCardCarouselNextAt - Date.now());
+          window.clearTimeout(homeCardCarouselTimer);
+          homeCardCarouselTimer = null;
+          homeCardCarouselNextAt = 0;
+        }
+      };
+      const resume = () => {
+        if (homeCardCarouselRoot === feature && homeCardCarouselTimer === null) scheduleAdvance(homeCardCarouselRemaining);
+      };
+      let swipePointerId = null;
+      let swipeStartX = 0;
+      let swipeStartY = 0;
+      let suppressSwipeClick = false;
+      const swipeThreshold = Math.max(34, Math.min(60, feature.clientWidth * .12));
+      feature.addEventListener('pointerdown', event => {
+        if (!event.isPrimary || (event.pointerType === 'mouse' && event.button !== 0)) return;
+        pause();
+        swipePointerId = event.pointerId;
+        swipeStartX = event.clientX;
+        swipeStartY = event.clientY;
+      });
+      feature.addEventListener('pointermove', event => {
+        if (event.pointerId !== swipePointerId) return;
+        const dx = event.clientX - swipeStartX;
+        const dy = event.clientY - swipeStartY;
+        if (Math.abs(dx) >= swipeThreshold && Math.abs(dx) > Math.abs(dy)) {
+          event.preventDefault();
+          if (!feature.hasPointerCapture(event.pointerId)) feature.setPointerCapture(event.pointerId);
+        }
+      });
+      feature.addEventListener('pointerup', event => {
+        if (event.pointerId !== swipePointerId) return;
+        const dx = event.clientX - swipeStartX;
+        const dy = event.clientY - swipeStartY;
+        swipePointerId = null;
+        if (Math.abs(dx) >= swipeThreshold && Math.abs(dx) > Math.abs(dy)) {
+          suppressSwipeClick = true;
+          homeCardCarouselRemaining = 5000;
+          move(dx < 0 ? 1 : -1);
+          window.setTimeout(() => { suppressSwipeClick = false; }, 0);
+        }
+        if (event.pointerType !== 'mouse') resume();
+      });
+      feature.addEventListener('pointercancel', event => {
+        if (event.pointerId !== swipePointerId) return;
+        swipePointerId = null;
+        if (event.pointerType !== 'mouse') resume();
+      });
+      feature.addEventListener('click', event => {
+        if (!suppressSwipeClick) return;
+        suppressSwipeClick = false;
+        event.preventDefault();
+        event.stopImmediatePropagation();
+      }, true);
+      feature.addEventListener('keydown', event => {
+        if (event.key !== 'ArrowLeft' && event.key !== 'ArrowRight') return;
+        event.preventDefault();
+        homeCardCarouselRemaining = 5000;
+        moveWithFocus(event.key === 'ArrowLeft' ? -1 : 1);
+      });
+      feature.addEventListener('pointerenter', pause);
+      feature.addEventListener('pointerleave', resume);
+      feature.addEventListener('focusin', pause);
+      feature.addEventListener('focusout', event => {
+        if (!feature.contains(event.relatedTarget)) resume();
+      });
+      if (feature.matches(':hover') || feature.contains(document.activeElement)) pause();
+      else resume();
+    }
+
     function render(animate) {
       const meta = SCREENS.find(s => s.id === state.screen) || SCREENS[0];
 
@@ -6741,6 +7044,7 @@ function screen02() {
       const selStart = focusId && 'selectionStart' in ae ? ae.selectionStart : null;
       const scrollTop = vp.scrollTop;
       vp.innerHTML = (RENDERERS[state.screen] || screen01)();
+      setupHomeCardCarousel();
       if (!animate) vp.scrollTop = scrollTop;
       if (focusId) {
         const el = document.getElementById(focusId);
