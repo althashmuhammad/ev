@@ -593,7 +593,7 @@
       padding: max(20px, env(safe-area-inset-top, 0px)) 28px 28px; background: var(--surface);
     }
     .auth-screen::before {
-      content: ''; position: absolute; z-index: 0; top: -84px; right: 4%; width: 185px; height: 190px;
+      content: ''; position: absolute; z-index: 0; top: -84px; right: 0; width: 185px; height: 190px;
       border-radius: 0 0 0 100%; background: linear-gradient(145deg, transparent 7%, color-mix(in srgb, var(--teal) 38%, transparent) 80%);
       pointer-events: none;
     }
@@ -668,9 +668,10 @@
     .auth-disclosure { margin-bottom: 28px; color: var(--label2); font-size: 10.5px; line-height: 1.5; text-align: center; }
     .auth-account-prompt { margin: 24px 0 0; color: var(--label2); font-size: 14px; text-align: center; }
     .auth-screen.auth-static {
-      height: 100%; min-height: 0; flex: 0 0 100%; overflow: hidden;
+      height: 100%; min-height: 0; flex: 0 0 100%; overflow-x: hidden; overflow-y: hidden;
       padding: max(14px, env(safe-area-inset-top, 0px)) 20px max(14px, env(safe-area-inset-bottom, 0px));
     }
+    .auth-screen.auth-static::after { bottom: 0; }
     .auth-screen.auth-static .auth-panel {
       width: min(100%, 430px); height: 100%; min-height: 0; margin: 0 auto; padding: 0 0 12px;
       justify-content: space-between;
@@ -686,14 +687,14 @@
     .auth-screen.auth-static .auth-label { font-size: 12px; }
     .auth-screen.auth-static .auth-input { min-height: 42px; padding: 0 14px; font-size: 13px; }
     .auth-screen.auth-static .auth-input-wrap .auth-input { padding-right: 44px; }
-    .auth-screen.auth-static .auth-eye { right: 6px; width: 32px; height: 32px; }
+    .auth-screen.auth-static .auth-eye { right: 6px; width: 36px; height: 36px; }
     .auth-screen.auth-static .auth-forgot { margin-top: 0; }
-    .auth-screen.auth-static .auth-forgot .auth-link { min-height: 24px; font-size: 11px; }
+    .auth-screen.auth-static .auth-forgot .auth-link { min-height: 36px; font-size: 11px; }
     .auth-screen.auth-static .auth-submit { width: 100%; min-height: 48px; margin: 2px 0 0; font-size: 14px; }
     .auth-screen.auth-static .auth-divider { gap: 8px; margin: 0; font-size: 10px; }
     .auth-screen.auth-static .auth-divider span { padding: 3px 8px; }
     .auth-screen.auth-static .auth-guest { width: 100%; min-height: 42px; font-size: 12px; }
-    .auth-screen.auth-static .auth-account-prompt { margin: 0 0 42px; font-size: 11px; }
+    .auth-screen.auth-static .auth-account-prompt { margin: 0 0 max(12px, env(safe-area-inset-bottom, 0px)); font-size: 11px; }
     .auth-screen.auth-static .auth-disclosure { margin: 0 0 24px; font-size: 10px; }
     @media (max-height: 680px) {
       .auth-screen { padding-top: max(12px, env(safe-area-inset-top, 0px)); padding-bottom: max(18px, env(safe-area-inset-bottom, 0px)); }
@@ -716,6 +717,28 @@
       .auth-screen.auth-static .auth-submit { min-height: 42px; }
       .auth-screen.auth-static .auth-divider span { padding: 2px 7px; }
       .auth-screen.auth-static .auth-guest { min-height: 36px; }
+    }
+    @media (max-width: 340px) {
+      .auth-screen.auth-static { padding-right: 14px; padding-left: 14px; }
+      .auth-screen.auth-static .auth-logo { width: min(100%, 164px); }
+      .auth-screen.auth-static .auth-title { font-size: 22px; }
+      .auth-screen.auth-static .auth-description { max-width: 30ch; }
+    }
+    @media (max-height: 520px) {
+      .auth-screen.auth-static {
+        overflow-y: auto; overscroll-behavior-y: contain; scroll-padding-block: 12px;
+        padding-top: max(8px, env(safe-area-inset-top, 0px));
+        padding-bottom: max(8px, env(safe-area-inset-bottom, 0px));
+      }
+      .auth-screen.auth-static .auth-panel {
+        height: auto; min-height: 100%; padding-bottom: 4px; justify-content: flex-start;
+        gap: clamp(4px, 1.4vh, 8px);
+      }
+      .auth-screen.auth-static .auth-back { margin-bottom: 0; }
+      .auth-screen.auth-static .auth-brand,
+      .auth-screen.auth-static .auth-heading { flex: none; }
+      .auth-screen.auth-static .auth-account-prompt { margin-bottom: 10px; }
+      .auth-screen.auth-static::after { height: 60px; }
     }
     .welcome-visit-button {
       display: flex; align-items: center; justify-content: center; gap: 16px;
@@ -1042,6 +1065,13 @@
       border: 1px solid rgba(0, 92, 104, .08); box-shadow: 0 2px 6px rgba(0, 70, 76, .08);
     }
     .home-shortcuts { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px 8px; }
+    .home-shortcuts.is-expanded .home-shortcut--extra { display: flex; }
+    .home-shortcuts .home-shortcut--extra { display: none; }
+    .home-services-more {
+      display: flex; width: 100%; min-height: 44px; align-items: center; justify-content: center;
+      margin-top: 4px; color: var(--teal); font-size: 13px; font-weight: 750;
+    }
+    .home-services-more:focus-visible { outline: 2px solid var(--teal); outline-offset: -2px; border-radius: 12px; }
     .home-shortcut {
       min-width: 0; min-height: 68px; padding: 8px; display: flex;
       flex-direction: row; align-items: center; justify-content: flex-start; gap: 8px;
@@ -1056,8 +1086,6 @@
       align-items: center; justify-content: center; background: #E2F7F4; color: #008F75;
     }
     .home-shortcut-icon.icon-container { width: 42px; height: 42px; border-radius: 15px; }
-    .home-shortcut-icon--image { overflow: hidden; background: var(--surface); }
-    .home-shortcut-image { width: 100%; height: 100%; object-fit: cover; border-radius: inherit; }
     .home-shortcut-label {
       min-width: 0; color: var(--label); font-size: clamp(10px, 3.4vw, 14px);
       font-weight: 700; line-height: 1.15; letter-spacing: -.02em; white-space: nowrap;
@@ -1948,7 +1976,6 @@
       activity: '<rect x="4" y="3.5" width="16" height="17" rx="2.5"/><path d="M8 8h8M8 12h8M8 16h5"/>',
       car: '<path d="M5 15l1.6-5.2a2 2 0 0 1 1.9-1.4h7a2 2 0 0 1 1.9 1.4L19 15M4 15h16v3.5H4z"/><circle cx="7.5" cy="18.5" r=".6"/><circle cx="16.5" cy="18.5" r=".6"/>',
       carWash: '<path d="m3.5 15 2-5a2 2 0 0 1 1.9-1.4h7.2a2 2 0 0 1 1.9 1.4l2 5v3h-15zM4 15h14M7 18.5h.01M15 18.5h.01"/><path d="M19.5 2.5s-2.5 2.8-2.5 4.6a2.5 2.5 0 0 0 5 0c0-1.8-2.5-4.6-2.5-4.6z"/>',
-      alertTriangle: '<path d="M10.3 4.2 2.7 17.3a2 2 0 0 0 1.7 3h15.2a2 2 0 0 0 1.7-3L13.7 4.2a2 2 0 0 0-3.4 0z"/><path d="M12 9v4M12 17h.01"/>',
       breakdown: '<path d="m3.5 15 1.6-4.8a2 2 0 0 1 1.9-1.4h4.8a2 2 0 0 1 1.9 1.4l1.5 4.8M4 15h11v3H4zM7 18.5h.01M12 18.5h.01"/><path d="M21 4a3 3 0 0 0-3.8 3.7l-4.5 4.5 2.1 2.1 4.5-4.5A3 3 0 0 0 23 6l-2 2-2-2z"/>',
       carCare: '<path d="m3.5 15 2-5a2 2 0 0 1 1.9-1.4h7.2a2 2 0 0 1 1.9 1.4l2 5v3h-15zM4 15h14M7 18.5h.01M15 18.5h.01"/><path d="m19.5 2 1 2.5L23 5.5l-2.5 1L19.5 9l-1-2.5-2.5-1 2.5-1z"/>',
       shoppingBag: '<path d="M5 8h14l1 13H4L5 8z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/>',
@@ -2094,6 +2121,7 @@
       authView: 'login',
       authNotice: '',
       demoBatteryAlertAnimating: false,
+      homeServicesExpanded: false,
       navDirection: 'tab',
       theme: document.documentElement.getAttribute('data-theme') || 'light',
       customTheme: loadCustomTheme(),
@@ -3508,28 +3536,6 @@
           </div>
 
           <div class="space-y-2">
-            <button onclick="startCharge('Emergency')" class="w-full p-3 rounded-2xl bg-coral text-white flex items-center justify-between text-left shadow-md press">
-              <div class="flex items-center gap-3">
-                <span class="w-10 h-10 rounded-xl bg-white/20 flex items-center justify-center shrink-0">${I('bolt', 'w-5 h-5')}</span>
-                <div>
-                  <div class="font-display text-[13.5px] font-bold">0% Battery Emergency Van</div>
-                  <div class="text-[11px] text-white/85">Priority DC boost at your current GPS</div>
-                </div>
-              </div>
-              ${I('chevR', 'w-4 h-4 text-white')}
-            </button>
-
-            <button onclick="go('06')" class="w-full p-3 rounded-2xl bg-fill hover:bg-fill2 flex items-center justify-between text-left press">
-              <div class="flex items-center gap-3">
-                <span class="w-10 h-10 rounded-xl bg-teal-soft text-teal flex items-center justify-center shrink-0">${I('battery12v', 'w-5 h-5')}</span>
-                <div>
-                  <div class="font-display text-[13.5px] font-bold">12V Dead Battery Jump Start</div>
-                  <div class="text-[11px] text-label2">Technician in ~25 min • ₹799 fixed</div>
-                </div>
-              </div>
-              ${I('chevR', 'w-4 h-4 text-label3')}
-            </button>
-
             <button onclick="startTow()" class="w-full p-3 rounded-2xl bg-fill hover:bg-fill2 flex items-center justify-between text-left press">
               <div class="flex items-center gap-3">
                 <span class="w-10 h-10 rounded-xl bg-teal-soft text-teal flex items-center justify-center shrink-0">${I('truck', 'w-5 h-5')}</span>
@@ -3990,11 +3996,6 @@
           </div>
           ${customerTest ? `<div class="rounded-2xl bg-amber-50 border border-amber-200 p-3 text-[10.5px] leading-relaxed text-amber-900">Requests from this test stay on this device. Nothing is dispatched or charged.</div>` : ''}
           <div class="space-y-2">
-            <button onclick="startCharge('Emergency')" class="w-full card min-h-[72px] p-3.5 flex items-center gap-3 text-left press border-teal/20 bg-teal-soft/30">
-              <span class="w-10 h-10 rounded-xl bg-teal text-white flex items-center justify-center shrink-0">${I('bolt', 'w-5 h-5')}</span>
-              <span class="flex-1 min-w-0"><span class="block text-[13px] font-bold text-teal">Emergency Mobile EV</span><span class="block text-[11px] text-label2">${customerTest ? 'Create a local charge request test' : 'DC van boost anywhere in Kochi'}</span></span>
-              ${I('chevR', 'w-4 h-4 text-teal')}
-            </button>
             <button onclick="${customerTest ? "showCustomerUnavailable('Fuel &amp; Gas')" : 'startFuel()'}" class="w-full card min-h-[72px] p-3.5 flex items-center gap-3 text-left press">
               <span class="w-10 h-10 rounded-xl bg-teal-soft text-teal flex items-center justify-center shrink-0">${I('fuel', 'w-5 h-5')}</span>
               <span class="flex-1 min-w-0"><span class="block text-[13px] font-semibold">Mobile Fuel &amp; Gas Station</span><span class="block text-[11px] text-label2">${customerTest ? 'Local request flow only; no delivery dispatch' : 'Petrol, Diesel &amp; CNG to your door'}</span></span>
@@ -4008,11 +4009,6 @@
             <button onclick="${customerTest ? "showCustomerUnavailable('Towing')" : 'startTow()'}" class="w-full card min-h-[72px] p-3.5 flex items-center gap-3 text-left press">
               <span class="w-10 h-10 rounded-xl bg-teal-soft text-teal flex items-center justify-center shrink-0">${I('truck', 'w-5 h-5')}</span>
               <span class="flex-1 min-w-0"><span class="block text-[13px] font-semibold">Flatbed Towing</span><span class="block text-[11px] text-label2">${customerTest ? 'Local request flow only; no towing dispatch' : 'Zero-drag hydraulic EV recovery'}</span></span>
-              ${I('chevR', 'w-4 h-4 text-label3')}
-            </button>
-            <button onclick="${customerTest ? "showCustomerUnavailable('Jump start')" : "go('06')"}" class="w-full card min-h-[72px] p-3.5 flex items-center gap-3 text-left press">
-              <span class="w-10 h-10 rounded-xl bg-teal-soft text-teal flex items-center justify-center shrink-0">${I('battery12v', 'w-5 h-5')}</span>
-              <span class="flex-1 min-w-0"><span class="block text-[13px] font-semibold">12V Jump Start</span><span class="block text-[11px] text-label2">${customerTest ? 'Local request flow only; no technician dispatch' : 'Dead 12V battery • ₹799 fixed'}</span></span>
               ${I('chevR', 'w-4 h-4 text-label3')}
             </button>
             <button onclick="${customerTest ? "showCustomerUnavailable('Breakdown assistance')" : 'startTow()'}" class="w-full card min-h-[72px] p-3.5 flex items-center gap-3 text-left press">
@@ -4627,8 +4623,8 @@
       const emergencyBattery = hasBatteryEstimate && c.soc <= 15;
       const batteryFillWidth = hasBatteryEstimate ? ((14 * c.soc) / 100).toFixed(2) : '0';
       const services = [
-        { l: 'EV Charging', i: 'bolt', fn: 'openQuickChargeChoiceSheet()' },
-        { l: 'Car Wash', i: 'carWash', fn: customerTest ? "showCustomerUnavailable('Car wash')" : 'startWash()' },
+        { l: 'EV Charging', i: 'chargingStation', fn: 'openQuickChargeChoiceSheet()' },
+        { l: 'Mobile Car Wash', i: 'carWash', fn: customerTest ? "showCustomerUnavailable('Car wash')" : 'startWash()' },
         { l: 'Towing', i: 'truck', fn: customerTest ? "showCustomerUnavailable('Towing')" : 'startTow()' },
         { l: 'Breakdown', i: 'breakdown', fn: customerTest ? "showCustomerUnavailable('Breakdown assistance')" : 'startTow()' },
         { l: 'Fuel & Gas', i: 'fuel', fn: customerTest ? "showCustomerUnavailable('Fuel & Gas')" : 'startFuel()' },
@@ -4727,15 +4723,15 @@
                 </button>
               </div>
             </div>
-            <div class="home-vehicle-slide home-vehicle-slide--wash" role="group" aria-roledescription="slide" aria-label="3 of 4: Car Wash" aria-hidden="true" inert>
+            <div class="home-vehicle-slide home-vehicle-slide--wash" role="group" aria-roledescription="slide" aria-label="3 of 4: Mobile Car Wash" aria-hidden="true" inert>
               <div class="home-vehicle-card home-vehicle-card--wash">
-                <button onclick="go('13')" aria-label="Book car wash service" class="home-vehicle-select press" tabindex="-1">
+                <button onclick="go('13')" aria-label="Book mobile car wash service" class="home-vehicle-select press" tabindex="-1">
                 <svg class="home-feature-slide-icon" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                   <path d="M6 17 9 11.5a3 3 0 0 1 2.6-1.5h8.8a3 3 0 0 1 2.6 1.5L26 17v7H6z"/>
                   <path d="M9 17h14M10 24v2m12-2v2M11 14h10"/>
                   <path d="M7 4v2m9-4v3m9-1v2"/>
                 </svg>
-                <span class="home-feature-slide-title">Car<br>Wash</span>
+                <span class="home-feature-slide-title">Mobile Car<br>Wash</span>
                 <span class="home-feature-slide-rule"></span>
                 <span class="home-feature-slide-cta">Book Now
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12h17M13 5l7 7-7 7"/></svg>
@@ -4765,7 +4761,7 @@
           <div class="home-carousel-controls" role="group" aria-label="Choose featured card">
             <button type="button" class="home-carousel-dot active" aria-label="Show Nexon EV card" aria-controls="home-vehicle-feature" aria-current="true"><i></i></button>
             <button type="button" class="home-carousel-dot" aria-label="Show Towing Service card" aria-controls="home-vehicle-feature"><i></i></button>
-            <button type="button" class="home-carousel-dot" aria-label="Show Car Wash card" aria-controls="home-vehicle-feature"><i></i></button>
+            <button type="button" class="home-carousel-dot" aria-label="Show Mobile Car Wash card" aria-controls="home-vehicle-feature"><i></i></button>
             <button type="button" class="home-carousel-dot" aria-label="Show Mobile EV Charging card" aria-controls="home-vehicle-feature"><i></i></button>
           </div>
         </div>
@@ -4812,17 +4808,41 @@
             </span>
           </button>
 
-          <div class="home-shortcuts" role="group" aria-label="EV services">
-            ${services.map(s => `
-              <button type="button" onclick="${s.fn}" aria-label="${s.l}" class="home-shortcut card-interactive press">
+          <div id="home-shortcuts" class="home-shortcuts ${state.homeServicesExpanded ? 'is-expanded' : ''}" role="group" aria-label="EV services">
+            ${services.map((s, index) => {
+              const isExtra = index >= 4;
+              const isHidden = isExtra && !state.homeServicesExpanded;
+              return `
+              <button type="button" onclick="${s.fn}" aria-label="${s.l}" aria-hidden="${isHidden}" ${isHidden ? 'inert' : ''} class="home-shortcut card-interactive press ${isExtra ? 'home-shortcut--extra' : ''}">
                 <span class="home-shortcut-icon icon-container" aria-hidden="true">
                   ${I(s.i, 'w-6 h-6', 2)}
                 </span>
                 <span class="home-shortcut-label">${s.l}</span>
-              </button>`).join('')}
+              </button>`;
+            }).join('')}
           </div>
+          <button id="home-services-more" type="button" class="home-services-more" aria-controls="home-shortcuts" aria-expanded="${state.homeServicesExpanded}" onclick="toggleHomeServices()">${state.homeServicesExpanded ? 'Show less' : 'More'}</button>
         </div>
       </div>`;
+    }
+
+    function toggleHomeServices() {
+      const grid = document.getElementById('home-shortcuts');
+      const button = document.getElementById('home-services-more');
+      if (!grid || !button) {
+        console.error('Unable to toggle the home services grid.');
+        return;
+      }
+
+      state.homeServicesExpanded = !state.homeServicesExpanded;
+      const expanded = state.homeServicesExpanded;
+      grid.classList.toggle('is-expanded', expanded);
+      grid.querySelectorAll('.home-shortcut--extra').forEach(tile => {
+        tile.setAttribute('aria-hidden', String(!expanded));
+        tile.inert = !expanded;
+      });
+      button.setAttribute('aria-expanded', String(expanded));
+      button.textContent = expanded ? 'Show less' : 'More';
     }
 
     // 02 — CHARGE FLOW (Address → Charging setup → Arrival)
