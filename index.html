@@ -743,7 +743,7 @@
     .map:not(.home-screen)::after { display: none; }
     .aerial-map-road-mock { display: none; }
     .home-screen {
-      justify-content: flex-start;
+      flex: 1 0 auto; height: auto; min-height: 100%; overflow: visible; justify-content: flex-start;
       background-color: #DFF5EF;
       background-image:
         radial-gradient(ellipse at 91% 18%, rgba(129, 219, 202, .42) 0 15%, transparent 42%),
@@ -792,40 +792,98 @@
     .home-battery-range { color: #64748B; }
     .home-battery-divider { background: #E5E7EB; }
     .home-battery-button { min-height: 36px; padding: 5px 11px; }
+    .home-carousel-shell {
+      position: relative; isolation: isolate; flex: none; width: 100vw; margin: 12px 0 8px;
+      --home-carousel-accent: #00b5ae;
+    }
     .home-vehicle-feature {
-      position: relative; isolation: isolate; flex: none; height: clamp(190px, 25vh, 220px); container-type: inline-size;
-      margin: 12px 16px; overflow: hidden; border-radius: 30px;
-      border: 1px solid rgba(80,255,235,.55);
-      background: linear-gradient(120deg, #014a4a, #00807f, #00a99f, #006b6a, #013f40);
-      background-size: 300% 300%; animation: homeVehicleFlow 14s ease-in-out infinite;
-      box-shadow: 0 24px 44px -20px rgba(0,120,115,.55), 0 0 30px rgba(0,230,215,.32), inset 0 1px 0 rgba(255,255,255,.24);
+      position: relative; isolation: isolate; flex: none; width: 100vw; aspect-ratio: 1610 / 977;
+      overflow: hidden;
       touch-action: pan-y; user-select: none; -webkit-user-select: none;
     }
-    .home-vehicle-track {
-      position: absolute; z-index: 1; inset: 0; display: flex; width: 600%; height: 100%;
-      transform: translateX(0); transition: transform 1200ms cubic-bezier(.22,.75,.22,1); will-change: transform;
+    .home-carousel-controls {
+      height: 8px; margin-top: 8px; display: flex; align-items: center; justify-content: center; gap: 8px;
     }
-    .home-vehicle-slide { position: relative; flex: 0 0 16.666667%; min-width: 0; height: 100%; overflow: hidden; isolation: isolate; border-radius: inherit; }
-    .home-vehicle-slide--wash {
+    .home-carousel-dot {
+      all: unset; box-sizing: border-box; position: relative; width: 8px; height: 8px; flex: none;
+      border-radius: 99px; background: color-mix(in srgb, var(--label) 17%, transparent);
+      cursor: pointer; transition: width .45s cubic-bezier(.65,0,.25,1), background .3s;
+    }
+    #ios-viewport .home-carousel-dot { min-width: 8px; min-height: 8px; padding: 0; }
+    .home-carousel-dot:focus-visible { outline: 2px solid var(--home-carousel-accent); outline-offset: 3px; }
+    .home-carousel-dot i {
+      position: absolute; inset: 0; border-radius: inherit; background: var(--home-carousel-accent);
+      transform: scaleX(0); transform-origin: left; transition: transform 50ms linear;
+    }
+    .home-carousel-dot.active { width: 38px; }
+    #ios-viewport .home-carousel-dot.active { min-width: 38px; }
+    .home-carousel-dot.done i { transform: scaleX(1); }
+    .home-carousel-arrow {
+      all: unset; box-sizing: border-box; position: absolute; z-index: 5; top: 0; bottom: 24px; left: 8px;
+      width: 44px; height: 44px; margin: auto 0; border-radius: 50%; display: none; place-items: center;
+      background: rgba(255,255,255,.92); color: #0a1418; cursor: pointer;
+      box-shadow: 0 6px 18px rgba(0,0,0,.18); opacity: 0; transition: opacity .25s, transform .25s;
+    }
+    .home-carousel-arrow--next { left: auto; right: 8px; }
+    .home-carousel-arrow svg { width: 20px; height: 20px; }
+    .home-carousel-arrow:hover { transform: scale(1.08); }
+    .home-carousel-arrow:focus-visible { opacity: 1; outline: 2px solid var(--home-carousel-accent); outline-offset: 2px; }
+    .home-carousel-shell:hover .home-carousel-arrow { opacity: 1; }
+    @media (hover: hover) and (min-width: 701px) {
+      .home-carousel-arrow { display: grid; }
+    }
+    @media (hover: none), (max-width: 700px) {
+      .home-carousel-arrow { display: none; }
+    }
+    .home-vehicle-track {
+      position: absolute; z-index: 1; top: 0; left: 0; display: flex; width: 100%; height: 100%;
+      transition: transform .75s cubic-bezier(.65,0,.25,1); will-change: transform;
+    }
+    .home-vehicle-slide {
+      position: relative; display: flex; flex: 0 0 100%; width: 100%; height: 100%;
+      align-items: center; justify-content: center;
+    }
+    .home-vehicle-card {
+      position: relative; isolation: isolate; flex: none; width: min(94vw,820px); aspect-ratio: 1610 / 977;
+      border-radius: 36px; container-type: inline-size;
+      box-shadow: 0 18px 34px rgba(0,45,50,.22), inset 0 1px 0 rgba(255,255,255,.24);
+    }
+    .home-vehicle-card--nexon {
+      border: 1px solid rgba(80,255,235,.55);
+      background: linear-gradient(120deg,#014a4a,#00807f,#00a99f,#006b6a,#013f40);
+      background-size: 300% 300%; animation: homeVehicleFlow 14s ease-in-out infinite;
+      box-shadow: 0 24px 44px -20px rgba(0,120,115,.55), 0 0 30px rgba(0,230,215,.32), inset 0 1px 0 rgba(255,255,255,.24);
+    }
+    .home-vehicle-card--wash {
       background: linear-gradient(125deg,#0057e0,#006cf3 30%,#1a8bff 52%,#0066ee 72%,#0049c9);
       background-size: 300% 300%; animation: homeVehicleServiceFlow 12s ease-in-out infinite;
     }
-    .home-vehicle-slide--wash::before {
-      content: ''; position: absolute; z-index: 0; inset: -18%; pointer-events: none;
+    .home-vehicle-card--wash::before {
+      content: ''; position: absolute; z-index: 0; inset: 0; border-radius: inherit; pointer-events: none;
       background: radial-gradient(ellipse at 76% 18%,rgba(120,210,255,.65),transparent 48%),radial-gradient(ellipse at 5% 90%,rgba(0,35,135,.62),transparent 52%);
       filter: blur(15px);
     }
-    .home-vehicle-slide--tow { background: radial-gradient(120% 90% at 72% 55%,#ff6410 0%,#fe5a02 55%,#f25200 100%); }
-    .home-vehicle-slide--charge { background: linear-gradient(135deg,#0a161c 0%,#08141a 50%,#05171a 100%); }
-    .home-vehicle-slide--charge::before {
-      content: ''; position: absolute; z-index: 0; inset: -16%; pointer-events: none;
+    .home-vehicle-card--tow { background: radial-gradient(120% 90% at 72% 55%,#ff6410 0%,#fe5a02 55%,#f25200 100%); }
+    .home-vehicle-card--charge { background: linear-gradient(135deg,#0a161c 0%,#08141a 50%,#05171a 100%); }
+    .home-vehicle-card--charge::before {
+      content: ''; position: absolute; z-index: 0; inset: 0; border-radius: inherit; pointer-events: none;
       background: radial-gradient(ellipse at 78% 48%,rgba(31,229,210,.32),transparent 43%),radial-gradient(ellipse at 8% 95%,rgba(0,150,140,.55),transparent 48%);
       filter: blur(16px);
     }
-    .home-vehicle-slide--wash.is-active, .home-vehicle-slide--tow.is-active, .home-vehicle-slide--charge.is-active { z-index: 1; }
+    .home-vehicle-card--nexon::before {
+      content: ''; position: absolute; z-index: 0; inset: 0; border-radius: inherit; pointer-events: none;
+      filter: blur(40px); opacity: .7;
+      background: radial-gradient(ellipse at 76% 34%,rgba(0,235,220,.62),transparent 58%);
+      animation: homeVehicleGlow 11s ease-in-out infinite;
+    }
+    .home-vehicle-card::after {
+      content: ''; position: absolute; z-index: 3; inset: 0; border-radius: inherit; pointer-events: none;
+      background: linear-gradient(105deg,transparent 38%,rgba(255,255,255,.2) 50%,transparent 62%);
+      transform: translateX(-120%); animation: homeVehicleShine 6s 2.2s ease-in-out infinite;
+    }
     .home-vehicle-select {
-      position: absolute; z-index: 1; inset: 0; width: 100%; height: 100%; overflow: hidden;
-      color: #FFFFFF; text-align: left;
+      position: absolute; z-index: 1; inset: 0; width: 100%; height: 100%;
+      border-radius: inherit; background: transparent; color: #FFFFFF; text-align: left;
     }
     .home-vehicle-select:focus-visible { outline: 2px solid rgba(255,255,255,.9); outline-offset: -5px; border-radius: inherit; }
     .home-feature-slide-image {
@@ -870,17 +928,6 @@
     .home-vehicle-slide--wash.is-active .home-feature-slide-cta,
     .home-vehicle-slide--tow.is-active .home-feature-slide-cta,
     .home-vehicle-slide--charge.is-active .home-feature-slide-cta { animation: homeServiceTextIn 650ms .3s ease-out both; }
-    .home-vehicle-feature::before {
-      content: ''; position: absolute; z-index: 0; inset: -18%; pointer-events: none;
-      border-radius: 50%; filter: blur(40px); opacity: .7;
-      background: radial-gradient(ellipse at 76% 34%, rgba(0,235,220,.62), transparent 58%);
-      animation: homeVehicleGlow 11s ease-in-out infinite;
-    }
-    .home-vehicle-feature::after {
-      content: ''; position: absolute; z-index: 3; inset: 0; pointer-events: none;
-      background: linear-gradient(105deg, transparent 38%, rgba(255,255,255,.2) 50%, transparent 62%);
-      transform: translateX(-120%); animation: homeVehicleShine 6s 2.2s ease-in-out infinite;
-    }
     .home-vehicle-lines { position: absolute; z-index: 1; inset: 0; width: 100%; height: 100%; pointer-events: none; }
     .home-vehicle-neon {
       fill: none; stroke: #2cf5e1; stroke-width: 2.2; stroke-linejoin: round; stroke-linecap: round;
@@ -907,12 +954,12 @@
       font-size: 11px; font-weight: 500; letter-spacing: .32em; text-transform: uppercase;
     }
     .home-vehicle-title {
-      position: absolute; top: 44%; left: 10%; max-width: 50%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+      position: absolute; top: 44%; left: 10%; max-width: 50%; white-space: nowrap;
       color: #FFFFFF; font: 750 clamp(20px, 5.6vw, 34px)/1.12 'Plus Jakarta Sans', 'Inter', sans-serif;
       letter-spacing: -.035em; text-shadow: 0 1px 10px rgba(0,45,46,.2);
     }
     .home-vehicle-spec {
-      position: absolute; top: 57%; left: 10.5%; max-width: 54%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+      position: absolute; top: 57%; left: 10.5%; max-width: 54%; white-space: nowrap;
       color: rgba(255,255,255,.76); font-size: clamp(12px, 3.4vw, 18px); font-weight: 400; letter-spacing: .04em;
     }
     .home-vehicle-rule {
@@ -933,27 +980,25 @@
     @keyframes homeServiceImageIn { from { opacity: 0; transform: scale(.96); } to { opacity: 1; transform: scale(1); } }
     @keyframes homeServiceTextIn { from { opacity: 0; } to { opacity: 1; } }
     @media (prefers-reduced-motion: reduce) {
-      .home-vehicle-feature, .home-vehicle-feature::before, .home-vehicle-feature::after,
-      .home-vehicle-track, .home-vehicle-slide--wash, .home-vehicle-neon, .home-vehicle-car,
+      .home-vehicle-card, .home-vehicle-card::before, .home-vehicle-card::after,
+      .home-vehicle-track, .home-vehicle-card--wash, .home-vehicle-neon, .home-vehicle-car,
       .home-feature-slide-image, .home-feature-slide-title, .home-feature-slide-cta { animation: none !important; }
-      .home-vehicle-track { transition: none !important; }
+      .home-vehicle-track, .home-carousel-dot i { transition: none !important; }
       .home-vehicle-neon { stroke-dashoffset: 0; }
       .home-vehicle-car { transform: translateY(-46%); }
-      .home-more-shortcuts { transition: none !important; }
     }
     .home-screen .home-service-sheet {
       display: flex; flex-direction: column;
-      flex: 1 1 auto; min-height: 0; z-index: 3; margin-top: 0; padding: 14px 12px 48px;
+      flex: 0 0 auto; min-height: auto; z-index: 3; margin-top: 0; padding: 14px 12px 48px;
       background: color-mix(in srgb, var(--surface) 38%, transparent);
       -webkit-backdrop-filter: blur(26px) saturate(180%); backdrop-filter: blur(26px) saturate(180%);
       border-radius: 25px 25px 0 0;
       border-top: 1px solid rgba(255,255,255,.82);
       box-shadow: 0 -10px 30px rgba(0, 62, 70, .12), inset 0 1px 0 rgba(255,255,255,.76);
-      overflow-y: auto;
+      overflow: visible;
     }
     .home-service-sheet > .grab { display: none; }
-    .home-service-sheet > .flex.items-center.justify-between { margin-bottom: 12px; }
-    .home-service-sheet .home-shortcuts { margin-top: auto; }
+    .home-service-sheet .home-shortcuts { margin-top: 12px; }
     .home-service-card {
       position: relative; isolation: isolate; overflow: hidden; width: 100%;
       min-height: 86px; padding: 10px 11px; margin-bottom: 12px;
@@ -996,31 +1041,27 @@
       margin-left: 8px; border-radius: 50%; background: #F0FAF8; color: #005C68;
       border: 1px solid rgba(0, 92, 104, .08); box-shadow: 0 2px 6px rgba(0, 70, 76, .08);
     }
-    .home-shortcuts { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; }
-    .home-service-sheet .home-more-shortcuts {
-      max-height: 0; margin-top: 0; overflow: hidden; opacity: 0; transform: translateY(-8px);
-      pointer-events: none;
-      transition: max-height 360ms cubic-bezier(.4,0,.2,1), margin-top 360ms cubic-bezier(.4,0,.2,1),
-        opacity 240ms ease, transform 360ms cubic-bezier(.4,0,.2,1);
-    }
-    .home-service-sheet .home-more-shortcuts.is-expanded {
-      max-height: 220px; margin-top: 8px; opacity: 1; transform: translateY(0); pointer-events: auto;
-    }
+    .home-shortcuts { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px 8px; }
     .home-shortcut {
-      min-width: 0; min-height: 86px; padding: 8px 3px 7px;
-      display: flex; flex-direction: column; align-items: center; justify-content: space-between;
-      border-radius: 19px; background: color-mix(in srgb, var(--surface) 66%, transparent);
+      min-width: 0; min-height: 68px; padding: 8px; display: flex;
+      flex-direction: row; align-items: center; justify-content: flex-start; gap: 8px;
+      border-radius: 999px; background: color-mix(in srgb, #FFFFFF 88%, var(--surface));
       border: 1px solid rgba(255,255,255,.76);
       -webkit-backdrop-filter: blur(18px) saturate(170%); backdrop-filter: blur(18px) saturate(170%);
-      box-shadow: 0 5px 16px rgba(0, 65, 72, .08), inset 0 1px 0 rgba(255,255,255,.8);
+      box-shadow: 0 8px 18px rgba(0, 92, 104, .1), inset 0 1px 0 rgba(255,255,255,.8);
+      text-align: left;
     }
     .home-shortcut-icon {
-      width: 52px; height: 52px; border-radius: 0; display: flex;
-      align-items: center; justify-content: center; background: transparent; color: #007E78;
+      width: 42px; height: 42px; flex: none; border-radius: 15px; display: flex;
+      align-items: center; justify-content: center; background: #E2F7F4; color: #008F75;
     }
+    .home-shortcut-icon.icon-container { width: 42px; height: 42px; border-radius: 15px; }
     .home-shortcut-icon--image { overflow: hidden; background: var(--surface); }
     .home-shortcut-image { width: 100%; height: 100%; object-fit: cover; border-radius: inherit; }
-    .home-shortcut-label { font-size: 10.5px; line-height: 1.15; font-weight: 650; color: var(--label); white-space: nowrap; }
+    .home-shortcut-label {
+      min-width: 0; color: var(--label); font-size: clamp(10px, 3.4vw, 14px);
+      font-weight: 700; line-height: 1.15; letter-spacing: -.02em; white-space: nowrap;
+    }
     .flow-stepper {
       display: flex; width: 100%; align-items: center; justify-content: space-between;
       gap: clamp(4px, 1vw, 12px); padding: 4px; user-select: none;
@@ -1347,12 +1388,11 @@
     }
     .home-service-card.home-emergency-arrival { animation: homeEmergencyAttention 680ms var(--motion-ease-out) both; }
     @media (max-height: 760px) {
-      .home-vehicle-feature { height: 180px; }
       .home-service-sheet { padding-top: 7px; padding-bottom: 8px; }
       .home-service-card { min-height: 70px; padding: 8px 9px; margin-bottom: 7px; }
       .home-service-icon { width: 44px; height: 44px; }
-      .home-shortcut { min-height: 70px; }
-      .home-shortcut-icon { width: 38px; height: 38px; }
+      .home-shortcut { min-height: 64px; }
+      .home-shortcut-icon.icon-container { width: 40px; height: 40px; }
     }
     @media (max-height: 600px) {
       .home-header { gap: 6px; padding-top: max(8px, env(safe-area-inset-top, 0px)); }
@@ -1362,15 +1402,14 @@
       .home-status-row { gap: 6px; }
       .home-battery-button { min-height: 34px; padding: 4px 9px; }
       .home-status-sos { min-height: 34px; padding: 0 12px; font-size: 10px; }
-      .home-vehicle-feature { height: 124px; min-height: 124px; margin: 6px 12px; border-radius: 20px; }
+      .home-carousel-shell { margin: 6px 0 8px; }
+      .home-carousel-controls { margin-top: 6px; }
       .home-vehicle-kicker { top: 10%; font-size: 8px; }
       .home-vehicle-title { top: 31%; font-size: clamp(17px, 5vw, 22px); }
       .home-vehicle-spec { top: 53%; font-size: 9.5px; }
       .home-vehicle-rule { top: 70%; }
       .home-plate-pill { top: 80%; font-size: 12px; }
       .home-screen .home-service-sheet { padding: 6px 10px 10px; }
-      .home-service-sheet > .flex.items-center.justify-between { margin-bottom: 8px; }
-      .home-service-sheet h2 { font-size: 14px !important; }
       .home-service-sheet .home-service-card { min-height: 58px; padding: 6px 8px; margin-bottom: 5px; }
       .home-service-icon, .home-service-icon.icon-container { width: 38px; height: 38px; border-radius: 13px; }
       .home-service-copy { margin-left: 7px; }
@@ -1379,10 +1418,10 @@
       .home-service-detail { margin-top: 2px; font-size: 10px; }
       .home-track-button { min-height: 34px; padding: 0 8px; font-size: 10px; }
       .home-charge-chevron { width: 32px; height: 32px; margin-left: 5px; }
-      .home-shortcuts { gap: 6px; }
-      .home-shortcut { min-height: 56px; padding: 5px 2px 4px; border-radius: 15px; }
-      .home-shortcut-icon { width: 30px; height: 30px; border-radius: 11px; }
-      .home-shortcut-label { font-size: 9px; }
+      .home-shortcuts { gap: 8px 7px; }
+      .home-shortcut { min-height: 60px; padding: 7px; border-radius: 999px; }
+      .home-shortcut-icon.icon-container { width: 38px; height: 38px; border-radius: 14px; }
+      .home-shortcut-label { font-size: clamp(10px, 3.2vw, 12px); }
     }
     .bar {
       position: sticky; bottom: 0; z-index: 10;
@@ -1908,6 +1947,10 @@
       home: '<path d="M3.5 10.5 12 3.5l8.5 7V20a1 1 0 0 1-1 1H15v-6H9v6H4.5a1 1 0 0 1-1-1z"/>',
       activity: '<rect x="4" y="3.5" width="16" height="17" rx="2.5"/><path d="M8 8h8M8 12h8M8 16h5"/>',
       car: '<path d="M5 15l1.6-5.2a2 2 0 0 1 1.9-1.4h7a2 2 0 0 1 1.9 1.4L19 15M4 15h16v3.5H4z"/><circle cx="7.5" cy="18.5" r=".6"/><circle cx="16.5" cy="18.5" r=".6"/>',
+      carWash: '<path d="m3.5 15 2-5a2 2 0 0 1 1.9-1.4h7.2a2 2 0 0 1 1.9 1.4l2 5v3h-15zM4 15h14M7 18.5h.01M15 18.5h.01"/><path d="M19.5 2.5s-2.5 2.8-2.5 4.6a2.5 2.5 0 0 0 5 0c0-1.8-2.5-4.6-2.5-4.6z"/>',
+      alertTriangle: '<path d="M10.3 4.2 2.7 17.3a2 2 0 0 0 1.7 3h15.2a2 2 0 0 0 1.7-3L13.7 4.2a2 2 0 0 0-3.4 0z"/><path d="M12 9v4M12 17h.01"/>',
+      breakdown: '<path d="m3.5 15 1.6-4.8a2 2 0 0 1 1.9-1.4h4.8a2 2 0 0 1 1.9 1.4l1.5 4.8M4 15h11v3H4zM7 18.5h.01M12 18.5h.01"/><path d="M21 4a3 3 0 0 0-3.8 3.7l-4.5 4.5 2.1 2.1 4.5-4.5A3 3 0 0 0 23 6l-2 2-2-2z"/>',
+      carCare: '<path d="m3.5 15 2-5a2 2 0 0 1 1.9-1.4h7.2a2 2 0 0 1 1.9 1.4l2 5v3h-15zM4 15h14M7 18.5h.01M15 18.5h.01"/><path d="m19.5 2 1 2.5L23 5.5l-2.5 1L19.5 9l-1-2.5-2.5-1 2.5-1z"/>',
       shoppingBag: '<path d="M5 8h14l1 13H4L5 8z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/>',
       wallet: '<rect x="3" y="6" width="18" height="13" rx="3"/><path d="M3 10h18M16 14.5h2"/>',
       phone: '<path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A15 15 0 0 1 3 6a2 2 0 0 1 2-2z"/>',
@@ -2051,7 +2094,6 @@
       authView: 'login',
       authNotice: '',
       demoBatteryAlertAnimating: false,
-      homeMoreExpanded: false,
       navDirection: 'tab',
       theme: document.documentElement.getAttribute('data-theme') || 'light',
       customTheme: loadCustomTheme(),
@@ -4585,23 +4627,16 @@
       const emergencyBattery = hasBatteryEstimate && c.soc <= 15;
       const batteryFillWidth = hasBatteryEstimate ? ((14 * c.soc) / 100).toFixed(2) : '0';
       const services = [
-        { l: 'EV Charging', i: 'chargingStation', fn: 'openQuickChargeChoiceSheet()' },
-        { l: 'Car Wash', i: 'drop', fn: customerTest ? "showCustomerUnavailable('Car wash')" : 'startWash()' },
+        { l: 'EV Charging', i: 'bolt', fn: 'openQuickChargeChoiceSheet()' },
+        { l: 'Car Wash', i: 'carWash', fn: customerTest ? "showCustomerUnavailable('Car wash')" : 'startWash()' },
         { l: 'Towing', i: 'truck', fn: customerTest ? "showCustomerUnavailable('Towing')" : 'startTow()' },
-        { l: state.homeMoreExpanded ? 'Less' : 'More', i: state.homeMoreExpanded ? 'close' : 'grid', color: 'text-teal', fn: 'toggleHomeMoreServices()', toggle: true }
-      ];
-      const moreServices = [
-        { l: 'Emergency EV', a: 'Emergency Mobile EV', i: 'bolt', fn: "startCharge('Emergency')" },
-        { l: 'Fuel & Gas', a: 'Mobile Fuel and Gas Station', i: 'fuel', fn: customerTest ? "showCustomerUnavailable('Fuel & Gas')" : 'startFuel()' },
-        { l: 'Jump Start', a: '12V Jump Start', i: 'battery12v', fn: customerTest ? "showCustomerUnavailable('Jump start')" : "go('06')" },
-        { l: 'Breakdown', a: 'Roadside Breakdown Assistance', i: 'truck', fn: customerTest ? "showCustomerUnavailable('Breakdown assistance')" : 'startTow()' },
-        ...(!customerTest ? [
-          { l: 'Accessories', a: 'Car Accessories and Interior', i: 'car', fn: "openShop('accessories')" },
-          { l: 'Car Care', a: 'Car Care and Interior Spa', i: 'sparkle', fn: "openShop('cleaning')" }
-        ] : [])
+        { l: 'Breakdown', i: 'breakdown', fn: customerTest ? "showCustomerUnavailable('Breakdown assistance')" : 'startTow()' },
+        { l: 'Fuel & Gas', i: 'fuel', fn: customerTest ? "showCustomerUnavailable('Fuel & Gas')" : 'startFuel()' },
+        { l: 'Car Care', i: 'carCare', fn: customerTest ? "showCustomerUnavailable('Car care')" : "openShop('cleaning')" },
+        { l: 'Accessories', i: 'car', fn: customerTest ? "showCustomerUnavailable('Accessories')" : "openShop('accessories')" }
       ];
       return `
-      <div class="screen home-screen relative overflow-hidden ${customerTest ? 'home-customer-test' : ''}">
+      <div class="screen home-screen relative ${customerTest ? 'home-customer-test' : ''}">
         <div class="home-header select-none">
           <div class="flex items-center gap-2.5">
             <button onclick="openLocationSheet()" aria-label="Change location, currently ${state.locationTitle}" class="home-location-button flex-1 backdrop-blur-sm rounded-full px-3 py-1.5 border flex items-center justify-between text-left press group">
@@ -4648,10 +4683,18 @@
           </div>
         </div>
 
-        <div class="home-vehicle-feature" role="region" aria-label="Featured vehicle and service cards. Swipe left or right to change cards." aria-roledescription="carousel">
+        <div class="home-carousel-shell" data-slide-index="0">
+          <button type="button" class="home-carousel-arrow home-carousel-arrow--previous" aria-label="Previous featured card" aria-controls="home-vehicle-feature">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg>
+          </button>
+          <button type="button" class="home-carousel-arrow home-carousel-arrow--next" aria-label="Next featured card" aria-controls="home-vehicle-feature">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg>
+          </button>
+          <div class="home-vehicle-feature" id="home-vehicle-feature" role="region" aria-label="Featured vehicle and service cards. Swipe left or right to change cards." aria-roledescription="carousel">
           <div class="home-vehicle-track">
             <div class="home-vehicle-slide home-vehicle-slide--nexon is-active" role="group" aria-roledescription="slide" aria-label="1 of 4: Your Nexon EV">
-              <button onclick="go('09')" aria-label="Active vehicle ${esc(c.name)}, switch vehicle" class="home-vehicle-select press">
+              <div class="home-vehicle-card home-vehicle-card--nexon">
+                <button onclick="go('09')" aria-label="Active vehicle ${esc(c.name)}, switch vehicle" class="home-vehicle-select press">
                 <svg class="home-vehicle-lines" viewBox="0 0 1130 680" preserveAspectRatio="none" aria-hidden="true">
                   <path class="home-vehicle-neon" d="M462 30 L346 360 L430 288 L755 286 Q772 288 770 306 L648 632"/>
                 </svg>
@@ -4664,25 +4707,12 @@
                   <span class="home-vehicle-rule"></span>
                   <span class="home-plate-pill">${esc(c.plate || (customerTest ? 'Test vehicle' : 'KL 07 CD 1234'))}</span>
                 </span>
-              </button>
+                </button>
+              </div>
             </div>
-            <div class="home-vehicle-slide home-vehicle-slide--wash" role="group" aria-roledescription="slide" aria-label="2 of 4: Car Wash" aria-hidden="true" inert>
-              <button onclick="go('13')" aria-label="Book car wash service" class="home-vehicle-select press" tabindex="-1">
-                <svg class="home-feature-slide-icon" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                  <path d="M6 17 9 11.5a3 3 0 0 1 2.6-1.5h8.8a3 3 0 0 1 2.6 1.5L26 17v7H6z"/>
-                  <path d="M9 17h14M10 24v2m12-2v2M11 14h10"/>
-                  <path d="M7 4v2m9-4v3m9-1v2"/>
-                </svg>
-                <span class="home-feature-slide-title">Car<br>Wash</span>
-                <span class="home-feature-slide-rule"></span>
-                <span class="home-feature-slide-cta">Book Now
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12h17M13 5l7 7-7 7"/></svg>
-                </span>
-                <img src="assets/home-car-wash.webp" alt="" class="home-feature-slide-image" decoding="async">
-              </button>
-            </div>
-            <div class="home-vehicle-slide home-vehicle-slide--tow" role="group" aria-roledescription="slide" aria-label="3 of 4: Towing Service" aria-hidden="true" inert>
-              <button onclick="go('07')" aria-label="Book towing service" class="home-vehicle-select press" tabindex="-1">
+            <div class="home-vehicle-slide home-vehicle-slide--tow" role="group" aria-roledescription="slide" aria-label="2 of 4: Towing Service" aria-hidden="true" inert>
+              <div class="home-vehicle-card home-vehicle-card--tow">
+                <button onclick="go('07')" aria-label="Book towing service" class="home-vehicle-select press" tabindex="-1">
                 <svg class="home-feature-slide-icon" viewBox="0 0 310 160" fill="none" stroke="currentColor" stroke-width="8" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true">
                   <path d="M14 48h56v54H6V58q0-10 8-10Zm0 10v27h42V58zM70 95h48l28-68"/>
                   <path d="M116 96h188v14H116zM155 83l18-20q6-7 15-7h42q11 0 20 9l18 13"/>
@@ -4694,10 +4724,29 @@
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12h17M13 5l7 7-7 7"/></svg>
                 </span>
                 <img src="assets/home-towing.webp" alt="" class="home-feature-slide-image" decoding="async">
-              </button>
+                </button>
+              </div>
+            </div>
+            <div class="home-vehicle-slide home-vehicle-slide--wash" role="group" aria-roledescription="slide" aria-label="3 of 4: Car Wash" aria-hidden="true" inert>
+              <div class="home-vehicle-card home-vehicle-card--wash">
+                <button onclick="go('13')" aria-label="Book car wash service" class="home-vehicle-select press" tabindex="-1">
+                <svg class="home-feature-slide-icon" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M6 17 9 11.5a3 3 0 0 1 2.6-1.5h8.8a3 3 0 0 1 2.6 1.5L26 17v7H6z"/>
+                  <path d="M9 17h14M10 24v2m12-2v2M11 14h10"/>
+                  <path d="M7 4v2m9-4v3m9-1v2"/>
+                </svg>
+                <span class="home-feature-slide-title">Car<br>Wash</span>
+                <span class="home-feature-slide-rule"></span>
+                <span class="home-feature-slide-cta">Book Now
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12h17M13 5l7 7-7 7"/></svg>
+                </span>
+                <img src="assets/home-car-wash.webp" alt="" class="home-feature-slide-image" decoding="async">
+                </button>
+              </div>
             </div>
             <div class="home-vehicle-slide home-vehicle-slide--charge" role="group" aria-roledescription="slide" aria-label="4 of 4: Mobile EV Charging" aria-hidden="true" inert>
-              <button onclick="go('02')" aria-label="Book mobile EV charging" class="home-vehicle-select press" tabindex="-1">
+              <div class="home-vehicle-card home-vehicle-card--charge">
+                <button onclick="go('02')" aria-label="Book mobile EV charging" class="home-vehicle-select press" tabindex="-1">
                 <svg class="home-feature-slide-icon" viewBox="0 0 36 32" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                   <path d="M3 8h20v16H3zM23 13h7l4 5v6H23zM8 28h.1M28 28h.1"/>
                   <path d="m14 11-4 7h4l-1 5 5-8h-4z"/>
@@ -4708,19 +4757,20 @@
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12h17M13 5l7 7-7 7"/></svg>
                 </span>
                 <img src="assets/home-mobile-charging.webp" alt="" class="home-feature-slide-image" decoding="async">
-              </button>
+                </button>
+              </div>
             </div>
+          </div>
+          </div>
+          <div class="home-carousel-controls" role="group" aria-label="Choose featured card">
+            <button type="button" class="home-carousel-dot active" aria-label="Show Nexon EV card" aria-controls="home-vehicle-feature" aria-current="true"><i></i></button>
+            <button type="button" class="home-carousel-dot" aria-label="Show Towing Service card" aria-controls="home-vehicle-feature"><i></i></button>
+            <button type="button" class="home-carousel-dot" aria-label="Show Car Wash card" aria-controls="home-vehicle-feature"><i></i></button>
+            <button type="button" class="home-carousel-dot" aria-label="Show Mobile EV Charging card" aria-controls="home-vehicle-feature"><i></i></button>
           </div>
         </div>
 
         <div class="sheet home-service-sheet">
-          <div class="grab !mb-2"></div>
-
-          <div class="flex items-center justify-between mb-2 px-0.5">
-            <h2 class="font-display text-[17px] font-bold tracking-tight text-label">What does your EV need?</h2>
-            <button id="home-more-link" onclick="toggleHomeMoreServices()" aria-expanded="${state.homeMoreExpanded}" aria-controls="home-more-services" class="text-[12px] font-bold text-teal min-h-[44px] px-1 inline-flex items-center gap-0.5"><span class="home-more-link-label">${state.homeMoreExpanded ? 'Hide services' : 'All services'}</span> ${I('chevR', 'w-3.5 h-3.5', 2)}</button>
-          </div>
-
           ${state.reservation ? `
             <button onclick="go('08')" class="w-full mb-2.5 bg-teal-soft text-teal rounded-[18px] p-3 flex items-center justify-between text-left press">
               <span class="text-[12px] font-bold truncate">${I('plug', 'w-4 h-4 inline -mt-0.5')} ${state.reservation.gun} held at ${state.reservation.hub.split(' ·')[0]}</span>
@@ -4762,55 +4812,17 @@
             </span>
           </button>
 
-          <!-- Compact 4-Item Secondary Services Row with 3D Icons -->
-          <div class="home-shortcuts">
+          <div class="home-shortcuts" role="group" aria-label="EV services">
             ${services.map(s => `
-              <button ${s.toggle ? 'id="home-more-toggle"' : ''} onclick="${s.fn}" aria-label="${s.toggle ? (state.homeMoreExpanded ? 'Show fewer services' : 'Show more services') : s.l}" ${s.toggle ? `aria-expanded="${state.homeMoreExpanded}" aria-controls="home-more-services"` : ''} class="home-shortcut card-interactive press">
-                <span class="home-shortcut-icon icon-container ${s.image ? 'home-shortcut-icon--image' : ''}">
-                  ${s.image ? `<img src="${s.image}" alt="" aria-hidden="true" class="home-shortcut-image">` : s.svg ? s.svg : I(s.i, 'w-5 h-5', 2)}
+              <button type="button" onclick="${s.fn}" aria-label="${s.l}" class="home-shortcut card-interactive press">
+                <span class="home-shortcut-icon icon-container" aria-hidden="true">
+                  ${I(s.i, 'w-6 h-6', 2)}
                 </span>
-                <span class="home-shortcut-label">${s.l}</span>
-              </button>`).join('')}
-          </div>
-          <div id="home-more-services" class="home-shortcuts home-more-shortcuts ${state.homeMoreExpanded ? 'is-expanded' : ''}" aria-label="More services" aria-hidden="${!state.homeMoreExpanded}" ${state.homeMoreExpanded ? '' : 'inert'}>
-            ${moreServices.map(s => `
-              <button onclick="${s.fn}" aria-label="${s.a}" class="home-shortcut card-interactive press">
-                <span class="home-shortcut-icon icon-container">${I(s.i, 'w-5 h-5', 2)}</span>
                 <span class="home-shortcut-label">${s.l}</span>
               </button>`).join('')}
           </div>
         </div>
       </div>`;
-    }
-
-    function toggleHomeMoreServices() {
-      const panel = document.getElementById('home-more-services');
-      const toggle = document.getElementById('home-more-toggle');
-      const link = document.getElementById('home-more-link');
-      if (!panel || !toggle || !link) {
-        console.error('Unable to toggle the home services grid.');
-        return;
-      }
-
-      state.homeMoreExpanded = !state.homeMoreExpanded;
-      const expanded = state.homeMoreExpanded;
-      panel.classList.toggle('is-expanded', expanded);
-      panel.setAttribute('aria-hidden', String(!expanded));
-      panel.inert = !expanded;
-      toggle.setAttribute('aria-expanded', String(expanded));
-      toggle.setAttribute('aria-label', expanded ? 'Show fewer services' : 'Show more services');
-      toggle.querySelector('.home-shortcut-label').textContent = expanded ? 'Less' : 'More';
-      toggle.querySelector('.home-shortcut-icon').innerHTML = I(expanded ? 'close' : 'grid', 'w-5 h-5', 2);
-      link.setAttribute('aria-expanded', String(expanded));
-      link.querySelector('.home-more-link-label').textContent = expanded ? 'Hide services' : 'All services';
-      if (expanded) {
-        window.setTimeout(() => {
-          if (!state.homeMoreExpanded || !document.querySelector('#home-more-services.is-expanded')) return;
-          const viewport = document.getElementById('ios-viewport');
-          if (viewport) viewport.scrollTo({ top: viewport.scrollHeight, behavior: 'smooth' });
-          else console.error('Unable to reveal expanded home services: app viewport is missing.');
-        }, 380);
-      }
     }
 
     // 02 — CHARGE FLOW (Address → Charging setup → Arrival)
@@ -6851,33 +6863,52 @@ function screen02() {
       '17': screen17, '18': screen18, '19': screen19, '20': screen20, '21': screen21
     };
 
-    let homeCardCarouselIndex = 1;
+    let homeCardCarouselIndex = 0;
     let homeCardCarouselTimer = null;
+    let homeCardCarouselProgressTimer = null;
     let homeCardCarouselNextAt = 0;
     let homeCardCarouselRemaining = 5000;
+    let homeCardCarouselElapsed = 0;
+    let homeCardCarouselLastProgressAt = 0;
     let homeCardCarouselRoot = null;
+    let homeCardCarouselPaused = false;
     function setupHomeCardCarousel() {
       const feature = document.querySelector('#ios-viewport .home-vehicle-feature');
       if (!feature) {
-        if (homeCardCarouselTimer !== null) window.clearTimeout(homeCardCarouselTimer);
+        if (homeCardCarouselTimer !== null) window.clearInterval(homeCardCarouselTimer);
+        if (homeCardCarouselProgressTimer !== null) window.clearInterval(homeCardCarouselProgressTimer);
         homeCardCarouselTimer = null;
+        homeCardCarouselProgressTimer = null;
         homeCardCarouselNextAt = 0;
         homeCardCarouselRemaining = 5000;
+        homeCardCarouselElapsed = 0;
         homeCardCarouselRoot = null;
+        homeCardCarouselPaused = false;
         return;
       }
       if (feature === homeCardCarouselRoot) return;
       if (homeCardCarouselTimer !== null) {
         homeCardCarouselRemaining = Math.max(0, homeCardCarouselNextAt - Date.now());
-        window.clearTimeout(homeCardCarouselTimer);
+        homeCardCarouselElapsed = 5000 - homeCardCarouselRemaining;
+        window.clearInterval(homeCardCarouselTimer);
       }
+      if (homeCardCarouselProgressTimer !== null) window.clearInterval(homeCardCarouselProgressTimer);
       homeCardCarouselTimer = null;
+      homeCardCarouselProgressTimer = null;
+      homeCardCarouselNextAt = 0;
       homeCardCarouselRoot = feature;
+      homeCardCarouselPaused = false;
 
+      const shell = feature.closest('.home-carousel-shell');
       const track = feature.querySelector('.home-vehicle-track');
+      if (!shell || !track) return;
       const slides = Array.from(track.children);
       if (!slides.length) return;
       const slideCount = slides.length;
+      const dots = Array.from(shell.querySelectorAll('.home-carousel-dot'));
+      const accents = ['#00b5ae', '#fe5a02', '#006cf3', '#12c4b3'];
+      homeCardCarouselIndex = ((homeCardCarouselIndex % slideCount) + slideCount) % slideCount;
+
       const makeLoopSlide = slide => {
         const clone = slide.cloneNode(true);
         clone.classList.remove('is-active');
@@ -6888,91 +6919,156 @@ function screen02() {
         if (button) button.tabIndex = -1;
         return clone;
       };
-      const previousClone = makeLoopSlide(slides[slideCount - 1]);
-      const nextClone = makeLoopSlide(slides[0]);
-      track.insertBefore(previousClone, slides[0]);
-      track.appendChild(nextClone);
-      if (homeCardCarouselIndex <= 0) homeCardCarouselIndex = slideCount;
-      else if (homeCardCarouselIndex >= slideCount + 1) homeCardCarouselIndex = 1;
+      track.insertBefore(makeLoopSlide(slides[slideCount - 1]), slides[0]);
+      track.appendChild(makeLoopSlide(slides[0]));
       const allSlides = Array.from(track.children);
-      const setPosition = () => {
-        allSlides.forEach((slide, index) => {
-          const isLoopSlide = index === 0 || index === slideCount + 1;
-          const active = index === homeCardCarouselIndex;
-          slide.classList.toggle('is-active', active);
-          if (!isLoopSlide) {
-            slide.setAttribute('aria-hidden', active ? 'false' : 'true');
-            slide.inert = !active;
-            const button = slide.querySelector('button');
-            if (button) button.tabIndex = active ? 0 : -1;
-          }
-        });
-        track.style.transform = `translateX(-${homeCardCarouselIndex * (100 / allSlides.length)}%)`;
-      };
+      let trackIndex = homeCardCarouselIndex + 1;
+      let isTransitioning = false;
+      let focusAfterLoop = false;
       const reducedMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
       const autoplayEnabled = !reducedMotion;
-      let focusAfterLoop = false;
+
+      const updateIndicators = () => {
+        const progress = Math.max(0, Math.min(1, homeCardCarouselElapsed / 5000));
+        shell.dataset.slideIndex = String(homeCardCarouselIndex);
+        shell.style.setProperty('--home-carousel-accent', accents[homeCardCarouselIndex] || accents[0]);
+        dots.forEach((dot, index) => {
+          dot.classList.toggle('active', index === homeCardCarouselIndex);
+          dot.classList.toggle('done', index < homeCardCarouselIndex);
+          if (index === homeCardCarouselIndex) dot.setAttribute('aria-current', 'true');
+          else dot.removeAttribute('aria-current');
+          const fill = dot.firstElementChild;
+          if (fill) fill.style.transform = `scaleX(${index < homeCardCarouselIndex ? 1 : index === homeCardCarouselIndex ? progress : 0})`;
+        });
+      };
+      const setTrackPosition = () => {
+        allSlides.forEach((slide, index) => {
+          const active = index === trackIndex;
+          slide.classList.toggle('is-active', active);
+          slide.setAttribute('aria-hidden', active ? 'false' : 'true');
+          slide.inert = !active;
+          const button = slide.querySelector('button');
+          if (button) button.tabIndex = active ? 0 : -1;
+        });
+        track.style.transform = `translateX(-${trackIndex * 100}%)`;
+        updateIndicators();
+      };
       const normalizeLoopPosition = () => {
-        if (homeCardCarouselIndex !== 0 && homeCardCarouselIndex !== slideCount + 1) return;
+        if (trackIndex !== 0 && trackIndex !== slideCount + 1) {
+          isTransitioning = false;
+          return;
+        }
         track.style.transition = 'none';
-        homeCardCarouselIndex = homeCardCarouselIndex === 0 ? slideCount : 1;
-        setPosition();
+        trackIndex = trackIndex === 0 ? slideCount : 1;
+        setTrackPosition();
         void track.offsetWidth;
         track.style.transition = '';
+        isTransitioning = false;
         if (focusAfterLoop) {
           focusAfterLoop = false;
-          allSlides[homeCardCarouselIndex].querySelector('button')?.focus({ preventScroll: true });
+          slides[homeCardCarouselIndex].querySelector('button')?.focus({ preventScroll: true });
         }
       };
       track.style.transition = 'none';
-      setPosition();
+      setTrackPosition();
       void track.offsetWidth;
       track.style.transition = '';
-
       track.addEventListener('transitionend', event => {
         if (event.target !== track || event.propertyName !== 'transform') return;
         normalizeLoopPosition();
       });
 
-      const move = direction => {
-        if (homeCardCarouselRoot !== feature || homeCardCarouselIndex === 0 || homeCardCarouselIndex === slideCount + 1) return;
-        homeCardCarouselIndex += direction;
-        setPosition();
-        if (reducedMotion) normalizeLoopPosition();
-      };
-      const moveWithFocus = direction => {
-        move(direction);
-        if (homeCardCarouselIndex === 0 || homeCardCarouselIndex === slideCount + 1) focusAfterLoop = true;
-        else allSlides[homeCardCarouselIndex].querySelector('button')?.focus({ preventScroll: true });
-      };
       const scheduleAdvance = delay => {
-        if (!autoplayEnabled) return;
+        if (!autoplayEnabled || homeCardCarouselPaused) return;
+        if (homeCardCarouselTimer !== null) window.clearInterval(homeCardCarouselTimer);
         homeCardCarouselRemaining = delay;
+        homeCardCarouselElapsed = 5000 - delay;
         homeCardCarouselNextAt = Date.now() + delay;
-        homeCardCarouselTimer = window.setTimeout(advance, delay);
+        homeCardCarouselLastProgressAt = performance.now();
+        updateIndicators();
+        homeCardCarouselTimer = window.setInterval(() => {
+          const timer = homeCardCarouselTimer;
+          homeCardCarouselTimer = null;
+          homeCardCarouselNextAt = 0;
+          if (timer !== null) window.clearInterval(timer);
+          if (homeCardCarouselRoot !== feature || homeCardCarouselPaused) return;
+          if (document.hidden) {
+            scheduleAdvance(5000);
+            return;
+          }
+          advance();
+        }, delay);
+      };
+      const move = direction => {
+        if (homeCardCarouselRoot !== feature || isTransitioning) return false;
+        homeCardCarouselIndex = (homeCardCarouselIndex + direction + slideCount) % slideCount;
+        trackIndex += direction;
+        homeCardCarouselElapsed = 0;
+        homeCardCarouselRemaining = 5000;
+        homeCardCarouselLastProgressAt = performance.now();
+        setTrackPosition();
+        if (reducedMotion) normalizeLoopPosition();
+        else isTransitioning = true;
+        return true;
       };
       const advance = () => {
-        homeCardCarouselTimer = null;
-        homeCardCarouselNextAt = 0;
-        if (homeCardCarouselRoot !== feature) return;
-        if (document.hidden) {
+        if (homeCardCarouselRoot !== feature || homeCardCarouselPaused) return;
+        if (!move(1)) {
           scheduleAdvance(5000);
           return;
         }
-        move(1);
         scheduleAdvance(5000);
       };
       const pause = () => {
+        if (homeCardCarouselPaused) return;
         if (homeCardCarouselTimer !== null) {
           homeCardCarouselRemaining = Math.max(0, homeCardCarouselNextAt - Date.now());
-          window.clearTimeout(homeCardCarouselTimer);
+          homeCardCarouselElapsed = 5000 - homeCardCarouselRemaining;
+          window.clearInterval(homeCardCarouselTimer);
           homeCardCarouselTimer = null;
           homeCardCarouselNextAt = 0;
         }
+        homeCardCarouselPaused = true;
+        homeCardCarouselLastProgressAt = performance.now();
+        updateIndicators();
       };
       const resume = () => {
-        if (homeCardCarouselRoot === feature && homeCardCarouselTimer === null) scheduleAdvance(homeCardCarouselRemaining);
+        if (!homeCardCarouselPaused) return;
+        homeCardCarouselPaused = false;
+        scheduleAdvance(homeCardCarouselRemaining);
       };
+      const restartAutoplay = () => {
+        homeCardCarouselElapsed = 0;
+        homeCardCarouselRemaining = 5000;
+        if (homeCardCarouselTimer !== null) window.clearInterval(homeCardCarouselTimer);
+        homeCardCarouselTimer = null;
+        homeCardCarouselNextAt = 0;
+        homeCardCarouselLastProgressAt = performance.now();
+        scheduleAdvance(5000);
+      };
+      const show = index => {
+        if (homeCardCarouselRoot !== feature || index === homeCardCarouselIndex || isTransitioning) return;
+        homeCardCarouselIndex = index;
+        trackIndex = index + 1;
+        homeCardCarouselElapsed = 0;
+        homeCardCarouselRemaining = 5000;
+        homeCardCarouselLastProgressAt = performance.now();
+        setTrackPosition();
+        if (reducedMotion) normalizeLoopPosition();
+        else isTransitioning = true;
+        restartAutoplay();
+      };
+      const moveWithFocus = direction => {
+        const destination = trackIndex + direction;
+        focusAfterLoop = destination === 0 || destination === slideCount + 1;
+        if (!move(direction)) {
+          focusAfterLoop = false;
+          return false;
+        }
+        if (!focusAfterLoop) slides[homeCardCarouselIndex].querySelector('button')?.focus({ preventScroll: true });
+        return true;
+      };
+
       let swipePointerId = null;
       let swipeStartX = 0;
       let swipeStartY = 0;
@@ -7001,16 +7097,22 @@ function screen02() {
         swipePointerId = null;
         if (Math.abs(dx) >= swipeThreshold && Math.abs(dx) > Math.abs(dy)) {
           suppressSwipeClick = true;
-          homeCardCarouselRemaining = 5000;
           move(dx < 0 ? 1 : -1);
+          homeCardCarouselElapsed = 0;
+          homeCardCarouselRemaining = 5000;
           window.setTimeout(() => { suppressSwipeClick = false; }, 0);
         }
-        if (event.pointerType !== 'mouse') resume();
+        resume();
       });
       feature.addEventListener('pointercancel', event => {
         if (event.pointerId !== swipePointerId) return;
         swipePointerId = null;
-        if (event.pointerType !== 'mouse') resume();
+        resume();
+      });
+      feature.addEventListener('pointerleave', event => {
+        if (event.pointerId !== swipePointerId || feature.hasPointerCapture(event.pointerId)) return;
+        swipePointerId = null;
+        resume();
       });
       feature.addEventListener('click', event => {
         if (!suppressSwipeClick) return;
@@ -7018,20 +7120,29 @@ function screen02() {
         event.preventDefault();
         event.stopImmediatePropagation();
       }, true);
-      feature.addEventListener('keydown', event => {
+      shell.addEventListener('keydown', event => {
         if (event.key !== 'ArrowLeft' && event.key !== 'ArrowRight') return;
         event.preventDefault();
-        homeCardCarouselRemaining = 5000;
-        moveWithFocus(event.key === 'ArrowLeft' ? -1 : 1);
+        if (moveWithFocus(event.key === 'ArrowLeft' ? -1 : 1)) restartAutoplay();
       });
-      feature.addEventListener('pointerenter', pause);
-      feature.addEventListener('pointerleave', resume);
-      feature.addEventListener('focusin', pause);
-      feature.addEventListener('focusout', event => {
-        if (!feature.contains(event.relatedTarget)) resume();
+      dots.forEach((dot, index) => dot.addEventListener('click', () => show(index)));
+      shell.querySelector('.home-carousel-arrow--previous')?.addEventListener('click', () => {
+        if (move(-1)) restartAutoplay();
       });
-      if (feature.matches(':hover') || feature.contains(document.activeElement)) pause();
-      else resume();
+      shell.querySelector('.home-carousel-arrow--next')?.addEventListener('click', () => {
+        if (move(1)) restartAutoplay();
+      });
+
+      homeCardCarouselLastProgressAt = performance.now();
+      homeCardCarouselProgressTimer = window.setInterval(() => {
+        const now = performance.now();
+        if (autoplayEnabled && !homeCardCarouselPaused && !document.hidden) {
+          homeCardCarouselElapsed = Math.min(5000, homeCardCarouselElapsed + now - homeCardCarouselLastProgressAt);
+        }
+        homeCardCarouselLastProgressAt = now;
+        updateIndicators();
+      }, 50);
+      scheduleAdvance(homeCardCarouselRemaining);
     }
 
     function render(animate) {
@@ -7065,7 +7176,7 @@ function screen02() {
       if (meta.tabBar) {
         tabBar.style.display = 'grid';
         tabBar.setAttribute('aria-label', 'Main');
-        tabBar.classList.toggle('home-liquid-tabs', state.screen === '01');
+        tabBar.classList.add('home-liquid-tabs');
         const activeLabel = state.screen === '11' ? state.tabLabel : meta.tabName;
         const visibleTabs = TABS;
         tabBar.style.gridTemplateColumns = `repeat(${visibleTabs.length}, minmax(0, 1fr))`;
