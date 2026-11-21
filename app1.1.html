@@ -963,6 +963,37 @@
       border-color: var(--coral) !important;
     }
 
+    .service-flow-shell { min-height: 100%; background: var(--page); }
+    .service-flow-header { min-height: 48px; }
+    .service-flow-back {
+      min-height: 44px; padding: 0 16px 0 12px; border: 1px solid var(--line); border-radius: 999px;
+      background: color-mix(in srgb, var(--surface) 92%, transparent); box-shadow: var(--shadow);
+      transition: transform 180ms ease, box-shadow 180ms ease;
+    }
+    .service-flow-back:active { transform: scale(.98); }
+    .service-flow-main > .flow-stepper { margin: 6px 0 10px; }
+    .service-flow-body { display: flex; flex-direction: column; gap: 12px; }
+    .service-flow-footer {
+      position: sticky; bottom: 0; z-index: 20; margin-top: auto; padding: 12px 16px max(12px, env(safe-area-inset-bottom, 0px));
+      background: linear-gradient(180deg, transparent, color-mix(in srgb, var(--page) 94%, transparent) 28%);
+      -webkit-backdrop-filter: blur(16px); backdrop-filter: blur(16px);
+    }
+    .service-flow-dock {
+      min-height: 68px; padding: 10px 12px; border: 1px solid var(--line); border-radius: 24px;
+      background: color-mix(in srgb, var(--surface) 96%, transparent);
+      box-shadow: 0 10px 28px rgba(0, 60, 68, .14); backdrop-filter: blur(18px);
+    }
+
+    .home-more-shortcuts {
+      max-height: 220px; margin-top: 8px !important; opacity: 1; transform: translateY(0);
+      transition: max-height 360ms cubic-bezier(.4,0,.2,1), margin-top 360ms cubic-bezier(.4,0,.2,1),
+        opacity 240ms ease, transform 360ms cubic-bezier(.4,0,.2,1);
+    }
+    .home-more-shortcuts:not(.is-expanded) {
+      max-height: 0; margin-top: 0 !important; opacity: 0; transform: translateY(-8px);
+      overflow: hidden; pointer-events: none;
+    }
+
     /* Respect reduced-motion preference */
     @media (prefers-reduced-motion: reduce) {
 
@@ -2389,13 +2420,12 @@
     }
 
     function renderStepBar(step, labels) {
-      const stepItems = [
-        { num: 1, label: labels[0] || 'Location' },
-        { num: 2, label: labels[1] || 'Charger' },
-        { num: 3, label: labels[2] || 'Time & pay' }
-      ];
+      const stepItems = ['Address', 'Setup', 'Arrival'].map((fallback, index) => ({
+        num: index + 1,
+        label: labels[index] || fallback
+      }));
       return `
-      <div class="flex items-center justify-center gap-1.5 py-1 px-1 select-none" role="tablist" aria-label="Steps">
+      <div class="flex items-center w-full gap-2 py-1 px-1 select-none" role="group" aria-label="Booking steps">
         ${stepItems.map((item, idx) => {
         const sNum = item.num;
         const active = step === sNum;
@@ -2403,19 +2433,13 @@
         const isLast = idx === stepItems.length - 1;
 
         return `
-          <button onclick="flowJumpToStep('${state.screen}', ${sNum})" class="flex items-center gap-1.5 py-1.5 pl-1.5 pr-3.5 rounded-full transition-all shrink-0 select-none press ${active
-            ? 'bg-teal text-white shadow-xs font-bold'
-            : done
-              ? 'bg-teal-soft text-teal font-semibold'
-              : 'text-gray-500 font-medium'
-          }">
-            <span class="w-5 h-5 rounded-full flex items-center justify-center shrink-0 ${active ? 'bg-white text-teal font-extrabold text-[11px]' : done ? 'bg-teal text-white font-extrabold text-[11px]' : 'bg-white border border-gray-300 text-gray-500 font-bold text-[10.5px]'
-          }">
-              ${done ? '✓' : sNum}
-            </span>
-            <span class="text-[11.5px] truncate">${item.label}</span>
+          <div class="flex items-center gap-2 min-w-0 ${isLast ? 'shrink-0' : ''}">
+            <button ${active ? 'aria-current="step"' : ''} onclick="flowJumpToStep('${state.screen}', ${sNum})" class="flex items-center gap-2 shrink-0 text-left press ${active || done ? 'text-teal' : 'text-label2'}">
+              <span class="w-9 h-9 rounded-full flex items-center justify-center border ${active || done ? 'bg-teal border-teal text-white shadow-sm' : 'bg-fill border-line text-label2'} font-display text-[14px] font-bold">${done ? '✓' : sNum}</span>
+              <span class="text-[12px] font-semibold whitespace-nowrap">${item.label}</span>
           </button>
-          ${!isLast ? `<span class="w-5 h-[1.5px] ${step > sNum ? 'bg-teal' : 'bg-gray-300'} shrink-0"></span>` : ''}
+          ${!isLast ? `<span class="w-5 h-[2px] ${done ? 'bg-teal' : 'bg-line'} shrink-0"></span>` : ''}
+          </div>
           `;
       }).join('')}
       </div>`;
@@ -2428,9 +2452,9 @@
         { id: 'Roadside', label: 'Roadside', icon: 'road' }
       ];
       return `
-      <div class="card p-4 space-y-3.5 shadow-lg border border-black/5 bg-white rounded-[24px]">
+      <div class="card p-4 space-y-3.5 shadow-md border border-line bg-surface rounded-[24px]">
         <div>
-          <div class="text-[10px] font-extrabold tracking-wider text-teal uppercase mb-1.5">Current Location Selection</div>
+          <div class="text-[10px] font-extrabold tracking-wider text-teal uppercase mb-1.5">Service location</div>
           <div class="flex items-center justify-between gap-2">
             <div class="flex items-center gap-2.5 min-w-0">
               <span class="w-8 h-8 rounded-full bg-[#E6F4F2] text-[#005C68] flex items-center justify-center shrink-0 mt-0.5">${I('pin', 'w-4 h-4 text-[#005C68]', 2.2)}</span>
@@ -2485,9 +2509,9 @@
       }).join('')}
           </div>
         </div>
-
-        ${opts.inlineMap !== false ? `
-          <div onclick="moveMapPin(event)" class="map relative h-[145px] rounded-[16px] overflow-hidden border border-line cursor-crosshair select-none">
+      </div>
+      ${opts.inlineMap !== false ? `
+          <div onclick="moveMapPin(event)" class="map relative h-[180px] rounded-[22px] overflow-hidden border border-white/80 shadow-md cursor-crosshair select-none mt-1">
             <div class="absolute top-2.5 left-2.5 bg-surface/95 backdrop-blur-sm px-2.5 py-1 rounded-full text-[9.5px] font-bold text-label2 border border-line shadow-xs">
               Tap map to mark exact vehicle spot
             </div>
@@ -2500,8 +2524,7 @@
               <span class="mt-0.5 px-2.5 py-0.5 rounded-full bg-slatecard text-white text-[9px] font-bold shadow">Van Stop Here</span>
             </div>
           </div>
-        ` : ''}
-      </div>`;
+      ` : ''}`;
     }
 
     function renderPrePostPaymentCard(total) {
@@ -2567,10 +2590,10 @@
     // Shared header + sticky footer for the 3-step checkout flows
     function flowShell({ title, badge, step, labels, body, footerLeft, footerBtn, extraHeader = '', rightAction = '' }) {
       return `
-      <div class="screen pt-[54px] justify-between">
-        <div class="px-4 space-y-2.5">
-          <div class="flex items-center justify-between gap-2">
-            <button onclick="flowBack()" class="navbtn min-h-[42px] pr-2 flex items-center gap-1 font-bold text-[17px] text-label" aria-label="Back">${I('chevL', 'w-5 h-5', 2.2)}${title}</button>
+      <div class="screen service-flow-shell">
+        <div class="service-flow-main px-4 pt-[54px] pb-4">
+          <div class="service-flow-header flex items-center justify-between gap-2">
+            <button onclick="flowBack()" class="service-flow-back flex items-center gap-2 font-bold text-[16px] text-label press" aria-label="Back">${I('chevL', 'w-5 h-5', 2.2)}<span>${title}</span></button>
             <div class="flex items-center gap-2">
               ${badge ? `<span class="chip font-bold">${badge}</span>` : ''}
               ${rightAction}
@@ -2578,10 +2601,10 @@
           </div>
           ${extraHeader}
           ${renderStepBar(step, labels)}
-          ${body}
+          <div class="service-flow-body">${body}</div>
         </div>
-        <div class="px-4 py-3 sticky bottom-0 z-20">
-          <div class="bg-surface/98 backdrop-blur-md rounded-[26px] p-3 shadow-xl border border-line flex items-center justify-between gap-3">
+        <div class="service-flow-footer">
+          <div class="service-flow-dock flex items-center justify-between gap-3">
             <div class="min-w-0">${footerLeft}</div>
             ${footerBtn}
           </div>
@@ -2745,7 +2768,7 @@
 
           <div class="flex items-center justify-between mb-2.5 px-0.5">
             <h2 class="font-display text-[17px] font-bold tracking-tight text-label">What does your EV need?</h2>
-            <button onclick="toggleHomeMoreServices()" aria-expanded="${state.homeMoreExpanded}" aria-controls="home-more-services" class="text-[12px] font-bold text-teal min-h-[32px] px-1">${state.homeMoreExpanded ? 'Hide services' : 'All services'}</button>
+            <button id="home-more-link" onclick="toggleHomeMoreServices()" aria-expanded="${state.homeMoreExpanded}" aria-controls="home-more-services" class="text-[12px] font-bold text-teal min-h-[32px] px-1"><span class="home-more-link-label">${state.homeMoreExpanded ? 'Hide services' : 'All services'}</span></button>
           </div>
 
           ${state.reservation ? `
@@ -2790,28 +2813,45 @@
           <!-- Compact 4-Item Secondary Services Row -->
           <div class="grid grid-cols-4 gap-2">
             ${services.map(s => `
-              <button onclick="${s.fn}" ${s.toggle ? `aria-label="${state.homeMoreExpanded ? 'Show fewer services' : 'Show more services'}" aria-expanded="${state.homeMoreExpanded}" aria-controls="home-more-services"` : `aria-label="${s.l}"`} class="card press py-2.5 px-1.5 flex flex-col items-center text-center">
-                <span class="w-10 h-10 flex items-center justify-center mb-1">
+              <button ${s.toggle ? 'id="home-more-toggle"' : ''} onclick="${s.fn}" ${s.toggle ? `aria-label="${state.homeMoreExpanded ? 'Show fewer services' : 'Show more services'}" aria-expanded="${state.homeMoreExpanded}" aria-controls="home-more-services"` : `aria-label="${s.l}"`} class="card press py-2.5 px-1.5 flex flex-col items-center text-center">
+                <span class="${s.toggle ? 'home-more-toggle-icon' : ''} w-10 h-10 rounded-[14px] bg-teal-soft text-teal flex items-center justify-center mb-1">
                   ${s.svg ? s.svg : I(s.i, `w-6 h-6 ${s.color}`, 1.9)}
                 </span>
+                <span class="${s.toggle ? 'home-more-toggle-label' : ''} text-[11px] font-semibold text-label leading-tight">${s.l}</span>
+              </button>`).join('')}
+          </div>
+          <div id="home-more-services" class="grid grid-cols-4 gap-2 home-more-shortcuts ${state.homeMoreExpanded ? 'is-expanded' : ''}" aria-label="More services" aria-hidden="${!state.homeMoreExpanded}" ${state.homeMoreExpanded ? '' : 'inert'}>
+            ${moreServices.map(s => `
+              <button onclick="${s.fn}" aria-label="${s.a}" class="card press py-2.5 px-1.5 flex flex-col items-center text-center">
+                <span class="w-10 h-10 rounded-[14px] bg-teal-soft text-teal flex items-center justify-center mb-1">${I(s.i, 'w-6 h-6', 1.9)}</span>
                 <span class="text-[11px] font-semibold text-label leading-tight">${s.l}</span>
               </button>`).join('')}
           </div>
-          ${state.homeMoreExpanded ? `
-          <div id="home-more-services" class="grid grid-cols-4 gap-2 mt-2" aria-label="More services">
-            ${moreServices.map(s => `
-              <button onclick="${s.fn}" aria-label="${s.a}" class="card press py-2.5 px-1.5 flex flex-col items-center text-center">
-                <span class="w-10 h-10 flex items-center justify-center mb-1">${I(s.i, 'w-6 h-6', 1.9)}</span>
-                <span class="text-[11px] font-semibold text-label leading-tight">${s.l}</span>
-              </button>`).join('')}
-          </div>` : ''}
         </div>
       </div>`;
     }
 
     function toggleHomeMoreServices() {
+      const panel = document.getElementById('home-more-services');
+      const toggle = document.getElementById('home-more-toggle');
+      const link = document.getElementById('home-more-link');
+      if (!panel || !toggle || !link) {
+        console.error('Unable to toggle the home services grid.');
+        return;
+      }
+
       state.homeMoreExpanded = !state.homeMoreExpanded;
-      render();
+      const expanded = state.homeMoreExpanded;
+      panel.style.maxHeight = expanded ? `${panel.scrollHeight}px` : '0px';
+      panel.classList.toggle('is-expanded', expanded);
+      panel.setAttribute('aria-hidden', String(!expanded));
+      panel.inert = !expanded;
+      toggle.setAttribute('aria-expanded', String(expanded));
+      toggle.setAttribute('aria-label', expanded ? 'Show fewer services' : 'Show more services');
+      toggle.querySelector('.home-more-toggle-label').textContent = expanded ? 'Less' : 'More';
+      toggle.querySelector('.home-more-toggle-icon').innerHTML = I(expanded ? 'close' : 'grid', 'w-6 h-6 text-teal', 1.9);
+      link.setAttribute('aria-expanded', String(expanded));
+      link.querySelector('.home-more-link-label').textContent = expanded ? 'Hide services' : 'All services';
     }
 
     // 02 — 3-STEP CHARGE FLOW (Now / Schedule / Weekly)
@@ -2874,7 +2914,7 @@
           <div class="px-4 pt-[54px] pb-2 space-y-2.5 z-10 shrink-0 bg-page/95 backdrop-blur-xs">
             <!-- Header with Back and Preferences/Filter Slider -->
             <div class="flex items-center justify-between">
-              <button onclick="flowBack()" class="navbtn min-h-[40px] pr-2 flex items-center gap-1.5 text-label font-bold text-[17px] press" aria-label="Back">
+              <button onclick="flowBack()" class="service-flow-back flex items-center gap-2 text-label font-bold text-[16px] press" aria-label="Back">
                 ${I('chevL', 'w-5 h-5', 2.2)}
                 <span>${modeTitle}</span>
               </button>
@@ -2885,7 +2925,7 @@
             ${modeSeg}
 
             <!-- Stepper (3rd Section on screen - Image 3 Design) -->
-            ${renderStepBar(step, ['Location', 'Charger', 'Time & pay'], ['pin', 'bolt', 'wallet'])}
+            ${renderStepBar(step, ['Address', 'Setup', 'Arrival'])}
 
             <!-- Location Selection Card (Image 2 Design) -->
             ${renderLocationPickerCard({ inlineMap: false })}
@@ -2902,7 +2942,7 @@
           </div>
 
           <!-- Expansive Interactive Kochi Vector Map (Image 2) -->
-          <div onclick="moveMapPin(event)" class="flex-1 relative min-h-[340px] cursor-crosshair select-none bg-[var(--map-bg)] overflow-hidden">
+          <div onclick="moveMapPin(event)" class="flex-1 relative min-h-[260px] mx-3 mb-3 rounded-[24px] border border-white/80 shadow-md cursor-crosshair select-none bg-[var(--map-bg)] overflow-hidden">
             <!-- SVG Vector Map of Kochi with Waterway, Parks & Street Grid -->
             <svg class="absolute inset-0 w-full h-full" preserveAspectRatio="xMidYMid slice" viewBox="0 0 400 480" fill="none">
               <!-- Parks -->
@@ -3003,7 +3043,7 @@
                     ${I('pin', 'w-4 h-4 text-teal', 2)}
                   </span>
                   <div class="min-w-0">
-                    <div class="text-[10px] font-medium text-label2 leading-none">Step 1 of 3 • Location</div>
+                    <div class="text-[10px] font-medium text-label2 leading-none">Step 1 of 3 • Address</div>
                     <div class="font-display text-[13.5px] font-bold text-label truncate mt-1">${state.locationTitle}</div>
                   </div>
                 </div>
@@ -3190,7 +3230,7 @@
         title: modeTitle,
         badge: '',
         step,
-        labels: ['Location', 'Charger', 'Time & pay'],
+        labels: ['Address', 'Setup', 'Arrival'],
         body,
         footerLeft,
         footerBtn,
@@ -3383,7 +3423,7 @@
             <span class="chip !text-[10px]">12.4 km</span>
           </div>
         `;
-        footerLeft = `<div class="text-[10px] text-label2">Step 1 of 3 • Pickup</div><div class="font-display text-[14px] font-bold truncate max-w-[160px]">${state.locationTitle}</div>`;
+        footerLeft = `<div class="text-[10px] text-label2">Step 1 of 3 • Address</div><div class="font-display text-[14px] font-bold truncate max-w-[160px]">${state.locationTitle}</div>`;
         footerBtn = `<button onclick="flowNext('towFlowStep')" class="btn shrink-0">Continue</button>`;
       } else if (step === 2) {
         body = `
@@ -3415,7 +3455,7 @@
             ${q.carrier.short === 'Wheel-lift' ? '<div class="field-error px-1">Wheel-lift towing can damage an EV motor. Use only if your manual allows it.</div>' : ''}
           </div>
         `;
-        footerLeft = `<div class="text-[10px] text-label2">Step 2 of 3 • Up to 15 km</div><div class="font-display text-[18px] font-bold num">₹${q.total.toLocaleString('en-IN')}</div>`;
+        footerLeft = `<div class="text-[10px] text-label2">Step 2 of 3 • Setup · up to 15 km</div><div class="font-display text-[18px] font-bold num">₹${q.total.toLocaleString('en-IN')}</div>`;
         footerBtn = `<button onclick="flowNext('towFlowStep')" class="btn shrink-0">Continue</button>`;
       } else {
         body = `
@@ -3430,7 +3470,7 @@
         `;
         ({ footerLeft, footerBtn } = checkoutFooter('Step 3 of 3', q.total, q.slot, q.etaMins, 'confirmTow()'));
       }
-      return flowShell({ title: 'Towing', badge: 'Zero-drag EV', step, labels: ['Location', 'Issue & truck', 'Time & pay'], body, footerLeft, footerBtn });
+      return flowShell({ title: 'Towing', badge: 'Zero-drag EV', step, labels: ['Address', 'Setup', 'Arrival'], body, footerLeft, footerBtn });
     }
 
     // 12 — MOBILE FUEL (Location → Fuel & qty → Time & pay)
@@ -3462,7 +3502,7 @@
       let body = '', footerLeft = '', footerBtn = '';
       if (step === 1) {
         body = renderLocationPickerCard();
-        footerLeft = `<div class="text-[10px] text-label2">Step 1 of 3 • Location</div><div class="font-display text-[14px] font-bold truncate max-w-[160px]">${state.locationTitle}</div>`;
+        footerLeft = `<div class="text-[10px] text-label2">Step 1 of 3 • Address</div><div class="font-display text-[14px] font-bold truncate max-w-[160px]">${state.locationTitle}</div>`;
         footerBtn = `<button onclick="flowNext('fuelStep')" class="btn shrink-0">Continue</button>`;
       } else if (step === 2) {
         body = `
@@ -3495,7 +3535,7 @@
             </div>
           </div>
         `;
-        footerLeft = `<div class="text-[10px] text-label2 num">Step 2 of 3 • ${q.f.label} ${state.fuelQty} ${q.f.unit}</div><div class="font-display text-[18px] font-bold num">₹${q.fuelCost.toLocaleString('en-IN')}</div>`;
+        footerLeft = `<div class="text-[10px] text-label2 num">Step 2 of 3 • Setup · ${q.f.label} ${state.fuelQty} ${q.f.unit}</div><div class="font-display text-[18px] font-bold num">₹${q.fuelCost.toLocaleString('en-IN')}</div>`;
         footerBtn = `<button onclick="flowNext('fuelStep')" class="btn shrink-0">Continue</button>`;
       } else {
         body = `
@@ -3509,7 +3549,7 @@
         `;
         ({ footerLeft, footerBtn } = checkoutFooter('Step 3 of 3', q.total, q.slot, q.etaMins, 'confirmFuel()'));
       }
-      return flowShell({ title: 'Fuel delivery', badge: 'PESO certified', step, labels: ['Location', 'Fuel', 'Time & pay'], body, footerLeft, footerBtn });
+      return flowShell({ title: 'Fuel delivery', badge: 'PESO certified', step, labels: ['Address', 'Setup', 'Arrival'], body, footerLeft, footerBtn });
     }
 
     // 13 — MOBILE CARWASH (Location → Package → Time & pay)
@@ -3551,7 +3591,7 @@
             <span class="text-[11px] font-bold text-teal">Change</span>
           </button>
         `;
-        footerLeft = `<div class="text-[10px] text-label2">Step 1 of 3 • Location</div><div class="font-display text-[14px] font-bold truncate max-w-[160px]">${state.locationTitle}</div>`;
+        footerLeft = `<div class="text-[10px] text-label2">Step 1 of 3 • Address</div><div class="font-display text-[14px] font-bold truncate max-w-[160px]">${state.locationTitle}</div>`;
         footerBtn = `<button onclick="flowNext('washStep')" class="btn shrink-0">Continue</button>`;
       } else if (step === 2) {
         body = `
@@ -3571,7 +3611,7 @@
             </div>
           </div>
         `;
-        footerLeft = `<div class="text-[10px] text-label2">Step 2 of 3 • ${q.p.time}</div><div class="font-display text-[18px] font-bold num">₹${q.total}</div>`;
+        footerLeft = `<div class="text-[10px] text-label2">Step 2 of 3 • Setup · ${q.p.time}</div><div class="font-display text-[18px] font-bold num">₹${q.total}</div>`;
         footerBtn = `<button onclick="flowNext('washStep')" class="btn shrink-0">Continue</button>`;
       } else {
         body = `
@@ -3585,7 +3625,7 @@
         `;
         ({ footerLeft, footerBtn } = checkoutFooter('Step 3 of 3', q.total, q.slot, q.etaMins, 'confirmWash()'));
       }
-      return flowShell({ title: 'Carwash', badge: 'EV port safe', step, labels: ['Location', 'Package', 'Time & pay'], body, footerLeft, footerBtn });
+      return flowShell({ title: 'Carwash', badge: 'EV port safe', step, labels: ['Address', 'Setup', 'Arrival'], body, footerLeft, footerBtn });
     }
 
     // 04 — STATIONS NEAR KOCHI (search + filters actually filter)
