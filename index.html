@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-  <title>VoltIndia — Deep Teal EV Charging Prototype</title>
+  <title>MyFuelEV — EV Charging Prototype</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -598,10 +598,10 @@
       pointer-events: none;
     }
     .auth-screen::after {
-      content: ''; position: absolute; z-index: 0; left: -9%; bottom: -62px; width: 118%; height: 112px;
+      content: ''; position: absolute; z-index: 0; left: 0; bottom: -62px; width: 100%; height: 112px;
       border-radius: 50% 50% 0 0 / 42% 42% 0 0;
       background: linear-gradient(100deg, color-mix(in srgb, var(--teal) 12%, transparent), color-mix(in srgb, var(--teal) 48%, transparent));
-      transform: rotate(-2deg); pointer-events: none;
+      pointer-events: none;
     }
     .auth-panel {
       position: relative; z-index: 1; display: flex; flex-direction: column;
@@ -611,20 +611,10 @@
       display: inline-flex; align-items: center; gap: 6px; min-height: 40px;
       align-self: flex-start; margin: 0 0 15px -8px; padding: 0 8px; color: var(--label2); font-size: 14px; font-weight: 700;
     }
-    .auth-brand-mark {
-      display: flex; width: 52px; height: 52px; flex: none; align-items: center; justify-content: center;
-      border-radius: 50% 50% 50% 8px; background: linear-gradient(145deg, color-mix(in srgb, var(--teal) 70%, #21C7AC), var(--teal-dark));
-      color: #FFFFFF; transform: rotate(-8deg);
-    }
-    .auth-brand-mark svg { transform: rotate(8deg); }
     .auth-brand {
       display: flex; align-items: center; justify-content: center; gap: 8px; margin: 32px 0 30px;
     }
-    .auth-brand-name {
-      color: var(--label); font: italic 800 30px/1 'Plus Jakarta Sans', 'Inter', sans-serif;
-      letter-spacing: -.055em;
-    }
-    .auth-brand-name span { color: var(--teal); margin-left: 2px; }
+    .auth-logo { display: block; width: min(100%, 320px); max-height: 108px; object-fit: contain; }
     .auth-heading { margin: 0 0 20px; }
     .auth-kicker {
       display: flex; flex-direction: column; align-items: center; gap: 8px; margin-bottom: 8px;
@@ -674,10 +664,10 @@
       padding: 0 16px; border: 1px solid color-mix(in srgb, var(--teal) 34%, var(--line)); border-radius: 999px;
       background: color-mix(in srgb, var(--surface) 82%, var(--teal-soft)); color: var(--label); font-size: 14px; font-weight: 750;
     }
-    .auth-disclosure { color: var(--label2); font-size: 10.5px; line-height: 1.5; text-align: center; }
+    .auth-disclosure { margin-bottom: 28px; color: var(--label2); font-size: 10.5px; line-height: 1.5; text-align: center; }
     .auth-account-prompt { margin: 24px 0 0; color: var(--label2); font-size: 14px; text-align: center; }
     @media (max-height: 680px) {
-      .auth-screen { padding-top: 12px; padding-bottom: 18px; }
+      .auth-screen { padding-top: max(12px, env(safe-area-inset-top, 0px)); padding-bottom: max(18px, env(safe-area-inset-bottom, 0px)); }
       .auth-back { min-height: 34px; margin-bottom: 8px; }
       .auth-brand { margin: 32px 0 30px; }
       .auth-heading { margin-bottom: 14px; }
@@ -3970,7 +3960,7 @@
         ? 'Sign up to keep your EV and service details together.'
         : mode === 'forgot'
           ? 'Enter your email and we’ll show a mock reset confirmation.'
-          : 'Sign in to continue to your VoltIndia dashboard.';
+          : 'Sign in to continue to your MyFuelEV dashboard.';
       const submitLabel = isSignup ? 'Create account' : mode === 'forgot' ? 'Send reset link' : 'Sign in';
       return `
         <div class="screen auth-screen">
@@ -3978,9 +3968,8 @@
             <button type="button" onclick="${isLogin ? "go('18','pop',{reset:true})" : "openAuthView('login')"}" class="auth-back press">
               ${I('chevL', 'w-4 h-4', 2)}<span>${isLogin ? 'Back' : 'Back to sign in'}</span>
             </button>
-            <div class="auth-brand" aria-label="VoltIndia EV">
-              <span class="auth-brand-mark">${I('bolt', 'w-7 h-7', 2)}</span>
-              <span class="auth-brand-name">VoltIndia<span>EV</span></span>
+            <div class="auth-brand">
+              <img src="assets/myfuelev-logo.png" alt="MyFuelEV" class="auth-logo" width="320" height="107" decoding="async">
             </div>
             <div class="auth-heading">
               <div class="auth-kicker">${isSignup ? 'Sign up' : mode === 'forgot' ? 'Account recovery' : 'Sign in'}</div>
