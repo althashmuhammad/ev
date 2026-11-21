@@ -633,6 +633,7 @@
       background: var(--fill); color: var(--label); font: 500 16px/1.3 Inter, sans-serif;
       transition: border-color .2s ease, box-shadow .2s ease, background .2s ease;
     }
+    .auth-form { display: flex; flex-direction: column; gap: 14px; }
     .auth-input-wrap .auth-input { padding-right: 54px; }
     .auth-input::placeholder { color: color-mix(in srgb, var(--label2) 88%, var(--surface)); opacity: 1; }
     .auth-input:focus { border-color: var(--teal); box-shadow: 0 0 0 3px color-mix(in srgb, var(--teal) 14%, transparent); }
@@ -666,6 +667,34 @@
     }
     .auth-disclosure { margin-bottom: 28px; color: var(--label2); font-size: 10.5px; line-height: 1.5; text-align: center; }
     .auth-account-prompt { margin: 24px 0 0; color: var(--label2); font-size: 14px; text-align: center; }
+    .auth-screen.auth-static {
+      height: 100%; min-height: 0; flex: 0 0 100%; overflow: hidden;
+      padding: max(14px, env(safe-area-inset-top, 0px)) 20px max(14px, env(safe-area-inset-bottom, 0px));
+    }
+    .auth-screen.auth-static .auth-panel {
+      width: min(100%, 430px); height: 100%; min-height: 0; margin: 0 auto; padding: 0 0 12px;
+      justify-content: space-between;
+    }
+    .auth-screen.auth-static .auth-back { min-height: 32px; margin: 0 0 0 -8px; font-size: 12px; }
+    .auth-screen.auth-static .auth-brand { margin: 0; }
+    .auth-screen.auth-static .auth-logo { width: min(100%, 220px); max-height: 82px; }
+    .auth-screen.auth-static .auth-heading { margin: 0; }
+    .auth-screen.auth-static .auth-title { font-size: clamp(23px, 6.5vw, 28px); }
+    .auth-screen.auth-static .auth-description { margin-top: 5px; font-size: 12px; }
+    .auth-screen.auth-static .auth-form { gap: 8px; }
+    .auth-screen.auth-static .auth-field { gap: 4px; font-size: 12px; }
+    .auth-screen.auth-static .auth-label { font-size: 12px; }
+    .auth-screen.auth-static .auth-input { min-height: 42px; padding: 0 14px; font-size: 13px; }
+    .auth-screen.auth-static .auth-input-wrap .auth-input { padding-right: 44px; }
+    .auth-screen.auth-static .auth-eye { right: 6px; width: 32px; height: 32px; }
+    .auth-screen.auth-static .auth-forgot { margin-top: 0; }
+    .auth-screen.auth-static .auth-forgot .auth-link { min-height: 24px; font-size: 11px; }
+    .auth-screen.auth-static .auth-submit { width: 100%; min-height: 48px; margin: 2px 0 0; font-size: 14px; }
+    .auth-screen.auth-static .auth-divider { gap: 8px; margin: 0; font-size: 10px; }
+    .auth-screen.auth-static .auth-divider span { padding: 3px 8px; }
+    .auth-screen.auth-static .auth-guest { width: 100%; min-height: 42px; font-size: 12px; }
+    .auth-screen.auth-static .auth-account-prompt { margin: 0 0 42px; font-size: 11px; }
+    .auth-screen.auth-static .auth-disclosure { margin: 0 0 24px; font-size: 10px; }
     @media (max-height: 680px) {
       .auth-screen { padding-top: max(12px, env(safe-area-inset-top, 0px)); padding-bottom: max(18px, env(safe-area-inset-bottom, 0px)); }
       .auth-back { min-height: 34px; margin-bottom: 8px; }
@@ -675,6 +704,18 @@
       .auth-submit { min-height: 52px; }
       .auth-divider { margin: 14px 4px 12px; }
       .auth-account-prompt { margin-top: 16px; }
+    }
+    @media (max-height: 680px) {
+      .auth-screen.auth-static { padding-top: max(10px, env(safe-area-inset-top, 0px)); padding-bottom: max(10px, env(safe-area-inset-bottom, 0px)); }
+      .auth-screen.auth-static .auth-panel { padding-bottom: 4px; }
+      .auth-screen.auth-static .auth-back { min-height: 26px; }
+      .auth-screen.auth-static .auth-logo { width: min(100%, 180px); max-height: 68px; }
+      .auth-screen.auth-static .auth-title { font-size: 23px; }
+      .auth-screen.auth-static .auth-form { gap: 6px; }
+      .auth-screen.auth-static .auth-input { min-height: 38px; }
+      .auth-screen.auth-static .auth-submit { min-height: 42px; }
+      .auth-screen.auth-static .auth-divider span { padding: 2px 7px; }
+      .auth-screen.auth-static .auth-guest { min-height: 36px; }
     }
     .welcome-visit-button {
       display: flex; align-items: center; justify-content: center; gap: 16px;
@@ -1827,8 +1868,6 @@
       alertCircle: '<circle cx="12" cy="12" r="9"/><path d="M12 8v4M12 16h.01"/>',
       sliders: '<path d="M4 21v-7M4 10V3M12 21v-9M12 8V3M20 21v-5M20 12V3M1 14h6M9 8h6M17 16h6"/>',
       arrowRight: '<path d="M5 12h14M12 5l7 7-7 7"/>',
-      mail: '<rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3.5 7 8.5 6 8.5-6"/>',
-      lock: '<rect x="4" y="10" width="16" height="11" rx="2.2"/><path d="M8 10V7a4 4 0 0 1 8 0v3M12 14v3"/>',
       eye: '<path d="M2.5 12s3.2-6 9.5-6 9.5 6 9.5 6-3.2 6-9.5 6-9.5-6-9.5-6z"/><circle cx="12" cy="12" r="2.5"/>',
       eyeOff: '<path d="M3 3l18 18M10.6 6.2A10.7 10.7 0 0 1 12 6c6.3 0 9.5 6 9.5 6a15 15 0 0 1-3.1 3.8M6.2 6.8C3.8 8.5 2.5 12 2.5 12s3.2 6 9.5 6c1 0 1.9-.2 2.7-.5"/><path d="M9.9 9.9a3 3 0 0 0 4.2 4.2"/>',
       road: '<path d="M4 19L8 5M16 5l4 14M12 8v2M12 14v2"/>'
@@ -3963,7 +4002,7 @@
           : 'Sign in to continue to your MyFuelEV dashboard.';
       const submitLabel = isSignup ? 'Create account' : mode === 'forgot' ? 'Send reset link' : 'Sign in';
       return `
-        <div class="screen auth-screen">
+        <div class="screen auth-screen ${isLogin ? 'auth-static' : ''}">
           <section class="auth-panel" aria-labelledby="auth-title">
             <button type="button" onclick="${isLogin ? "go('18','pop',{reset:true})" : "openAuthView('login')"}" class="auth-back press">
               ${I('chevL', 'w-4 h-4', 2)}<span>${isLogin ? 'Back' : 'Back to sign in'}</span>
@@ -3972,23 +4011,23 @@
               <img src="assets/myfuelev-logo.png" alt="MyFuelEV" class="auth-logo" width="320" height="107" decoding="async">
             </div>
             <div class="auth-heading">
-              <div class="auth-kicker">${isSignup ? 'Sign up' : mode === 'forgot' ? 'Account recovery' : 'Sign in'}</div>
+              ${isLogin ? '' : `<div class="auth-kicker">${isSignup ? 'Sign up' : 'Account recovery'}</div>`}
               <h1 id="auth-title" class="auth-title">${title}</h1>
               <p class="auth-description">${description}</p>
             </div>
             ${state.authNotice ? `<div class="auth-notice mb-4" role="status">${state.authNotice}</div>` : ''}
-            <form class="space-y-3.5" onsubmit="submitAuthMock(event)">
+            <form class="auth-form" onsubmit="submitAuthMock(event)">
               ${isSignup ? `
                 <label class="auth-field" for="auth-name">Full name
                   <input id="auth-name" class="auth-input" name="name" type="text" autocomplete="name" placeholder="Your name" required>
                 </label>` : ''}
               <label class="auth-field" for="auth-email">
-                <span class="auth-label">${I('mail', 'w-5 h-5', 2)}Email address</span>
+                  <span class="auth-label">Email address</span>
                 <input id="auth-email" class="auth-input" name="email" type="email" autocomplete="email" placeholder="you@example.com" required>
               </label>
               ${mode !== 'forgot' ? `
                 <div class="auth-field">
-                  <label class="auth-label" for="auth-password">${I('lock', 'w-5 h-5', 2)}Password</label>
+                    <label class="auth-label" for="auth-password">Password</label>
                   <span class="auth-input-wrap">
                     <input id="auth-password" class="auth-input" name="password" type="password" autocomplete="${isSignup ? 'new-password' : 'current-password'}" placeholder="${isSignup ? 'At least 8 characters' : 'Enter your password'}" ${isSignup ? 'minlength="8"' : ''} required>
                     <button type="button" class="auth-eye press" aria-label="Show password" onclick="toggleAuthPassword(this)">${I('eyeOff', 'w-5 h-5', 2)}</button>
@@ -4006,7 +4045,7 @@
             ` : `
               <p class="auth-account-prompt">Remember your password? <button type="button" class="auth-link press" onclick="openAuthView('login')">Back to sign in</button></p>
             `}
-            <p class="auth-disclosure mt-4">Demo only. Credentials are not sent or saved.</p>
+            ${isLogin ? '' : '<p class="auth-disclosure mt-4">Demo only. Credentials are not sent or saved.</p>'}
           </section>
         </div>`;
     }
