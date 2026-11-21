@@ -4448,6 +4448,14 @@
       toggle.querySelector('.home-shortcut-icon').innerHTML = I(expanded ? 'close' : 'grid', 'w-5 h-5', 2);
       link.setAttribute('aria-expanded', String(expanded));
       link.querySelector('.home-more-link-label').textContent = expanded ? 'Hide services' : 'All services';
+      if (expanded) {
+        window.setTimeout(() => {
+          if (!state.homeMoreExpanded || !document.querySelector('#home-more-services.is-expanded')) return;
+          const viewport = document.getElementById('ios-viewport');
+          if (viewport) viewport.scrollTo({ top: viewport.scrollHeight, behavior: 'smooth' });
+          else console.error('Unable to reveal expanded home services: app viewport is missing.');
+        }, 380);
+      }
     }
 
     // 02 — CHARGE FLOW (Address → Charging setup → Arrival)
