@@ -2777,7 +2777,7 @@
       const live = hasLiveOrder();
       const lowBattery = c.soc <= 25;
       const services = [
-        { l: 'Stations', i: 'chargingStation', fn: "go('04')" },
+        { l: 'EV Charging', i: 'chargingStation', fn: 'openQuickChargeChoiceSheet()' },
         { l: 'Car Wash', i: 'drop', fn: 'startWash()' },
         { l: 'Towing', i: 'truck', fn: "startTow()" },
         { l: state.homeMoreExpanded ? 'Less' : 'More', i: state.homeMoreExpanded ? 'close' : 'grid', color: 'text-teal', fn: 'toggleHomeMoreServices()', toggle: true }

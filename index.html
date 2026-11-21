@@ -588,6 +588,104 @@
       max-width: 620px; margin: clamp(12px, 2vw, 20px) 0 0;
       color: #70777D; font-size: clamp(16px, 3.4vw, 27px); font-weight: 500; line-height: 1.45;
     }
+    .auth-screen {
+      position: relative; isolation: isolate; min-height: 100%; justify-content: flex-start; overflow: visible;
+      padding: max(20px, env(safe-area-inset-top, 0px)) 28px 28px; background: var(--surface);
+    }
+    .auth-screen::before {
+      content: ''; position: absolute; z-index: 0; top: -84px; right: 4%; width: 185px; height: 190px;
+      border-radius: 0 0 0 100%; background: linear-gradient(145deg, transparent 7%, color-mix(in srgb, var(--teal) 38%, transparent) 80%);
+      pointer-events: none;
+    }
+    .auth-screen::after {
+      content: ''; position: absolute; z-index: 0; left: -9%; bottom: -62px; width: 118%; height: 112px;
+      border-radius: 50% 50% 0 0 / 42% 42% 0 0;
+      background: linear-gradient(100deg, color-mix(in srgb, var(--teal) 12%, transparent), color-mix(in srgb, var(--teal) 48%, transparent));
+      transform: rotate(-2deg); pointer-events: none;
+    }
+    .auth-panel {
+      position: relative; z-index: 1; display: flex; flex-direction: column;
+      width: min(100%, 430px); margin: 0 auto 0 0; padding: 0 0 18px;
+    }
+    .auth-back {
+      display: inline-flex; align-items: center; gap: 6px; min-height: 40px;
+      align-self: flex-start; margin: 0 0 15px -8px; padding: 0 8px; color: var(--label2); font-size: 14px; font-weight: 700;
+    }
+    .auth-brand-mark {
+      display: flex; width: 52px; height: 52px; flex: none; align-items: center; justify-content: center;
+      border-radius: 50% 50% 50% 8px; background: linear-gradient(145deg, color-mix(in srgb, var(--teal) 70%, #21C7AC), var(--teal-dark));
+      color: #FFFFFF; transform: rotate(-8deg);
+    }
+    .auth-brand-mark svg { transform: rotate(8deg); }
+    .auth-brand {
+      display: flex; align-items: center; justify-content: center; gap: 8px; margin: 32px 0 30px;
+    }
+    .auth-brand-name {
+      color: var(--label); font: italic 800 30px/1 'Plus Jakarta Sans', 'Inter', sans-serif;
+      letter-spacing: -.055em;
+    }
+    .auth-brand-name span { color: var(--teal); margin-left: 2px; }
+    .auth-heading { margin: 0 0 20px; }
+    .auth-kicker {
+      display: flex; flex-direction: column; align-items: center; gap: 8px; margin-bottom: 8px;
+      color: var(--teal); font-size: 13px; font-weight: 800; letter-spacing: .3em; text-transform: uppercase;
+    }
+    .auth-kicker::after { content: ''; width: 44px; height: 2px; border-radius: 99px; background: var(--teal); }
+    .auth-title { margin: 0; color: var(--label); font: 800 clamp(27px, 7vw, 36px)/1.16 'Plus Jakarta Sans', 'Inter', sans-serif; letter-spacing: -.045em; }
+    .auth-description { margin: 8px 0 0; color: var(--label2); font-size: 14px; line-height: 1.45; }
+    .auth-field { display: flex; flex-direction: column; gap: 9px; color: var(--label); font-size: 14px; font-weight: 700; }
+    .auth-label { display: flex; align-items: center; gap: 10px; color: var(--label); font-size: 15px; font-weight: 700; }
+    .auth-label svg { width: 20px; height: 20px; flex: none; }
+    .auth-input-wrap { position: relative; }
+    .auth-input {
+      width: 100%; min-height: 54px; padding: 0 20px;
+      border: 1px solid color-mix(in srgb, var(--label) 11%, transparent); border-radius: 999px; outline: none;
+      background: var(--fill); color: var(--label); font: 500 16px/1.3 Inter, sans-serif;
+      transition: border-color .2s ease, box-shadow .2s ease, background .2s ease;
+    }
+    .auth-input-wrap .auth-input { padding-right: 54px; }
+    .auth-input::placeholder { color: color-mix(in srgb, var(--label2) 88%, var(--surface)); opacity: 1; }
+    .auth-input:focus { border-color: var(--teal); box-shadow: 0 0 0 3px color-mix(in srgb, var(--teal) 14%, transparent); }
+    .auth-eye {
+      position: absolute; top: 50%; right: 10px; display: flex; width: 38px; height: 38px; align-items: center; justify-content: center;
+      border-radius: 50%; color: var(--label2); transform: translateY(-50%);
+    }
+    .auth-link { color: var(--teal); font-size: 14px; font-weight: 750; }
+    .auth-forgot { display: flex; justify-content: flex-end; margin-top: 2px; }
+    .auth-notice {
+      padding: 10px 12px; border: 1px solid color-mix(in srgb, var(--teal) 20%, var(--line));
+      border-radius: 13px; background: color-mix(in srgb, var(--teal-soft) 82%, var(--surface));
+      color: var(--label); font-size: 11px; line-height: 1.45;
+    }
+    .auth-submit {
+      display: flex; width: min(252px, 100%); min-height: 60px; align-items: center; justify-content: center; gap: 12px;
+      margin: 8px auto 0; border-radius: 999px;
+      background: linear-gradient(110deg, color-mix(in srgb, var(--teal) 74%, #20C5AB), var(--teal-dark));
+      color: #FFFFFF; font-size: 17px; font-weight: 800; box-shadow: 0 13px 25px color-mix(in srgb, var(--teal) 20%, transparent);
+    }
+    .auth-divider {
+      display: flex; align-items: center; gap: 11px; margin: 20px 4px 17px; color: var(--label2);
+      font-size: 12px; font-weight: 700;
+    }
+    .auth-divider::before, .auth-divider::after { content: ''; height: 1px; flex: 1; background: var(--line); }
+    .auth-divider span { padding: 5px 11px; border-radius: 99px; background: var(--fill); }
+    .auth-guest {
+      display: flex; min-height: 44px; align-items: center; justify-content: center; gap: 10px; align-self: center;
+      padding: 0 16px; border: 1px solid color-mix(in srgb, var(--teal) 34%, var(--line)); border-radius: 999px;
+      background: color-mix(in srgb, var(--surface) 82%, var(--teal-soft)); color: var(--label); font-size: 14px; font-weight: 750;
+    }
+    .auth-disclosure { color: var(--label2); font-size: 10.5px; line-height: 1.5; text-align: center; }
+    .auth-account-prompt { margin: 24px 0 0; color: var(--label2); font-size: 14px; text-align: center; }
+    @media (max-height: 680px) {
+      .auth-screen { padding-top: 12px; padding-bottom: 18px; }
+      .auth-back { min-height: 34px; margin-bottom: 8px; }
+      .auth-brand { margin: 32px 0 30px; }
+      .auth-heading { margin-bottom: 14px; }
+      .auth-input { min-height: 48px; }
+      .auth-submit { min-height: 52px; }
+      .auth-divider { margin: 14px 4px 12px; }
+      .auth-account-prompt { margin-top: 16px; }
+    }
     .welcome-visit-button {
       display: flex; align-items: center; justify-content: center; gap: 16px;
       width: 100%; min-height: clamp(58px, 11.5vw, 88px); margin-top: clamp(36px, 4.5vh, 64px);
@@ -1739,6 +1837,10 @@
       alertCircle: '<circle cx="12" cy="12" r="9"/><path d="M12 8v4M12 16h.01"/>',
       sliders: '<path d="M4 21v-7M4 10V3M12 21v-9M12 8V3M20 21v-5M20 12V3M1 14h6M9 8h6M17 16h6"/>',
       arrowRight: '<path d="M5 12h14M12 5l7 7-7 7"/>',
+      mail: '<rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3.5 7 8.5 6 8.5-6"/>',
+      lock: '<rect x="4" y="10" width="16" height="11" rx="2.2"/><path d="M8 10V7a4 4 0 0 1 8 0v3M12 14v3"/>',
+      eye: '<path d="M2.5 12s3.2-6 9.5-6 9.5 6 9.5 6-3.2 6-9.5 6-9.5-6-9.5-6z"/><circle cx="12" cy="12" r="2.5"/>',
+      eyeOff: '<path d="M3 3l18 18M10.6 6.2A10.7 10.7 0 0 1 12 6c6.3 0 9.5 6 9.5 6a15 15 0 0 1-3.1 3.8M6.2 6.8C3.8 8.5 2.5 12 2.5 12s3.2 6 9.5 6c1 0 1.9-.2 2.7-.5"/><path d="M9.9 9.9a3 3 0 0 0 4.2 4.2"/>',
       road: '<path d="M4 19L8 5M16 5l4 14M12 8v2M12 14v2"/>'
     };
     const I = (n, cls = 'w-5 h-5', sw = 'var(--icon-stroke)') =>
@@ -1843,6 +1945,8 @@
     const state = {
       screen: '18',
       entryMode: null,
+      authView: 'login',
+      authNotice: '',
       demoBatteryAlertAnimating: false,
       homeMoreExpanded: false,
       navDirection: 'tab',
@@ -1993,7 +2097,8 @@
       { id: '17', shortTitle: 'Order Confirmation', tag: 'Shop', tabBar: false, t: '17 Order Confirmation — Demo Checkout', d: 'Confirmation for a local demo order; no payment or delivery request is sent.' },
       { id: '18', shortTitle: 'Welcome', tag: 'Entry', tabBar: false, t: '18 Welcome — Customer Test or Demo Visit', d: 'Choose guest vehicle setup for customer testing or enter the existing prototype as a demo visitor.' },
       { id: '19', shortTitle: 'Test Vehicle', tag: 'Entry', tabBar: false, t: '19 Guest Test Vehicle — Tata Nexon EV', d: 'Confirm the Tata Nexon EV for the local guest test.' },
-      { id: '20', shortTitle: 'Test Location', tag: 'Entry', tabBar: false, t: '20 Guest Test Location — Kochi', d: 'Choose the illustrative Kochi test area before entering the customer flow.' }
+      { id: '20', shortTitle: 'Test Location', tag: 'Entry', tabBar: false, t: '20 Guest Test Location — Kochi', d: 'Choose the illustrative Kochi test area before entering the customer flow.' },
+      { id: '21', shortTitle: 'Sign In', tag: 'Entry', tabBar: false, t: '21 Sign In — Mock Account Entry', d: 'Prototype sign-in, sign-up, and password reset forms; no credentials are sent or saved.' }
     ];
     const car = () => state.cars[state.carIdx];
     const hub = () => HUBS[state.hubIdx];
@@ -2066,7 +2171,7 @@
 
     const SCREEN_DEPTH = {
       '01': 0, '08': 0, '09': 0, '11': 0, '18': 0,
-      '02': 1, '04': 1, '06': 1, '07': 1, '10': 1, '12': 1, '13': 1, '14': 1, '19': 1, '20': 1,
+      '02': 1, '04': 1, '06': 1, '07': 1, '10': 1, '12': 1, '13': 1, '14': 1, '19': 1, '20': 1, '21': 1,
       '03': 2, '05': 2, '15': 2, '16': 3, '17': 4
     };
 
@@ -2649,9 +2754,41 @@
       go('19');
     }
     function visitDemo() {
-      state.entryMode = 'demo';
-      go('01', 'tab', { reset: true });
+      state.authView = 'login';
+      state.authNotice = '';
+      go('21', 'push', { reset: true });
       if (!isImmersiveMode) toggleImmersive();
+    }
+    function enterDemo() {
+      state.entryMode = 'demo';
+      state.authNotice = '';
+      go('01', 'tab', { reset: true });
+    }
+    function openAuthView(view) {
+      if (!['login', 'signup', 'forgot'].includes(view)) throw new RangeError(`Unknown mock auth view: ${view}`);
+      state.authView = view;
+      state.authNotice = '';
+      render(true);
+    }
+    function toggleAuthPassword(button) {
+      const input = document.getElementById('auth-password');
+      if (!input) return;
+      const show = input.type === 'password';
+      input.type = show ? 'text' : 'password';
+      button.setAttribute('aria-label', show ? 'Hide password' : 'Show password');
+      button.innerHTML = I(show ? 'eye' : 'eyeOff', 'w-5 h-5', 2);
+    }
+    function submitAuthMock(event) {
+      event.preventDefault();
+      if (state.authView === 'login') {
+        enterDemo();
+        return;
+      }
+      state.authNotice = state.authView === 'signup'
+        ? 'This is a demo sign-up. No account is created and no details are saved.'
+        : 'This is a demo reset. No email will be sent.';
+      state.authView = 'login';
+      render(true);
     }
     function continueCustomerTestWithVehicle() {
       state.cars = [{
@@ -3767,11 +3904,11 @@
             <h1 class="welcome-title">Welcome to a simpler EV day.</h1>
             <p class="welcome-copy">Explore charging stations, EV services, and roadside support.</p>
             <button onclick="visitDemo()" aria-describedby="welcome-demo-disclosure" class="welcome-visit-button press">
-              ${I('grid', 'w-6 h-6', 1.8)}<span>Visit demo</span>
+              ${I('arrowRight', 'w-6 h-6', 1.8)}<span>Get started</span>
             </button>
           </div>
 
-          <p id="welcome-demo-disclosure" class="sr-only">Demo only: sample data is used. No payment or service request is sent.</p>
+          <p id="welcome-demo-disclosure" class="sr-only">Continue to the mock sign-in screen. No account details are required or sent.</p>
         </div>
       `;
     }
@@ -3821,6 +3958,67 @@
               <button onclick="continueCustomerTestWithLocation()" class="btn w-full min-h-[50px]">${I('arrowRight', 'w-4 h-4', 2.2)} Continue with Kochi test location</button>
             </div>
           </div>
+        </div>`;
+    }
+
+    function screen21() {
+      const mode = ['signup', 'forgot'].includes(state.authView) ? state.authView : 'login';
+      const isLogin = mode === 'login';
+      const isSignup = mode === 'signup';
+      const title = isSignup ? 'Create your account' : mode === 'forgot' ? 'Reset your password' : 'Welcome back';
+      const description = isSignup
+        ? 'Sign up to keep your EV and service details together.'
+        : mode === 'forgot'
+          ? 'Enter your email and we’ll show a mock reset confirmation.'
+          : 'Sign in to continue to your VoltIndia dashboard.';
+      const submitLabel = isSignup ? 'Create account' : mode === 'forgot' ? 'Send reset link' : 'Sign in';
+      return `
+        <div class="screen auth-screen">
+          <section class="auth-panel" aria-labelledby="auth-title">
+            <button type="button" onclick="${isLogin ? "go('18','pop',{reset:true})" : "openAuthView('login')"}" class="auth-back press">
+              ${I('chevL', 'w-4 h-4', 2)}<span>${isLogin ? 'Back' : 'Back to sign in'}</span>
+            </button>
+            <div class="auth-brand" aria-label="VoltIndia EV">
+              <span class="auth-brand-mark">${I('bolt', 'w-7 h-7', 2)}</span>
+              <span class="auth-brand-name">VoltIndia<span>EV</span></span>
+            </div>
+            <div class="auth-heading">
+              <div class="auth-kicker">${isSignup ? 'Sign up' : mode === 'forgot' ? 'Account recovery' : 'Sign in'}</div>
+              <h1 id="auth-title" class="auth-title">${title}</h1>
+              <p class="auth-description">${description}</p>
+            </div>
+            ${state.authNotice ? `<div class="auth-notice mb-4" role="status">${state.authNotice}</div>` : ''}
+            <form class="space-y-3.5" onsubmit="submitAuthMock(event)">
+              ${isSignup ? `
+                <label class="auth-field" for="auth-name">Full name
+                  <input id="auth-name" class="auth-input" name="name" type="text" autocomplete="name" placeholder="Your name" required>
+                </label>` : ''}
+              <label class="auth-field" for="auth-email">
+                <span class="auth-label">${I('mail', 'w-5 h-5', 2)}Email address</span>
+                <input id="auth-email" class="auth-input" name="email" type="email" autocomplete="email" placeholder="you@example.com" required>
+              </label>
+              ${mode !== 'forgot' ? `
+                <div class="auth-field">
+                  <label class="auth-label" for="auth-password">${I('lock', 'w-5 h-5', 2)}Password</label>
+                  <span class="auth-input-wrap">
+                    <input id="auth-password" class="auth-input" name="password" type="password" autocomplete="${isSignup ? 'new-password' : 'current-password'}" placeholder="${isSignup ? 'At least 8 characters' : 'Enter your password'}" ${isSignup ? 'minlength="8"' : ''} required>
+                    <button type="button" class="auth-eye press" aria-label="Show password" onclick="toggleAuthPassword(this)">${I('eyeOff', 'w-5 h-5', 2)}</button>
+                  </span>
+                </div>` : ''}
+              ${isLogin ? `<div class="auth-forgot"><button type="button" class="auth-link press min-h-[36px]" onclick="openAuthView('forgot')">Forgot password?</button></div>` : ''}
+              <button type="submit" class="auth-submit press">${submitLabel}${I('arrowRight', 'w-5 h-5', 2)}</button>
+            </form>
+            ${isLogin ? `
+              <div class="auth-divider"><span>or</span></div>
+              <button type="button" onclick="enterDemo()" class="auth-guest press">${I('user', 'w-5 h-5', 2)}Continue as Guest</button>
+              <p class="auth-account-prompt">Don’t have an account? <button type="button" class="auth-link press" onclick="openAuthView('signup')">Sign up</button></p>
+            ` : isSignup ? `
+              <p class="auth-account-prompt">Already have an account? <button type="button" class="auth-link press" onclick="openAuthView('login')">Sign in</button></p>
+            ` : `
+              <p class="auth-account-prompt">Remember your password? <button type="button" class="auth-link press" onclick="openAuthView('login')">Back to sign in</button></p>
+            `}
+            <p class="auth-disclosure mt-4">Demo only. Credentials are not sent or saved.</p>
+          </section>
         </div>`;
     }
 
@@ -4285,7 +4483,7 @@
       const emergencyBattery = hasBatteryEstimate && c.soc <= 15;
       const batteryFillWidth = hasBatteryEstimate ? ((14 * c.soc) / 100).toFixed(2) : '0';
       const services = [
-        { l: 'Stations', i: 'chargingStation', fn: "go('04')" },
+        { l: 'EV Charging', i: 'chargingStation', fn: 'openQuickChargeChoiceSheet()' },
         { l: 'Car Wash', i: 'drop', fn: customerTest ? "showCustomerUnavailable('Car wash')" : 'startWash()' },
         { l: 'Towing', i: 'truck', fn: customerTest ? "showCustomerUnavailable('Towing')" : 'startTow()' },
         { l: state.homeMoreExpanded ? 'Less' : 'More', i: state.homeMoreExpanded ? 'close' : 'grid', color: 'text-teal', fn: 'toggleHomeMoreServices()', toggle: true }
@@ -4333,7 +4531,7 @@
           </div>
 
           <div class="home-status-row">
-            <button id="home-battery-button" onclick="go('09')" aria-label="${emergencyBattery ? `Emergency: charge your vehicle now. Battery ${c.soc} percent, estimated ${estRangeKm} kilometres range` : hasBatteryEstimate ? `Battery ${c.soc} percent, estimated ${estRangeKm} kilometres range` : 'Battery and range are not connected'}" class="home-battery-button backdrop-blur-sm shadow-sm border rounded-full py-1.5 px-3.5 inline-flex items-center gap-2 press">
+            <button id="home-battery-button" onclick="${emergencyBattery ? "startCharge('Emergency')" : "go('09')"}" aria-label="${emergencyBattery ? `Emergency: charge your vehicle now. Battery ${c.soc} percent, estimated ${estRangeKm} kilometres range` : hasBatteryEstimate ? `Battery ${c.soc} percent, estimated ${estRangeKm} kilometres range` : 'Battery and range are not connected'}" class="home-battery-button backdrop-blur-sm shadow-sm border rounded-full py-1.5 px-3.5 inline-flex items-center gap-2 press">
               <svg class="w-5 h-3.5 ${lowBattery ? 'home-battery-low' : 'home-battery-normal'}" viewBox="0 0 24 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <rect x="1" y="1" width="18" height="14" rx="3"/>
                 <line x1="21" y1="5.5" x2="21" y2="10.5"/>
@@ -4401,7 +4599,7 @@
             </button>
           ` : ''}
 
-          <button onclick="openQuickChargeChoiceSheet()" aria-live="polite" aria-label="${emergencyBattery ? `Emergency: charge your vehicle now. Battery ${c.soc} percent, estimated ${estRangeKm} kilometres range` : hasBatteryEstimate ? `Charge my EV, ${lowBattery ? 'low battery' : `battery at ${c.soc} percent`}, about ${estRangeKm} kilometres estimated range` : 'Charge my EV; battery and range data are not connected'}" class="home-service-card card-feature card-interactive press ${emergencyBattery ? 'home-service-card--emergency' : ''} ${emergencyBattery && state.demoBatteryAlertAnimating ? 'home-emergency-arrival' : ''}">
+          <button onclick="${emergencyBattery ? "startCharge('Emergency')" : 'openQuickChargeChoiceSheet()'}" aria-live="polite" aria-label="${emergencyBattery ? `Emergency: charge your vehicle now. Battery ${c.soc} percent, estimated ${estRangeKm} kilometres range` : hasBatteryEstimate ? `Charge my EV, ${lowBattery ? 'low battery' : `battery at ${c.soc} percent`}, about ${estRangeKm} kilometres estimated range` : 'Charge my EV; battery and range data are not connected'}" class="home-service-card card-feature card-interactive press ${emergencyBattery ? 'home-service-card--emergency' : ''} ${emergencyBattery && state.demoBatteryAlertAnimating ? 'home-emergency-arrival' : ''}">
             <span class="home-service-content">
               <span class="home-service-icon icon-container icon-container--liquid" aria-hidden="true">
                 <svg class="w-6 h-6 fill-white" viewBox="0 0 24 24"><path d="M13 2L4 14h7l-1 8 9-12h-7l1-8z"/></svg>
@@ -6502,7 +6700,7 @@ function screen02() {
       '05': screen05, '06': screen06, '07': screen07, '08': screen08,
       '09': screen09, '10': screen10, '11': screen11, '12': screen12,
       '13': screen13, '14': screen14, '15': screen15, '16': screen16,
-      '17': screen17, '18': screen18, '19': screen19, '20': screen20
+      '17': screen17, '18': screen18, '19': screen19, '20': screen20, '21': screen21
     };
 
     function render(animate) {
