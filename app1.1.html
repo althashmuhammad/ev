@@ -1267,6 +1267,7 @@
     const state = {
       screen: '01',
       navDirection: 'tab',
+      homeMoreExpanded: false,
       theme: document.documentElement.getAttribute('data-theme') || 'light',
       tabLabel: 'Home',
       activityTab: 'Recent',
@@ -2660,7 +2661,14 @@
         { l: 'Stations', i: 'chargingStation', fn: "go('04')" },
         { l: 'Car Wash', i: 'drop', fn: 'startWash()' },
         { l: 'Towing', i: 'truck', fn: "startTow()" },
-        { l: 'More', i: 'grid', color: 'text-teal', fn: "openMoreServicesSheet()" }
+        { l: state.homeMoreExpanded ? 'Less' : 'More', i: state.homeMoreExpanded ? 'close' : 'grid', color: 'text-teal', fn: 'toggleHomeMoreServices()', toggle: true }
+      ];
+      const moreServices = [
+        { l: 'Emergency EV', a: 'Emergency Mobile EV', i: 'bolt', fn: "startCharge('Emergency')" },
+        { l: 'Fuel & Gas', a: 'Mobile Fuel and Gas Station', i: 'fuel', fn: 'startFuel()' },
+        { l: 'Jump Start', a: '12V Jump Start', i: 'battery12v', fn: "go('06')" },
+        { l: 'Accessories', a: 'Car Accessories and Interior', i: 'car', fn: "openShop('accessories')" },
+        { l: 'Car Care', a: 'Car Care and Interior Spa', i: 'sparkle', fn: "openShop('cleaning')" }
       ];
       return `
       <div class="screen map relative overflow-hidden justify-between">
@@ -2737,7 +2745,7 @@
 
           <div class="flex items-center justify-between mb-2.5 px-0.5">
             <h2 class="font-display text-[17px] font-bold tracking-tight text-label">What does your EV need?</h2>
-            <button onclick="openMoreServicesSheet()" class="text-[12px] font-bold text-teal min-h-[32px] px-1">All services</button>
+            <button onclick="toggleHomeMoreServices()" aria-expanded="${state.homeMoreExpanded}" aria-controls="home-more-services" class="text-[12px] font-bold text-teal min-h-[32px] px-1">${state.homeMoreExpanded ? 'Hide services' : 'All services'}</button>
           </div>
 
           ${state.reservation ? `
@@ -2782,15 +2790,28 @@
           <!-- Compact 4-Item Secondary Services Row -->
           <div class="grid grid-cols-4 gap-2">
             ${services.map(s => `
-              <button onclick="${s.fn}" class="card press py-2.5 px-1.5 flex flex-col items-center text-center">
+              <button onclick="${s.fn}" ${s.toggle ? `aria-label="${state.homeMoreExpanded ? 'Show fewer services' : 'Show more services'}" aria-expanded="${state.homeMoreExpanded}" aria-controls="home-more-services"` : `aria-label="${s.l}"`} class="card press py-2.5 px-1.5 flex flex-col items-center text-center">
                 <span class="w-10 h-10 flex items-center justify-center mb-1">
                   ${s.svg ? s.svg : I(s.i, `w-6 h-6 ${s.color}`, 1.9)}
                 </span>
                 <span class="text-[11px] font-semibold text-label leading-tight">${s.l}</span>
               </button>`).join('')}
           </div>
+          ${state.homeMoreExpanded ? `
+          <div id="home-more-services" class="grid grid-cols-4 gap-2 mt-2" aria-label="More services">
+            ${moreServices.map(s => `
+              <button onclick="${s.fn}" aria-label="${s.a}" class="card press py-2.5 px-1.5 flex flex-col items-center text-center">
+                <span class="w-10 h-10 flex items-center justify-center mb-1">${I(s.i, 'w-6 h-6', 1.9)}</span>
+                <span class="text-[11px] font-semibold text-label leading-tight">${s.l}</span>
+              </button>`).join('')}
+          </div>` : ''}
         </div>
       </div>`;
+    }
+
+    function toggleHomeMoreServices() {
+      state.homeMoreExpanded = !state.homeMoreExpanded;
+      render();
     }
 
     // 02 — 3-STEP CHARGE FLOW (Now / Schedule / Weekly)

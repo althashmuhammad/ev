@@ -789,6 +789,7 @@
       border: 1px solid rgba(0, 92, 104, .08); box-shadow: 0 2px 6px rgba(0, 70, 76, .08);
     }
     .home-shortcuts { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; }
+    .home-service-sheet .home-more-shortcuts { margin-top: 8px; }
     .home-shortcut {
       min-width: 0; min-height: 86px; padding: 8px 3px 7px;
       display: flex; flex-direction: column; align-items: center; justify-content: space-between;
@@ -1701,6 +1702,7 @@
       screen: '18',
       entryMode: null,
       demoBatteryAlertAnimating: false,
+      homeMoreExpanded: false,
       navDirection: 'tab',
       theme: document.documentElement.getAttribute('data-theme') || 'light',
       customTheme: loadCustomTheme(),
@@ -4148,7 +4150,17 @@
         { l: 'Stations', i: 'chargingStation', fn: "go('04')" },
         { l: 'Car Wash', i: 'drop', fn: customerTest ? "showCustomerUnavailable('Car wash')" : 'startWash()' },
         { l: 'Towing', i: 'truck', fn: customerTest ? "showCustomerUnavailable('Towing')" : 'startTow()' },
-        { l: 'More', i: 'grid', color: 'text-teal', fn: "go('14')" }
+        { l: state.homeMoreExpanded ? 'Less' : 'More', i: state.homeMoreExpanded ? 'close' : 'grid', color: 'text-teal', fn: 'toggleHomeMoreServices()', toggle: true }
+      ];
+      const moreServices = [
+        { l: 'Emergency EV', a: 'Emergency Mobile EV', i: 'bolt', fn: "startCharge('Emergency')" },
+        { l: 'Fuel & Gas', a: 'Mobile Fuel and Gas Station', i: 'fuel', fn: customerTest ? "showCustomerUnavailable('Fuel & Gas')" : 'startFuel()' },
+        { l: 'Jump Start', a: '12V Jump Start', i: 'battery12v', fn: customerTest ? "showCustomerUnavailable('Jump start')" : "go('06')" },
+        { l: 'Breakdown', a: 'Roadside Breakdown Assistance', i: 'truck', fn: customerTest ? "showCustomerUnavailable('Breakdown assistance')" : 'startTow()' },
+        ...(!customerTest ? [
+          { l: 'Accessories', a: 'Car Accessories and Interior', i: 'car', fn: "openShop('accessories')" },
+          { l: 'Car Care', a: 'Car Care and Interior Spa', i: 'sparkle', fn: "openShop('cleaning')" }
+        ] : [])
       ];
       return `
       <div class="screen home-screen relative overflow-hidden ${customerTest ? 'home-customer-test' : ''}">
@@ -4222,7 +4234,7 @@
 
           <div class="flex items-center justify-between mb-2 px-0.5">
             <h2 class="font-display text-[17px] font-bold tracking-tight text-label">What does your EV need?</h2>
-            <button onclick="go('14')" class="text-[12px] font-bold text-teal min-h-[44px] px-1 inline-flex items-center gap-0.5">All services ${I('chevR', 'w-3.5 h-3.5', 2)}</button>
+            <button onclick="toggleHomeMoreServices()" aria-expanded="${state.homeMoreExpanded}" aria-controls="home-more-services" class="text-[12px] font-bold text-teal min-h-[44px] px-1 inline-flex items-center gap-0.5">${state.homeMoreExpanded ? 'Hide services' : 'All services'} ${I('chevR', 'w-3.5 h-3.5', 2)}</button>
           </div>
 
           ${state.reservation ? `
@@ -4269,15 +4281,28 @@
           <!-- Compact 4-Item Secondary Services Row with 3D Icons -->
           <div class="home-shortcuts">
             ${services.map(s => `
-              <button onclick="${s.fn}" aria-label="${s.l}" class="home-shortcut card-interactive press">
+              <button onclick="${s.fn}" aria-label="${s.toggle ? (state.homeMoreExpanded ? 'Show fewer services' : 'Show more services') : s.l}" ${s.toggle ? `aria-expanded="${state.homeMoreExpanded}" aria-controls="home-more-services"` : ''} class="home-shortcut card-interactive press">
                 <span class="home-shortcut-icon icon-container ${s.image ? 'home-shortcut-icon--image' : ''}">
                   ${s.image ? `<img src="${s.image}" alt="" aria-hidden="true" class="home-shortcut-image">` : s.svg ? s.svg : I(s.i, 'w-5 h-5', 2)}
                 </span>
                 <span class="home-shortcut-label">${s.l}</span>
               </button>`).join('')}
           </div>
+          ${state.homeMoreExpanded ? `
+          <div id="home-more-services" class="home-shortcuts home-more-shortcuts" aria-label="More services">
+            ${moreServices.map(s => `
+              <button onclick="${s.fn}" aria-label="${s.a}" class="home-shortcut card-interactive press">
+                <span class="home-shortcut-icon">${I(s.i, 'w-5 h-5', 2)}</span>
+                <span class="home-shortcut-label">${s.l}</span>
+              </button>`).join('')}
+          </div>` : ''}
         </div>
       </div>`;
+    }
+
+    function toggleHomeMoreServices() {
+      state.homeMoreExpanded = !state.homeMoreExpanded;
+      render();
     }
 
     // 02 — CHARGE FLOW (Address → Charging setup → Arrival)
