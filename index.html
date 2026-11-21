@@ -485,13 +485,15 @@
       z-index: 60;
     }
     .charge-address-dock-card {
-      background: #FFFFFF;
-      backdrop-filter: none;
-      -webkit-backdrop-filter: none;
-      color: #15272A;
+      background: color-mix(in srgb, var(--surface) 72%, transparent);
+      border-color: color-mix(in srgb, var(--surface) 72%, white);
+      backdrop-filter: blur(22px) saturate(160%);
+      -webkit-backdrop-filter: blur(22px) saturate(160%);
+      box-shadow: 0 12px 30px rgba(0, 60, 68, .16), inset 0 1px 0 rgba(255,255,255,.75);
+      color: var(--label);
     }
-    .charge-address-dock-card .text-label { color: #15272A !important; }
-    .charge-address-dock-card .text-label2 { color: #526569 !important; }
+    .charge-address-dock-card .text-label { color: var(--label) !important; }
+    .charge-address-dock-card .text-label2 { color: var(--label2) !important; }
     body.is-fullscreen .charge-address-dock {
       position: fixed;
       bottom: max(24px, calc(env(safe-area-inset-bottom, 0px) + 16px));
@@ -838,7 +840,9 @@
     .flow-step-label-short { display: none; }
     .flow-step-item[aria-current="step"] .flow-step-number,
     .flow-step-item[data-complete="true"] .flow-step-number {
-      background: var(--teal); color: var(--invtext);
+      background: linear-gradient(145deg, var(--teal), var(--teal-dark));
+      color: var(--invtext);
+      box-shadow: 0 6px 16px color-mix(in srgb, var(--teal) 26%, transparent), inset 0 1px 0 rgba(255,255,255,.25);
     }
     .flow-step-item[aria-current="step"] .flow-step-label,
     .flow-step-item[data-complete="true"] .flow-step-label { color: var(--teal); }
@@ -852,12 +856,75 @@
     .service-flow-header { min-height: 48px; }
     .service-flow-back {
       min-height: 44px; padding: 0 16px 0 12px; border: 1px solid var(--line); border-radius: 999px;
-      background: color-mix(in srgb, var(--surface) 92%, transparent); box-shadow: var(--shadow);
+      background: color-mix(in srgb, var(--surface) 72%, transparent);
+      border-color: color-mix(in srgb, var(--surface) 72%, white);
+      -webkit-backdrop-filter: blur(18px) saturate(155%); backdrop-filter: blur(18px) saturate(155%);
+      box-shadow: 0 8px 22px rgba(0, 60, 68, .11), inset 0 1px 0 rgba(255,255,255,.75);
+      transition: transform 180ms ease, box-shadow 180ms ease;
+    }
+    .service-flow-filter {
+      width: 48px; height: 48px; border: 1px solid color-mix(in srgb, var(--surface) 72%, white);
+      border-radius: 50%; background: color-mix(in srgb, var(--surface) 68%, transparent);
+      -webkit-backdrop-filter: blur(18px) saturate(155%); backdrop-filter: blur(18px) saturate(155%);
+      box-shadow: 0 8px 22px rgba(0, 60, 68, .11), inset 0 1px 0 rgba(255,255,255,.75);
       transition: transform 180ms ease, box-shadow 180ms ease;
     }
     .service-flow-back:active { transform: scale(.98); }
+    .service-flow-filter:active { transform: scale(.96); }
     .service-flow-main > .flow-stepper { margin: 6px 0 10px; }
     .service-flow-body { display: flex; flex-direction: column; gap: 12px; }
+    .service-flow-body .card,
+    .service-flow-location-card {
+      border-color: color-mix(in srgb, var(--surface) 72%, white);
+      background: color-mix(in srgb, var(--surface) 72%, transparent);
+      -webkit-backdrop-filter: blur(20px) saturate(155%); backdrop-filter: blur(20px) saturate(155%);
+      box-shadow: 0 10px 24px rgba(0, 60, 68, .08), inset 0 1px 0 rgba(255,255,255,.55);
+    }
+    .service-flow-gps {
+      border-color: color-mix(in srgb, var(--teal) 13%, white) !important;
+      background: color-mix(in srgb, var(--teal-soft) 72%, transparent) !important;
+      -webkit-backdrop-filter: blur(16px) saturate(150%); backdrop-filter: blur(16px) saturate(150%);
+      box-shadow: 0 5px 14px rgba(0, 92, 104, .1), inset 0 1px 0 rgba(255,255,255,.8);
+    }
+    .service-flow-parking-option {
+      position: relative; gap: 4px !important; padding-left: 6px !important; padding-right: 6px !important;
+      border: 1px solid color-mix(in srgb, var(--surface) 68%, white);
+      background: color-mix(in srgb, var(--surface) 66%, transparent);
+      -webkit-backdrop-filter: blur(14px) saturate(145%); backdrop-filter: blur(14px) saturate(145%);
+      box-shadow: 0 4px 12px rgba(0, 60, 68, .06), inset 0 1px 0 rgba(255,255,255,.65);
+      transition: background 180ms ease, border-color 180ms ease, box-shadow 180ms ease, transform 180ms ease;
+    }
+    .service-flow-parking-option { font-size: 10px !important; white-space: nowrap; }
+    .service-flow-parking-option.is-selected { padding-right: 18px !important; }
+    .service-flow-parking-option > svg { width: 13px; height: 13px; flex-shrink: 0; }
+    .service-flow-parking-option > .w-4 {
+      position: absolute; right: 4px; width: 14px; height: 14px; margin: 0 !important;
+    }
+    .service-flow-parking-option:active { transform: scale(.98); }
+    .service-flow-parking-option.is-selected {
+      color: var(--invtext);
+      border-color: color-mix(in srgb, var(--teal) 75%, white);
+      background: linear-gradient(145deg, color-mix(in srgb, var(--teal) 90%, white), var(--teal-dark));
+      box-shadow: 0 7px 17px color-mix(in srgb, var(--teal) 24%, transparent), inset 0 1px 0 rgba(255,255,255,.32);
+    }
+    .service-flow-body .opt {
+      border-color: color-mix(in srgb, var(--surface) 68%, white);
+      background: color-mix(in srgb, var(--surface) 62%, transparent);
+      -webkit-backdrop-filter: blur(12px) saturate(145%); backdrop-filter: blur(12px) saturate(145%);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.6);
+    }
+    .service-flow-body .opt.on {
+      color: var(--teal);
+      border-color: color-mix(in srgb, var(--teal) 48%, white);
+      background: color-mix(in srgb, var(--teal-soft) 72%, transparent);
+      box-shadow: 0 5px 14px rgba(0, 92, 104, .1), inset 0 1px 0 rgba(255,255,255,.75);
+    }
+    .service-flow-map { border: 1px solid rgba(255,255,255,.82); box-shadow: 0 12px 26px rgba(0,60,68,.1); }
+    .service-flow-map-label {
+      border: 1px solid rgba(255,255,255,.75); background: rgba(255,255,255,.68);
+      -webkit-backdrop-filter: blur(16px) saturate(155%); backdrop-filter: blur(16px) saturate(155%);
+      box-shadow: 0 5px 14px rgba(0,60,68,.1), inset 0 1px 0 rgba(255,255,255,.8);
+    }
     .service-flow-footer {
       position: sticky; bottom: 0; z-index: 20; margin-top: auto; padding: 12px 16px max(12px, env(safe-area-inset-bottom, 0px));
       background: linear-gradient(180deg, transparent, color-mix(in srgb, var(--page) 94%, transparent) 28%);
@@ -865,8 +932,44 @@
     }
     .service-flow-dock {
       min-height: 68px; padding: 10px 12px; border: 1px solid var(--line); border-radius: 24px;
-      background: color-mix(in srgb, var(--surface) 96%, transparent);
-      box-shadow: 0 10px 28px rgba(0, 60, 68, .14); backdrop-filter: blur(18px);
+      border-color: color-mix(in srgb, var(--surface) 72%, white);
+      background: color-mix(in srgb, var(--surface) 72%, transparent);
+      -webkit-backdrop-filter: blur(22px) saturate(160%); backdrop-filter: blur(22px) saturate(160%);
+      box-shadow: 0 12px 30px rgba(0, 60, 68, .16), inset 0 1px 0 rgba(255,255,255,.75);
+    }
+    .service-flow-dock > button:not(:disabled) {
+      border: 1px solid rgba(255,255,255,.28);
+      background: linear-gradient(145deg, var(--teal), var(--teal-dark));
+      box-shadow: 0 7px 18px color-mix(in srgb, var(--teal) 25%, transparent), inset 0 1px 0 rgba(255,255,255,.22);
+      transition: transform 180ms ease, box-shadow 180ms ease, filter 180ms ease;
+    }
+    .service-flow-primary-button {
+      border: 1px solid rgba(255,255,255,.28);
+      background: linear-gradient(145deg, var(--teal), var(--teal-dark));
+      box-shadow: 0 7px 18px color-mix(in srgb, var(--teal) 25%, transparent), inset 0 1px 0 rgba(255,255,255,.22);
+      transition: transform 180ms ease, box-shadow 180ms ease, filter 180ms ease;
+    }
+    .service-flow-primary-button:hover { filter: brightness(1.05); }
+    .service-flow-primary-button:active { transform: scale(.98); }
+    .service-flow-dock > button:not(:disabled):hover { filter: brightness(1.05); }
+    .service-flow-dock > button:not(:disabled):active { transform: scale(.98); }
+    .service-flow-dock > button:disabled { opacity: .48; }
+    .service-flow-footer .service-flow-dock { border-radius: 30px; }
+    .service-flow-shell .service-flow-main > .flow-stepper { margin: 8px 0 12px; }
+    .service-flow-shell .service-flow-back + div { gap: 8px; }
+    .service-flow-shell .service-flow-back + div > .chip,
+    .service-flow-shell .service-flow-header .chip { background: color-mix(in srgb, var(--surface) 72%, transparent); -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px); }
+    .service-flow-shell .seg {
+      border: 1px solid color-mix(in srgb, var(--surface) 72%, white);
+      background: color-mix(in srgb, var(--surface) 66%, transparent);
+      -webkit-backdrop-filter: blur(16px) saturate(150%); backdrop-filter: blur(16px) saturate(150%);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.7);
+    }
+    .service-flow-shell .service-flow-location-card .service-flow-parking-option { border-radius: 999px; min-height: 46px; }
+    .service-flow-location-card .service-flow-gps { min-height: 40px; padding: 0 14px; }
+    .service-flow-dock > div:first-child > span {
+      background: color-mix(in srgb, var(--teal-soft) 72%, transparent);
+      -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px);
     }
     :root[data-theme]:not([data-theme="light"]):not([data-theme="dark"]) .home-service-sheet { background: color-mix(in srgb, var(--surface) 50%, transparent); border-color: var(--line); }
     :root[data-theme]:not([data-theme="light"]):not([data-theme="dark"]) .home-service-card,
@@ -3699,7 +3802,7 @@
             </button>
           </div>
           <div class="relative z-10 p-4">
-            <div class="card p-4 space-y-3">
+            <div class="card service-flow-location-card p-4 space-y-3">
               <div>
                 <div class="eyebrow text-teal">Test location</div>
                 <h1 class="font-display text-[22px] font-bold tracking-tight text-label mt-1">Kochi, Kerala</h1>
@@ -3915,12 +4018,12 @@
 
     function renderLocationPickerCard(opts = {}) {
       const parkingSpots = [
-        { id: 'Open parking', label: 'Open park...', icon: 'car' },
+        { id: 'Open parking', label: 'Open Lot', icon: 'car' },
         { id: 'Basement', label: 'Basement', icon: 'building' },
         { id: 'Roadside', label: 'Roadside', icon: 'road' }
       ];
       return `
-      <div class="card card-location p-4 space-y-3.5 rounded-[24px] border border-line shadow-md">
+      <div class="card card-location service-flow-location-card p-4 space-y-3.5 rounded-[28px] border border-line shadow-md">
         <div>
           <div class="text-[10px] font-extrabold tracking-wider text-teal uppercase mb-1.5">Service location</div>
           <div class="flex items-center justify-between gap-2">
@@ -3931,7 +4034,7 @@
                 <div class="text-[11px] text-label2 truncate mt-0.5">${state.locationFull}</div>
               </div>
             </div>
-            <button onclick="useCurrentGpsLocation()" class="min-h-[44px] px-3 py-1.5 rounded-full text-[11px] font-bold flex items-center gap-1.5 shrink-0 press bg-teal-soft text-teal border border-line shadow-2xs">
+            <button onclick="useCurrentGpsLocation()" class="service-flow-gps min-h-[44px] px-3 py-1.5 rounded-full text-[11px] font-bold flex items-center gap-1.5 shrink-0 press bg-teal-soft text-teal border border-line shadow-2xs">
               ${I('crosshair', 'w-3.5 h-3.5 text-teal', 2.2)} Current GPS
             </button>
           </div>
@@ -3943,11 +4046,7 @@
             ${parkingSpots.map(p => {
               const on = state.jumpSpot === p.id;
               return `
-              <button onclick="set('jumpSpot','${p.id}')" class="min-h-[44px] py-2.5 px-2.5 rounded-xl text-[11.5px] flex items-center justify-center gap-1.5 transition-all press ${
-                on 
-                  ? 'bg-teal text-white font-bold shadow-xs' 
-                  : 'bg-[#F3F4F6] text-[#4B5563] font-medium hover:bg-gray-200'
-              }">
+              <button aria-pressed="${on}" onclick="set('jumpSpot','${p.id}')" class="service-flow-parking-option ${on ? 'is-selected font-bold' : 'font-medium'} min-h-[44px] py-2.5 px-2.5 rounded-full text-[11.5px] flex items-center justify-center gap-1.5 press">
                 ${I(p.icon, 'w-3.5 h-3.5 ' + (on ? 'text-white' : 'text-[#4B5563]'), 2)}
                 <span class="truncate">${p.label}</span>
                 ${on ? '<span class="w-4 h-4 rounded-full bg-white text-teal flex items-center justify-center text-[10px] font-extrabold ml-1 shrink-0">✓</span>' : ''}
@@ -3957,8 +4056,8 @@
         </div>
       </div>
       ${opts.inlineMap !== false ? `
-          <div onclick="moveMapPin(event)" class="map relative h-[180px] rounded-[22px] overflow-hidden border border-white/80 shadow-md cursor-crosshair select-none mt-1">
-            <div class="absolute top-2.5 left-2.5 bg-surface/95 backdrop-blur-sm px-2.5 py-1 rounded-full text-[9.5px] font-bold text-label2 border border-line shadow-xs">
+          <div onclick="moveMapPin(event)" class="map service-flow-map relative h-[180px] rounded-[22px] overflow-hidden border border-white/80 shadow-md cursor-crosshair select-none mt-1">
+            <div class="service-flow-map-label absolute top-2.5 left-2.5 px-2.5 py-1 rounded-full text-[9.5px] font-bold text-label2">
               Tap map to mark exact vehicle spot
             </div>
             <div style="left: ${state.pinX}%; top: ${state.pinY}%;" class="absolute -translate-x-1/2 -translate-y-1/2 flex flex-col items-center pointer-events-none transition-all duration-150">
@@ -4390,7 +4489,7 @@
                 <p class="text-[10.5px] text-label2 mt-1">Use or edit the location for this local estimate. It is not sent to a service provider.</p>
               </div>
               <textarea id="customer-address" rows="3" oninput="state.locationFull = this.value" placeholder="Street address, area, city" class="w-full bg-fill border border-line rounded-xl p-3 text-[13px] text-label outline-none focus:border-teal">${esc(state.locationFull)}</textarea>
-              <button onclick="useCurrentGpsLocation()" class="btn-outline w-full min-h-[44px]">${I('crosshair', 'w-4 h-4')} Use device location</button>
+              <button onclick="useCurrentGpsLocation()" class="service-flow-gps btn-outline w-full min-h-[44px]">${I('crosshair', 'w-4 h-4')} Current GPS</button>
             </div>
             <div class="customer-map-frame h-[200px] rounded-[22px] border border-line shadow-md">
               ${customerMapBackdrop(true)}
@@ -4404,7 +4503,7 @@
               <div class="text-[10px] text-label2">Address</div>
               <div class="font-display text-[12px] font-bold text-label truncate">${state.locationFull ? esc(state.locationFull) : 'Required to continue'}</div>
             </div>
-            <button onclick="continueCustomerAddress()" class="min-h-[44px] bg-teal text-white font-bold text-[13px] px-5 py-2.5 rounded-full flex items-center gap-2 press shrink-0">
+            <button onclick="continueCustomerAddress()" class="service-flow-primary-button min-h-[44px] bg-teal text-white font-bold text-[13px] px-5 py-2.5 rounded-full flex items-center gap-2 press shrink-0">
               Continue ${I('arrowRight', 'w-4 h-4', 2.2)}
             </button>
           </div>
@@ -4432,7 +4531,7 @@ function screen02() {
       const modeTitle = chargeModeTitle();
 
       const headerRightBtn = state.entryMode === 'customer' ? '' : `
-        <button onclick="openChargeFiltersSheet()" class="w-11 h-11 rounded-full bg-surface border border-line shadow-xs flex items-center justify-center text-label press" aria-label="Preferences">
+        <button onclick="openChargeFiltersSheet()" class="service-flow-filter flex items-center justify-center text-label press" aria-label="Filters">
           ${I('sliders', 'w-4 h-4', 2)}
         </button>
       `;
@@ -4443,7 +4542,7 @@ function screen02() {
 
       if (step === 1) {
         return `
-        <div class="screen relative flex flex-col justify-between overflow-hidden" style="min-height: 100%; height: 100%;">
+        <div class="screen service-flow-shell relative flex flex-col justify-between overflow-hidden" style="min-height: 100%; height: 100%;">
           <!-- Top Section (Header + Stepper + Location Selection Card) -->
           <div class="px-4 pt-[54px] pb-2 space-y-2.5 z-10 shrink-0 bg-page/95 backdrop-blur-xs">
             <!-- Header with Back and Preferences/Filter Slider -->
@@ -4462,7 +4561,7 @@ function screen02() {
           </div>
 
           <!-- Interactive Kochi charging map -->
-          <div onclick="moveMapPin(event)" class="map flex-1 relative min-h-[260px] mx-3 mb-3 rounded-[24px] border border-white/80 shadow-md cursor-crosshair select-none overflow-hidden">
+          <div onclick="moveMapPin(event)" class="map service-flow-map flex-1 relative min-h-[260px] mx-3 mb-3 rounded-[24px] cursor-crosshair select-none overflow-hidden">
             <!-- SVG Vector Map of Kochi with Waterway, Parks & Street Grid -->
             <svg class="aerial-map-road-mock absolute inset-0 w-full h-full" preserveAspectRatio="xMidYMid slice" viewBox="0 0 400 480" fill="none">
               <!-- Parks -->
@@ -4557,7 +4656,7 @@ function screen02() {
 
           </div>
           <div class="charge-address-dock">
-            <div class="charge-address-dock-card rounded-[26px] p-2.5 shadow-xl border border-line flex items-center justify-between gap-2">
+            <div class="charge-address-dock-card service-flow-dock rounded-[30px] p-2.5 flex items-center justify-between gap-2">
               <div class="flex items-center gap-2 min-w-0">
                 <span class="w-8 h-8 rounded-full border border-teal/30 bg-teal-soft/40 text-teal flex items-center justify-center shrink-0">
                   ${I('pin', 'w-4 h-4 text-teal', 2)}
@@ -4567,7 +4666,7 @@ function screen02() {
                   <div class="font-display text-[13px] font-bold text-label truncate mt-0.5">${state.locationTitle}</div>
                 </div>
               </div>
-              <button onclick="flowNext('chargeStep')" class="min-h-[44px] bg-teal hover:bg-teal-dark text-white font-bold text-[13px] px-4 py-2.5 rounded-full flex items-center gap-2 shadow-md shrink-0 press transition-transform">
+              <button onclick="flowNext('chargeStep')" class="service-flow-primary-button min-h-[44px] bg-teal hover:bg-teal-dark text-white font-bold text-[13px] px-4 py-2.5 rounded-full flex items-center gap-2 shadow-md shrink-0 press transition-transform">
                 <span>Continue</span>
                 ${I('arrowRight', 'w-4 h-4', 2.2)}
               </button>
